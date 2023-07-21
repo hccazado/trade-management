@@ -29,8 +29,17 @@ def create_app (test_config = None):
     def favicon():
         return redirect(url_for("static", filename = "favicon.ico"))
     
-    from .routes import index
-    app.register_blueprint(index.bp)
+    from .routes import home
+    app.register_blueprint(home.bp)
+    
+    from .routes import warehouse
+    app.register_blueprint(warehouse.bp)
+    
+    from .routes import agreement
+    app.register_blueprint(agreement.bp)
+    
+    from .routes import client
+    app.register_blueprint(client.bp)
 
     @app.route("/")
     def home():

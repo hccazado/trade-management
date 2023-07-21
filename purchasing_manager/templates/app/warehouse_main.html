@@ -1,0 +1,41 @@
+{%extends "base.html"%}
+
+<h1>{%block title%} {%endblock%}</h1>
+
+{%block content%}
+    <section class="lt_mgt">
+        <div class="mgt_row">
+            <input name="search" id="input_search"> 
+            <a href="{{url_for('warehouse.new')}}">Cadastrar</a>
+        </div>
+        <div class="mgt_table">
+            <table>
+                <thead>
+                    <td>ID</td>
+                    <td>Nome</td>
+                    <td>CPF/CNPJ</td>
+                    <td>Cidade / UF</td>
+                </thead>
+                <tbody>
+                    {%for warehouse in warehouses%}
+                    <tr>
+                        <td>
+                            {{warehouse[id]}}
+                            
+                        </td>
+                        <td>
+                            {{warehouse[nome]}}
+                        </td>
+                        <td>
+                            {{warehouse[doc]}}  
+                        </td>
+                        <td>
+                            {{warehouse[cidade]}} / {{warehouse[uf]}}
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{%endblock%}

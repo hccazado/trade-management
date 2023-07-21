@@ -1,0 +1,40 @@
+{%extends "base.html"%}
+
+<h1>{%block title%} {%endblock%}</h1>
+
+{%block content%}
+    <section class="lt_mgt">
+        <div class="mgt_row">
+            <input name="search" id="input_search"> 
+            <a href="{{url_for('client.new')}}">Cadastrar</a>
+        </div>
+        <div class="mgt_table">
+            <table>
+                <thead>
+                    <td>ID</td>
+                    <td>Nome</td>
+                    <td>CPF/CNPJ</td>
+                    <td>Cidade / UF</td>
+                </thead>
+                <tbody>
+                    {%for client in clients%}
+                    <tr>
+                        <td>
+                            {{client.id}}
+                        </td>
+                        <td>
+                            {{client.nome}}
+                        </td>
+                        <td>
+                            {{client.doc}}  
+                        </td>
+                        <td>
+                            {{client.cidade}} / {{client.uf}}
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{%endblock%}
