@@ -1,0 +1,18 @@
+{% extends 'base.html'%}
+<h1>{%block title%} {%endblock%}</h1>
+{%block content%}
+<div class="menu">
+    <div class="card">
+        <img src="{{url_for('static', filename='client.png')}}">
+        <p>Clientes</p>
+    </div>
+    <div class="card">
+        <img src="{{url_for('static', filename='warehouse.png')}}">
+        <p>Armazéns</p>
+    </div>
+    <div class="card">
+        <img src="{{url_for('static', filename='contract.png')}}">
+        <p>Fechamentos</p>
+    </div>
+</div>
+{%endblock%}

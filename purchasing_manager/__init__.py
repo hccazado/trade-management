@@ -2,8 +2,6 @@ import os
 
 from flask import Flask, url_for, redirect
 
-from .models import client
-
 def create_app (test_config = None):
     """App factory"""
     app = Flask(__name__, instance_relative_config = True)
@@ -31,6 +29,9 @@ def create_app (test_config = None):
     def favicon():
         return redirect(url_for("static", filename = "favicon.ico"))
     
+    from .routes import index
+    app.register_blueprint(index.bp)
+
     @app.route("/")
     def home():
         return "Under development!"

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <title>{%block title%}{%endblock%}</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+            {% if "node_user" in session %}
+                <li><a href="#">Log Out</a>
+            {% else %}
+                <li><a href="#">Log In</a>
+            {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <section id="content">
+        {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+
+        {%block content%}
+        {%endblock%}
+    </section>
+</body>
+</html>
