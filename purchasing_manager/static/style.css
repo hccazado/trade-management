@@ -42,3 +42,67 @@ header a{
 .card > img {
     width: 90%;
 }
+
+.lt_mgt{
+    width: 90%;
+    
+}
+
+.mgt_row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+}
+
+.mgt_row > input{
+    width: 150px
+}
+.mgt_row > a{
+    padding: 10px;
+    text-decoration: none;
+    background-color: #166;
+    color: aliceblue;
+    width: 100px;;
+}
+
+.mgt_table{
+    margin: 50px auto;
+}
+.mgt_table > table td{
+    column-width: 120px;
+    height: 1.3em;
+}
+
+.lt_mgt > form{
+    margin: 20px auto;
+    width: 400px;
+    border: 1px solid #ccc;
+}
+
+.lt_mgt > form > ul{
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+} 
+
+.lt_mgt > form li > label{
+    display: inline-block;
+    text-align: left;
+    margin-left: 15px;
+    width: 60px;
+}
+.lt_mgt > form li +li {
+    margin-top: 20px;
+}
+.lt_mgt > form li > input, textarea{
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+}
+.lt_mgt > form li >textarea{
+    height: 3em;
+}
+
+.lt_mgt > form li:last-child{
+    text-align: right;
+}
