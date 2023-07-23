@@ -5,8 +5,11 @@
 {%block content%}
     <section class="lt_mgt">
         <div class="mgt_row">
-            <input name="search" id="input_search"> 
-            <a href="{{url_for('client.new')}}">Cadastrar</a>
+            <a class="transparent" href="{{url_for('home.index')}}">
+                <img class="return" src="{{url_for('static',filename='return.png')}}">
+            </a>
+            <input name="search" id="input_search" placeholder="filtrar"> 
+            <a class="green" href="{{url_for('warehouse.new')}}">Cadastrar</a>
         </div>
         <div class="mgt_table">
             <table>
@@ -15,6 +18,7 @@
                     <td>Nome</td>
                     <td>CPF/CNPJ</td>
                     <td>Cidade / UF</td>
+                    <td>Editar</td>
                 </thead>
                 <tbody>
                     {%for client in clients%}
@@ -30,6 +34,11 @@
                         </td>
                         <td>
                             {{client.cidade}} / {{client.uf}}
+                        </td>
+                        <td>
+                            <a href="{{url_for('client.edit', id=client.id)}}">
+                                <img class="edit" src="{{url_for('static', filename='edit.png')}}">
+                            </a>
                         </td>
                     </tr>
                     {%endfor%}

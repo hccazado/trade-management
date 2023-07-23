@@ -3,11 +3,14 @@
 <h1>{%block title%} {%endblock%}</h1>
 
 {%block content%}
-    <section class="lt_mgt">
-        <div class="mgt_row">
-            <input name="search" id="input_search"> 
-            <a href="{{url_for('agreement.new')}}">Cadastrar</a>
-        </div>
+<section class="lt_mgt">
+    <div class="mgt_row">
+        <a class="transparent" href="{{url_for('home.index')}}">
+            <img class="return" src="{{url_for('static',filename='return.png')}}">
+        </a>
+        <input name="search" id="input_search" placeholder="filtrar"> 
+        <a class="green" href="{{url_for('warehouse.new')}}">Cadastrar</a>
+    </div>
         <div class="mgt_table">
             <table>
                 <thead>

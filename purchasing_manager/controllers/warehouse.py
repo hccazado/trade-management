@@ -34,8 +34,6 @@ def create():
     
     new_warehouse = request.form.to_dict()
     
-    print(new_warehouse)
-    
     if document.set(new_warehouse):
     
         return True
@@ -46,11 +44,17 @@ def create():
 
 def edit(id):
     
-    warehouse = warehouses_ref.get(id)
+    stream =  warehouses_ref.document(id).get()
     
-    if id in warehouse:
+    warehouse_structure = {} 
+    
+    warehouse_structure = stream.to_dict()
+        
+    warehouse_structure["id"] = stream.id 
+    
+    if warehouse_structure:
 
-        return render_template("app/warehouse_form.html", isediting=True, warehouse = warehouse)
+        return render_template("app/warehouse_form.html", isediting=True, warehouse = warehouse_structure)
     
     else:
         
@@ -64,10 +68,15 @@ def update(id):
     
     new_data = request.form.to_dict()
     
-    if warehouses_ref.document(id).set(new_data):
+    res = warehouses_ref.document(id).set(new_data)
+
+    print(res)
+
+    if "update_time" in res:
     
-        return True
+        return redirect(url_for('home.index'))
     
     else:
         
+        return render_template(url_for('app/warehouse_main.html', flash("Something went wrong!")))
         return False

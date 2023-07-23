@@ -8,6 +8,7 @@ bp = Blueprint("warehouse", __name__, url_prefix="/warehouse")
 
 @bp.route("/")
 def index():
+    
     return warehouse.index()
 
 @bp.route("/new", methods=("GET", "POST"))
@@ -23,7 +24,7 @@ def new():
             return redirect(url_for("warehouse.index"))
         
 @bp.route("/edit/<id>", methods = ("GET", "POST"))
-def update(id):
+async def edit(id):
     
     if request.method == "GET":
         

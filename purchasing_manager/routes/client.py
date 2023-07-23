@@ -24,7 +24,7 @@ def new():
             return redirect(url_for("client.index"))
         
 @bp.route("/edit/<id>", methods = ("GET", "POST"))
-def edit(id):
+async def edit(id):
 
     if request.method == "GET":
         

@@ -1,6 +1,6 @@
 import flask, asyncio
 
-from flask import Blueprint, url_for, request, session, redirect, render_template
+from flask import Blueprint, url_for, request, session, redirect, render_template, flash
 
 from ..db import db
 
@@ -34,8 +34,6 @@ def create():
     
     new_client = request.form.to_dict()
     
-    print(new_client)
-    
     if document.set(new_client):
     
         return True
@@ -46,17 +44,31 @@ def create():
 
 def edit(id):
     
-    client = clients_ref.get(id)
+    client = clients_ref.document(id).get()
     
-    return render_template("app/client_form.html", isediting=True, client = client)
+    client_structure = client.to_dict()
+        
+    client_structure["id"] = client.id
+    
+    if client_structure:
+    
+        return render_template("app/client_form.html", isediting=True, client = client_structure)
+    
+    else:
+        error = "Something went wrong. Register a new client?"
+        flash(error)
+        return render_template("app/client_form.html", isediting=False)
 
 def update(id):
     
     new_data = request.form.to_dict()
+
+    res = clients_ref.document(id).set(new_data)
+
     
-    if clients_ref.document(id).set(new_data):
-    
-        return True
+    if "update_time" in res:
+
+        return redirect(url_for("home.index"))
     
     else:
         

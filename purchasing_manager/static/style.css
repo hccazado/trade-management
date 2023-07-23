@@ -5,8 +5,9 @@ body{
 
 header{
     margin-top: 0;
-    height: 100px;
+    height: 80px;
     width: 100%;
+    border-bottom: 1px solid #ccc;
 }
 
 header ul{
@@ -43,34 +44,67 @@ header a{
     width: 90%;
 }
 
+section{
+    margin: 0 auto;
+}
+
 .lt_mgt{
     width: 90%;
-    
+    align-self: center;
 }
 
 .mgt_row{
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
+    grid-template-columns: 50px 1fr 1fr;
+    grid-template-rows: 50px;
+    gap: 50px;
+    justify-content: center;
+    align-content: center;
+    margin-top: 20px;
+    text-align: center;
 }
 
 .mgt_row > input{
-    width: 150px
+    width: 150px;
+    justify-self: center;
+    align-self: center;
+    height: 1.7em
 }
 .mgt_row > a{
     padding: 10px;
     text-decoration: none;
-    background-color: #166;
     color: aliceblue;
-    width: 100px;;
+    width: 100px;
+    justify-self: center;
+    align-self: center;
+}
+
+.return{
+    width: 36px;
+}
+.green{
+    background-color: #166;
 }
 
 .mgt_table{
     margin: 50px auto;
+    width: 95%;
 }
 .mgt_table > table td{
-    column-width: 120px;
+    column-width: 150px;
     height: 1.3em;
+}
+
+.mgt_table > table thead{
+    background-color: #aaa;
+    height: 2em;
+}
+
+.mgt_table > table tbody tr:nth-child(even){
+    background-color: #eee;
+}
+.edit{
+    width:32px;
 }
 
 .lt_mgt > form{

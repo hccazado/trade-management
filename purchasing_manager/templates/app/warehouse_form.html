@@ -1,8 +1,9 @@
 {%extends "base.html"%}
 
-<h1>{%block title%} {%endblock%}</h1>
-
 {%block content%}
+<a href="{{url_for('home.index')}}">
+    <img class="return" src="{{url_for('static',filename='return.png')}}">
+</a>
 {%if not isediting%}
     <section class="lt_mgt">
         <form id="form" method="post">
@@ -63,39 +64,39 @@
         <ul>
             <li>
                 <label for="nome">Nome</label>
-                <input id="nome" name="nome" value="{{warehouse[nome]}}">
+                <input id="nome" name="nome" value="{{warehouse.nome}}">
             </li>
             <li>
                 <label for="email">E-mail</label>
-                <input type="email" id="email" name="email" value="{{warehouse[email]}}">
+                <input type="email" id="email" name="email" value="{{warehouse.email}}">
             </li>
             <li>
                 <label for="doc">CNPJ/CPF</label>
-                <input id="doc" name="doc" value="{{warehouse[doc]}}">
+                <input id="doc" name="doc" value="{{warehouse.doc}}">
             </li>
             <li>
                 <label for="tel">Telefone</label>
-                <input id="tel" name="tel" value="{{warehouse[tel]}}">
+                <input id="tel" name="tel" value="{{warehouse.tel}}">
             </li>
             <li>
                 <label for="cep">CEP</label>
-                <input id="cep" name="cep" value="{{warehouse[cep]}}">
+                <input id="cep" name="cep" value="{{warehouse.cep}}">
             </li>
             <li>
                 <label for="end">End.</label>
-                <input id="end" name="end" value="{{warehouse[end]}}">
+                <input id="end" name="end" value="{{warehouse.end}}">
             </li>
             <li>
                 <label for="num">Num</label>
-                <input id="num" name="num" value="{{warehouse[num]}}">
+                <input id="num" name="num" value="{{warehouse.num}}">
             </li>
             <li>
                 <label for="bairro">Bairro</label>
-                <input id="bairro" name="bairro" value="{{warehouse[bairro]}}">
+                <input id="bairro" name="bairro" value="{{warehouse.bairro}}">
             </li>
             <li>
                 <label for="cidade">Cidade</label>
-                <input id="cidade" name="cidade" value="{{warehouse[cidade]}}">
+                <input id="cidade" name="cidade" value="{{warehouse.cidade}}">
             </li>
             <li>
                 <label for="uf">UF</label>
@@ -103,7 +104,7 @@
             </li>
             <li>
                 <label for="obs">OBS</label>
-                <textarea id="obs" name="obs">{{warehouse[obs]}}</textarea>
+                <textarea id="obs" name="obs">{{warehouse.obs}}</textarea>
             </li>
             <li>
                 <button type="submit">Atualizar </button>

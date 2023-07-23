@@ -1,12 +1,16 @@
 {%extends "base.html"%}
 
+
 <h1>{%block title%} {%endblock%}</h1>
 
 {%block content%}
     <section class="lt_mgt">
         <div class="mgt_row">
-            <input name="search" id="input_search"> 
-            <a href="{{url_for('warehouse.new')}}">Cadastrar</a>
+            <a class="transparent" href="{{url_for('home.index')}}">
+                <img class="return" src="{{url_for('static',filename='return.png')}}">
+            </a>
+            <input name="search" id="input_search" placeholder="filtrar"> 
+            <a class="green" href="{{url_for('warehouse.new')}}">Cadastrar</a>
         </div>
         <div class="mgt_table">
             <table>
@@ -15,22 +19,28 @@
                     <td>Nome</td>
                     <td>CPF/CNPJ</td>
                     <td>Cidade / UF</td>
+                    <td>Editar</td>
                 </thead>
                 <tbody>
                     {%for warehouse in warehouses%}
                     <tr>
                         <td>
-                            {{warehouse[id]}}
+                            {{warehouse.id}}
                             
                         </td>
                         <td>
-                            {{warehouse[nome]}}
+                            {{warehouse.nome}}
                         </td>
                         <td>
-                            {{warehouse[doc]}}  
+                            {{warehouse.doc}}  
                         </td>
                         <td>
-                            {{warehouse[cidade]}} / {{warehouse[uf]}}
+                            {{warehouse.cidade}} / {{warehouse.uf}}
+                        </td>
+                        <td>
+                            <a href="{{url_for('warehouse.edit', id=warehouse.id)}}">
+                                <img class="edit" src="{{url_for('static', filename='edit.png')}}">
+                            </a>
                         </td>
                     </tr>
                     {%endfor%}
