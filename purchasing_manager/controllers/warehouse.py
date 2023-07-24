@@ -58,7 +58,7 @@ def edit(id):
     
     else:
         
-        error = "Not found!"
+        error = "Something Went Wrong. Item Not found!"
         
         flash(error)
         
@@ -70,8 +70,6 @@ def update(id):
     
     res = warehouses_ref.document(id).set(new_data)
 
-    print(res)
-
     if "update_time" in res:
     
         return redirect(url_for('home.index'))
@@ -79,4 +77,4 @@ def update(id):
     else:
         
         return render_template(url_for('app/warehouse_main.html', flash("Something went wrong!")))
-        return False
+        #return False

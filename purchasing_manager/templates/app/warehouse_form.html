@@ -1,9 +1,11 @@
 {%extends "base.html"%}
 
 {%block content%}
-<a href="{{url_for('home.index')}}">
+<a href="{{url_for('warehouse.index')}}">
     <img class="return" src="{{url_for('static',filename='return.png')}}">
 </a>
+<h1>Formulario Armazém</h1>
+
 {%if not isediting%}
     <section class="lt_mgt">
         <form id="form" method="post">

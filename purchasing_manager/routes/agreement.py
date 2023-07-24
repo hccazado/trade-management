@@ -18,4 +18,4 @@ def new():
     
     elif request.method ==  "POST":
         
-        return agreement.create(request.form.to_dict())
+        return agreement.create()

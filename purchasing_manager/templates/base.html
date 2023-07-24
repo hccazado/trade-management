@@ -9,12 +9,16 @@
 </head>
 <body>
     <header>
+        <div id="clock"></div>
+        <a href="{{url_for('home.index')}}">
+            <img src="{{url_for('static', filename='logo.jpg')}}" alt="business logo" class="logo">
+        </a>
         <nav>
             <ul>
             {% if "node_user" in session %}
-                <li><a href="#">Log Out</a>
+                <li><a class="green" href="#">Log Out</a>
             {% else %}
-                <li><a href="#">Log In</a>
+                <li><a class="green" href="#">Log In</a>
             {% endif %}
             </ul>
         </nav>
@@ -27,5 +31,6 @@
         {%block content%}
         {%endblock%}
     </section>
+    <script src="{{url_for('static', filename='clock.js')}}"></script>
 </body>
 </html>

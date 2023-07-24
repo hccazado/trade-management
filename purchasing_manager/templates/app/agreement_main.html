@@ -9,31 +9,31 @@
             <img class="return" src="{{url_for('static',filename='return.png')}}">
         </a>
         <input name="search" id="input_search" placeholder="filtrar"> 
-        <a class="green" href="{{url_for('warehouse.new')}}">Cadastrar</a>
+        <a class="green" href="{{url_for('agreement.new')}}">Cadastrar</a>
     </div>
         <div class="mgt_table">
             <table>
                 <thead>
-                    <td>ID</td>
-                    <td>Nome</td>
-                    <td>CPF/CNPJ</td>
-                    <td>Cidade / UF</td>
+                    <td>Num Fechamento</td>
+                    <td>Ordem Compra</td>
+                    <td>Vendedor</td>
+                    <td>Descarga</td>
+                    <td>Quantidade</td>
                 </thead>
                 <tbody>
-                    {%for warehouse in warehouses%}
+                    {%for agreement in agreements%}
                     <tr>
                         <td>
-                            {{warehouse[id]}}
-                            
+                            {{agreement['num_fechamento']}}
                         </td>
                         <td>
-                            {{warehouse[nome]}}
+                            {{agreement['vendedor']}}
                         </td>
                         <td>
-                            {{warehouse[doc]}}  
+                            {{agreement['descarga']}}  
                         </td>
                         <td>
-                            {{warehouse[cidade]}} / {{warehouse[uf]}}
+                            {{agreement['quantidade']}}
                         </td>
                     </tr>
                     {%endfor%}

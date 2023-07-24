@@ -1,54 +1,88 @@
 {%extends "base.html"%}
 
-<h1>{%block title%} {%endblock%}</h1>
-
 {%block content%}
+
+<h1>Novo Fechamento</h1>
+
     <section class="lt_mgt">
         <form id="form" method="post">
             <ul>
                 <li>
-                    <label for="nome">Nome</label>
-                    <input id="nome" name="nome">
+                    <label for="rc">Ref. Compra</label>
+                    <input id="rc" name="rc">
                 </li>
                 <li>
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email">
+                    <label for="num_fechamento">Número de Fechamento</label>
+                    <input id="num_fechamento" name="num_fechamento">
                 </li>
                 <li>
-                    <label for="doc">CNPJ/CPF</label>
-                    <input id="doc" name="doc">
+                    <label for="vendedor">Vendedor</label>
+                    <select name="vendedor" id="vendedor">
+                        {% for client in clients %}
+                            <option value="{{client['id']}}">{{client.nome}}</option>
+                        {% endfor %}
+                    </select>
                 </li>
                 <li>
-                    <label for="tel">Telefone</label>
-                    <input id="tel" name="tel">
+                    <label for="comprador">Comprador</label>
+                    <select name="comprador" id="comprador">
+                        {%for client in clients%}
+                            <option value="{{client['id']}}">{{client.nome}}</option>
+                        {% endfor %}
+                    </select>
                 </li>
                 <li>
-                    <label for="cep">CEP</label>
-                    <input id="cep" name="cep">
+                    <label for="retirada">Local de Retirada</label>
+                    <select name="retirada" id="retirada">
+                        {% for warehouse in warehouses %}
+                            <option value="{{warehouse['id']}}">{{warehouse.nome}}</option>
+                        {% endfor %}
+                    </select>
                 </li>
                 <li>
-                    <label for="end">End.</label>
-                    <input id="end" name="end">
+                    <label for="descarga">Local de Descarga</label>
+                    <select name="descarga" id="descarga">
+                        {% for warehouse in warehouses %}
+                            <option value="{{warehouse['id']}}">{{warehouse.nome}}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+
+                <li>
+                    <label for="cond_venda">Condição de Venda</label>
+                    <input id="cond_venda" name="cond_venda">
                 </li>
                 <li>
-                    <label for="num">num</label>
-                    <input id="num" name="num">
+                    <label for="preco">Preço</label>
+                    <input id="preco" name="preco">
                 </li>
                 <li>
-                    <label for="bairro">Bairro</label>
-                    <input id="bairro" name="bairro" >
+                    <label for="quantidade">Quantidade</label>
+                    <input id="quantidade" name="quantidade">
                 </li>
                 <li>
-                    <label for="cidade">cidade</label>
-                    <input id="cidade" name="cidade" >
+                    <label for="modalidade">Modalidade</label>
+                    <input id="modalidade" name="modalidade">
                 </li>
                 <li>
-                    <label for="uf">UF</label>
-                    <input id="uf" name="uf" >
+                    <label for="pagamento">Dados Para Pagamento do Fechamento</label>
+                    <input id="paramento" name="paramento">
+                </li>
+                <li>
+                    <label for="corretor">Corretor</label>
+                    <input id="corretor" name="corretor" value="NETTUZZI CORRETORA">
+                </li>
+                <li>
+                    <label for="corretagem_vendedor">Corretagem Vendedor</label>
+                    <input id="corretagem_vendedor" type="number" step="any" name="corretagem_vendedor" value="0.0">
+                </li>
+                <li>
+                    <label for="corretagem_comprador">Corretagem Comprador</label>
+                    <input id="corretagem_comprador" type="number" step="any" name="corretagem_comprador" value="0.5">
                 </li>
                 <li>
                     <label for="obs">OBS</label>
-                    <textarea id="obs" name="obs"></textarea>
+                    <textarea id="obs" name="obs">Conforme amostra em poder das partes</textarea>
                 </li>
                 <li>
                     <button type="submit">Cadastrar</button>

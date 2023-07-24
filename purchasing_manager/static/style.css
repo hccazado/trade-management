@@ -4,6 +4,10 @@ body{
 }
 
 header{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    align-items: center;
     margin-top: 0;
     height: 80px;
     width: 100%;
@@ -22,13 +26,16 @@ header li{
 
 header a{
     padding: 15px;
-    background-color: #166;
     color: aliceblue;
     text-decoration: none;
 }
 
+header .logo{
+    width: 72px;
+}
+
 .menu{
-    margin-top: 50px;
+    margin-top: 75px;
     display: flex;
     justify-content: space-around;
     text-align: center;
@@ -46,6 +53,10 @@ header a{
 
 section{
     margin: 0 auto;
+}
+#content > h1{
+    margin: 10px auto;
+    text-align: center;
 }
 
 .lt_mgt{
@@ -81,6 +92,10 @@ section{
 
 .return{
     width: 36px;
+    display: table;
+    margin-top: 20px;
+    margin-left: 20px;
+    
 }
 .green{
     background-color: #166;
@@ -89,6 +104,9 @@ section{
 .mgt_table{
     margin: 50px auto;
     width: 95%;
+}
+.mgt_table > table{
+    margin: auto;
 }
 .mgt_table > table td{
     column-width: 150px;
@@ -105,6 +123,7 @@ section{
 }
 .edit{
     width:32px;
+    margin-left: 15px;
 }
 
 .lt_mgt > form{
