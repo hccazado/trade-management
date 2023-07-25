@@ -1,11 +1,8 @@
-from firebase_admin import credentials, firestore, initialize_app
+import firebase_admin
+from firebase_admin import credentials, firestore, exceptions
+import requests, os
 
 #Initialize Firebase Firestore connection
-
-import os
-import firebase_admin
-from firebase_admin import firestore, exceptions
-
 CREDENTIAL = credentials.Certificate("./prc-mgt.json")
 
 app = firebase_admin.initialize_app(CREDENTIAL)

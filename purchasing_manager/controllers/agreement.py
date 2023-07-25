@@ -10,6 +10,8 @@ clients_ref = db.get_db().collection("clients")
 
 warehouse_ref = db.get_db().collection("warehouses")
 
+agreement_ref = db.get_db().collection("agreements")
+
 def index():
 
     agreements = agreement.get_all()
@@ -51,4 +53,35 @@ def create():
     
     else: 
         
-        return render_template("app/agreement_form", flash("Something Went Wrong!"))
+        return render_template("app/agreement_form.html", flash("Something Went Wrong!"))
+    
+def edit(id):
+    
+    if (id == None):
+        
+        return render_template("app/agreement_form.html", flash("Something Went Wrong! An ID must be informed!"))
+    
+    old_agreement = agreement.get_one(id)
+    
+    return render_template("app/agreement_form", old_agreement = old_agreement)
+
+def update (id):
+    
+    if (id == None):
+        
+        return render_template("app/agreement_form.html", flash("Something Went Wrong! An ID must be informed!"))
+    
+    else:
+    
+        new_data = request.form.to_dict()
+        
+        if agreement.update(id, new_data):
+        
+            return redirect(url_for("agreement.index"))
+        
+        else:
+            
+           return render_template("app/agreement_form.html", flash("Something Went Wrong!")) 
+
+    
+    

@@ -55,8 +55,18 @@ section{
     margin: 0 auto;
 }
 #content > h1{
-    margin: 10px auto;
+    margin: 0 auto;
+    margin-top: 20px;
     text-align: center;
+}
+
+.login{
+    margin: 0 auto;
+    height: 500px;
+    width:400px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    margin-top: 30px;
 }
 
 .lt_mgt{

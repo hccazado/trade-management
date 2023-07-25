@@ -2,11 +2,12 @@ import flask
 
 from flask import Blueprint, url_for, request, session, redirect 
 
-from ..controllers import client, warehouse, agreement, home
+from ..controllers import client, warehouse, agreement, home, auth
 
 bp = Blueprint("client", __name__, url_prefix="/client")
 
 @bp.route("/")
+@auth.login_required
 def index():
     return client.index()
 
@@ -24,6 +25,7 @@ def new():
             return redirect(url_for("client.index"))
         
 @bp.route("/edit/<id>", methods = ("GET", "POST"))
+@auth.login_required
 async def edit(id):
 
     if request.method == "GET":

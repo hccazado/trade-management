@@ -1,0 +1,32 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<h1>Sign-In</h1>
+
+<div class="lt_mgt">
+
+    <form class=form" method="POST">
+    
+        <ul>
+            <li>
+                <label for="email">E-mail</label>
+                <input id="email" name="email">
+            </li>
+            <li>
+                <label for="user">Usuario</label>
+                <input id="name" name="name">
+            </li>
+            <li>
+                <label for="password">Senha</label>
+                <input id="password" name="password" type="password">
+            </li>
+            <li>
+                <button type="submit">Sign-in</button>
+            </li>
+        </ul>
+
+    </form>
+
+</div>
+
+{%endblock%}

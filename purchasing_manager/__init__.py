@@ -1,13 +1,14 @@
-import os
+import os, requests
 
 from flask import Flask, url_for, redirect
+
 
 def create_app (test_config = None):
     """App factory"""
     app = Flask(__name__, instance_relative_config = True)
     
     app.config.from_mapping(
-        SECRET_KEY='dev'
+        SECRET_KEY= os.urandom(24)
     )
     
     if test_config is None:
@@ -23,7 +24,7 @@ def create_app (test_config = None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
-    
+            
     #defining a static starting page while developing app
     @app.route("/favicon.ico")
     def favicon():
@@ -40,9 +41,24 @@ def create_app (test_config = None):
     
     from .routes import client
     app.register_blueprint(client.bp)
+    
+    from .routes import auth
+    app.register_blueprint(auth.bp)
+    
+    #Global variables
+    
+    global CLIENTS_COLLECTION
+    
+    global WAREHOUSES_COLLECTION
+    
+    global AGREEMENTS_COLLECTION
 
     @app.route("/")
     def home():
         return "Under development!"
     
     return app
+
+if __name__ == "__main__":
+    
+    app = create_app()

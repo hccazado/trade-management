@@ -21,6 +21,18 @@ def get_all():
 
     return agreements
 
+def get_one(id = None):
+    
+    if id == None:
+        return {}
+    
+    else:
+        old_agreement = agreement_ref.document(id).get()
+        
+        old_agreement = old_agreement.to_dict()
+        
+        return old_agreement
+
 def create(new_agreement):
 
     doc = agreement_ref.document()
@@ -35,4 +47,19 @@ def create(new_agreement):
         print(fire_error.http_response, fire_error.cause)
             
         return False
+    
+def update(id, new_data):
+    
+    document = agreement_ref.document(id)
+    
+    res = document.set(new_data)
+    
+    if "update_time" in res:
+        
+        return True
+    
+    else:
+        
+        return False
+    
 
