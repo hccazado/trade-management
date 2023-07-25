@@ -1,3 +1,4 @@
+from flask import current_app
 from firebase_admin import exceptions
 
 from ..db import db
@@ -13,6 +14,7 @@ def get_all():
     agreements = []
 
     for agreement in agreements_stream:
+        
         agreement_struct = agreement.to_dict()
 
         agreement_struct["id"] = agreement.id
@@ -24,20 +26,24 @@ def get_all():
 def get_one(id = None):
     
     if id == None:
+        
         return {}
     
     else:
-        old_agreement = agreement_ref.document(id).get()
         
-        old_agreement = old_agreement.to_dict()
+        for agreement in current_app.agreements_collection:
         
-        return old_agreement
+            if agreement['id'] == id:
+                
+                return agreement
 
 def create(new_agreement):
 
-    doc = agreement_ref.document()
 
     try:
+        
+        doc = agreement_ref.document()
+        
         doc.set(new_agreement)
 
         return True
@@ -50,16 +56,24 @@ def create(new_agreement):
     
 def update(id, new_data):
     
-    document = agreement_ref.document(id)
+    try:
     
-    res = document.set(new_data)
-    
-    if "update_time" in res:
+        document = agreement_ref.document(id)
         
-        return True
-    
-    else:
+        res = document.set(new_data)
         
+        if "update_time" in res:
+            
+            return True
+        
+        else:
+            
+            return False
+        
+    except exceptions.FirebaseError as fire_error:
+            
+        print(fire_error.http_response, fire_error.cause)
+            
         return False
     
 

@@ -1,6 +1,6 @@
 import os, requests
 
-from flask import Flask, url_for, redirect
+from flask import Flask, url_for, redirect, current_app
 
 
 def create_app (test_config = None):
@@ -45,17 +45,21 @@ def create_app (test_config = None):
     from .routes import auth
     app.register_blueprint(auth.bp)
     
-    #Global variables
     
-    global CLIENTS_COLLECTION
-    
-    global WAREHOUSES_COLLECTION
-    
-    global AGREEMENTS_COLLECTION
-
     @app.route("/")
     def home():
         return "Under development!"
+    
+    #context variables (for avoiding firebase recursive  calling)
+    clients_collection = []
+    warehouses_collection = []
+    agreements_collection = []
+    
+    with app.app_context():
+        current_app.clients_collection = clients_collection
+        current_app.warehouses_collection = warehouses_collection
+        current_app.agreements_collection = agreements_collection
+        
     
     return app
 

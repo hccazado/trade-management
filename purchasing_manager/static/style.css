@@ -169,3 +169,13 @@ section{
 .lt_mgt > form li:last-child{
     text-align: right;
 }
+
+.flash{
+    text-align: center;
+    font-size: 1.2em;
+    background-color: rgba(100, 100, 250, 0.05);
+    border: 1px solid #05a;
+    color: #000;
+    margin: 20px;
+    width: 100%;
+}

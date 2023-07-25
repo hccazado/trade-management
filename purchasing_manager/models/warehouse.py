@@ -1,4 +1,8 @@
+from flask import current_app
+
 from ..db import db
+
+from firebase_admin import exceptions
 
 warehouses_ref = db.get_db().collection("warehouses")
 
@@ -16,14 +20,64 @@ def get_all():
         warehouse_structure["id"] = warehouse.id
       
         warehouses.append(warehouse_structure)
-
+        
     return warehouses
 
-def get_name(key):
+def get_one(id):
+    
+    for warehouse in current_app.warehouses_collection:
+        
+        if warehouse['id'] == id:
+    
+            return warehouse    
+    
+    return []
 
-    warehouse = warehouses_ref.document(key).get()
+def get_name(id):
+    
+    for warehouse in current_app.warehouses_collection:
+        
+        if warehouse['id'] == id:
+            
+            return warehouse['nome']
 
-    warehouse_struct = warehouse.to_dict()
+def create(new_data):
+    
+    try:
+        
+        doc = warehouses_ref.document()
+        
+        doc.set(new_data)
 
-    return warehouse_struct['nome']
+        return True
+            
+    except exceptions.FirebaseError as fire_error:
+            
+        print(fire_error.http_response, fire_error.cause)
+            
+        return False
+
+def update(id, new_data):
+    
+    try:
+        
+        document = warehouses_ref.document(id)
+    
+        res = document.set(new_data)
+    
+        if "update_time" in res:
+        
+            return True
+    
+        else:
+        
+            return False
+            
+    except exceptions.FirebaseError as fire_error:
+            
+        print(fire_error.http_response, fire_error.cause)
+            
+        return False
+    
+    
 

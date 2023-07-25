@@ -1,0 +1,21 @@
+.heading{
+    width: 60%;
+}
+
+.title{
+    font-size: 1.1em;
+}
+
+.agreement_dt{
+    text-align: right;
+}
+
+.obs{
+    font-size: 12px;
+}
+
+.nunito_font400{
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+}

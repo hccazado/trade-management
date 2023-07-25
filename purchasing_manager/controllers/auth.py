@@ -1,6 +1,6 @@
 import flask, os, requests, json, functools
 
-from flask import Blueprint, url_for, request, session, redirect, render_template, flash, g
+from flask import Blueprint, url_for, request, session, redirect, render_template, flash, current_app
 
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -95,7 +95,7 @@ def login_required(view):
         
 def load_snapshots():
     
-    g.clients_collection = model_client.get_all()
-    
-    g.warehouse_collection = model_warehouse.get_all()
+    current_app.clients_collection = model_client.get_all()
+    current_app.warehouses_collection = model_warehouse.get_all()
+    current_app.agreements_collection = model_agreement.get_all()
     

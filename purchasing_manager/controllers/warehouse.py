@@ -1,27 +1,15 @@
 import flask
 
-from flask import Blueprint, url_for, request, session, redirect, render_template, flash
+from flask import Blueprint, url_for, request, session, redirect, render_template, flash, current_app
 
 from ..db import db
 
-warehouses_ref = db.get_db().collection("warehouses")
+from ..models import warehouse as model_warehouse
 
 def index():
     
-    stream = warehouses_ref.get()
-    
-    warehouse_structure = {}
-    
-    warehouses = []
-    
-    for warehouse in stream:
-        
-        warehouse_structure = warehouse.to_dict()
-        
-        warehouse_structure["id"] = warehouse.id
-      
-        warehouses.append(warehouse_structure)
-    
+    warehouses = current_app.warehouses_collection
+            
     return render_template("app/warehouse_main.html", warehouses = warehouses)
 
 def new():
@@ -30,11 +18,11 @@ def new():
 
 def create():
     
-    document = warehouses_ref.document()
+    new_data = request.form.to_dict()
     
-    new_warehouse = request.form.to_dict()
-    
-    if document.set(new_warehouse):
+    if model_warehouse.create(new_data):
+        
+        current_app.warehouses_collection = model_warehouse.get_all()
     
         return True
     
@@ -44,17 +32,11 @@ def create():
 
 def edit(id):
     
-    stream =  warehouses_ref.document(id).get()
+    warehouse = model_warehouse.get_one(id)
     
-    warehouse_structure = {} 
-    
-    warehouse_structure = stream.to_dict()
-        
-    warehouse_structure["id"] = stream.id 
-    
-    if warehouse_structure:
+    if 'id' in warehouse:
 
-        return render_template("app/warehouse_form.html", isediting=True, warehouse = warehouse_structure)
+        return render_template("app/warehouse_form.html", isediting=True, warehouse = warehouse)
     
     else:
         
@@ -68,9 +50,9 @@ def update(id):
     
     new_data = request.form.to_dict()
     
-    res = warehouses_ref.document(id).set(new_data)
-
-    if "update_time" in res:
+    if model_warehouse.update(id, new_data):
+        
+        current_app.warehouses_collection = model_warehouse.get_all()
     
         return redirect(url_for('home.index'))
     

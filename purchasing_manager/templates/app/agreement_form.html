@@ -1,11 +1,15 @@
 {%extends "base.html"%}
 
 {%block content%}
+<a href="{{url_for('agreement.index')}}">
+    <img class="return" src="{{url_for('static',filename='return.png')}}">
+</a>
 
+{%if not isEditing%}
 <h1>Novo Fechamento</h1>
-
     <section class="lt_mgt">
         <form id="form" method="post">
+
             <ul>
                 <li>
                     <label for="rc">Ref. Compra</label>
@@ -90,4 +94,116 @@
             </ul>
         </form>
     </section>
+{%else%}
+<h1>Atualizar Fechamento</h1>
+<section class="lt_mgt">
+    <form id="form" method="post">
+        <ul>
+            <li>
+                <label for="created_at">Criado em</label>
+                <input name="created_at" value="{{old_agreement['created_at']}}" readonly>
+            </li>
+            <li>
+                <label for="date">Data</label>
+                <input id="data" name="data" value="{{old_agreement['data']}}" readonly>
+            </li>
+            <li>
+                <label for="rc">Ref. Compra</label>
+                <input id="rc" name="rc" value="{{old_agreement['rc']}}">
+            </li>
+            <li>
+                <label for="num_fechamento">Número de Fechamento</label>
+                <input id="num_fechamento" name="num_fechamento" value="{{old_agreement['num_fechamento']}}">
+            </li>
+            <li>
+                <label for="vendedor">Vendedor</label>
+                <select name="vendedor" id="vendedor">
+                    {% for client in clients %}
+                        {%if old_agreement['vendedor'] == client.id %}
+                            <option value="{{client['id']}}" selected>{{client.nome}}</option>
+                        {%else%}
+                            <option value="{{client['id']}}">{{client.nome}}</option>
+                        {%endif%}
+                    {% endfor %}
+                </select>
+            </li>
+            <li>
+                <label for="comprador">Comprador</label>
+                <select name="comprador" id="comprador">
+                    {%for client in clients%}
+                        {%if old_agreement['comprador'] == client['id'] %}
+                            <option value="{{client['id']}}" selected>{{client.nome}}</option>
+                        {%else%}
+                            <option value="{{client['id']}}">{{client.nome}}</option>
+                        {%endif%}
+                    {% endfor %}
+                </select>
+            </li>
+            <li>
+                <label for="retirada">Local de Retirada</label>
+                <select name="retirada" id="retirada">
+                    {% for warehouse in warehouses %}
+                        {%if old_agreement['retirada'] == warehouse.id %}
+                            <option value="{{warehouse['id']}}" selected>{{warehouse.nome}}</option>
+                        {%else%}
+                            <option value="{{warehouse['id']}}">{{warehouse.nome}}</option>
+                        {%endif%}
+                    {% endfor %}
+                </select>
+            </li>
+            <li>
+                <label for="descarga">Local de Descarga</label>
+                <select name="descarga" id="descarga">
+                    {% for warehouse in warehouses %}
+                        {%if old_agreement['descarga'] == warehouse.id %}
+                            <option value="{{warehouse['id']}}" selected>{{warehouse.nome}}</option>
+                        {%else%}
+                            <option value="{{warehouse['id']}}">{{warehouse.nome}}</option>
+                        {%endif%}
+                    {% endfor %}
+                </select>
+            </li>
+            <li>
+                <label for="cond_venda">Condição de Venda</label>
+                <input id="cond_venda" name="cond_venda" value="{{old_agreement['cond_venda']}}">
+            </li>
+            <li>
+                <label for="preco">Preço</label>
+                <input id="preco" name="preco" value="{{old_agreement['preco']}}">
+            </li>
+            <li>
+                <label for="quantidade">Quantidade</label>
+                <input id="quantidade" name="quantidade" value="{{old_agreement['quantidade']}}">
+            </li>
+            <li>
+                <label for="modalidade">Modalidade</label>
+                <input id="modalidade" name="modalidade" value="{{old_agreement['modalidade']}}">
+            </li>
+            <li>
+                <label for="pagamento">Dados Para Pagamento do Fechamento</label>
+                <input id="paramento" name="paramento" value="{{old_agreement['paramento']}}">
+            </li>
+            <li>
+                <label for="corretor">Corretor</label>
+                <input id="corretor" name="corretor" value="NETTUZZI CORRETORA">
+            </li>
+            <li>
+                <label for="corretagem_vendedor">Corretagem Vendedor</label>
+                <input id="corretagem_vendedor" type="number" step="any" name="corretagem_vendedor" value="{{old_agreement['corretagem_vendedor']}}">
+            </li>
+            <li>
+                <label for="corretagem_comprador">Corretagem Comprador</label>
+                <input id="corretagem_comprador" type="number" step="any" name="corretagem_comprador" value="{{old_agreement['corretagem_comprador']}}">
+            </li>
+            <li>
+                <label for="obs">OBS</label>
+                <textarea id="obs" name="obs">{{old_agreement['obs']}}</textarea>
+            </li>
+            <li>
+                <button type="submit">Atualizar</button>
+            </li>
+        </ul>
+    </form>
+</section>
+{%endif%}
 {%endblock%}

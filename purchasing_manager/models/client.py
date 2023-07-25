@@ -1,8 +1,25 @@
+from flask import current_app
+from firebase_admin import exceptions
 from ..db import db
-
 
 #Defining Clients Firebase collection
 clients_ref = db.get_db().collection("clients")
+
+def create(new_data):
+    
+    try:
+        
+        doc = clients_ref.document()
+        
+        doc.set(new_data)
+        
+        return True
+    
+    except exceptions.FirebaseError as fire_error:
+            
+        print(fire_error.http_response, fire_error.cause)
+            
+        return False
 
 def get_all():
      
@@ -22,10 +39,45 @@ def get_all():
 
     return clients
 
-def get_name(key):
-    client = clients_ref.document(key).get()
+def get_one(id):
+    
+    for client in current_app.clients_collection:
+        
+        if client['id'] == id:
+            
+            return client
+        
+    return {}
 
-    client_struct = client.to_dict()
+def get_name(id):
+    
+    for client in current_app.clients_collection:
+        
+        if client['id'] == id:
+            
+            return client['nome']
+        
+    return ""
 
-    return client_struct['nome']
+def update(id, new_data):
+    
+    try:
+        
+        doc = clients_ref.document(id)
+        
+        res = doc.set(new_data)
+        
+        if "update_time" in res:
+            
+            return True
+        
+        else:
+            
+            return False
+    
+    except exceptions.FirebaseError as fire_error:
+            
+        print(fire_error.http_response, fire_error.cause)
+            
+        return False
 

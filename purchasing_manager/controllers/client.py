@@ -1,30 +1,13 @@
 import flask, asyncio
 
-from flask import Blueprint, url_for, request, session, redirect, render_template, flash, g
-
-from ..db import db
+from flask import Blueprint, url_for, request, session, redirect, render_template, flash, current_app
 
 from ..models import client as model_client
 
-clients_ref = db.get_db().collection("clients")
 
 def index():
-    
-   #stream = clients_ref.get()
-    
-    #client_structure = {}
-    
-    #clients = []
-    
-    #for client in stream:
-        
-        #client_structure = client.to_dict()
-        
-        #client_structure["id"] = client.id
-      
-        #clients.append(client_structure)
-        
-    clients= g.clients_collection.copy()
+            
+    clients= current_app.clients_collection
     
     return render_template("app/client_main.html", clients = clients)
 
@@ -34,13 +17,11 @@ def new():
 
 def create():
     
-    document = clients_ref.document()
+    new_data = request.form.to_dict()
     
-    new_client = request.form.to_dict()
-    
-    if document.set(new_client):
+    if model_client.create(new_data):
         
-        g.clients_collection = model_client.get_all()
+        update_clients_collection()
     
         return True
     
@@ -50,17 +31,11 @@ def create():
 
 def edit(id):
     
-    client = clients_ref.document(id).get()
+    client = model_client.get_one(id)
     
-    client_structure = client.to_dict()
+    if 'id' in client:
         
-    client_structure["id"] = client.id
-    
-    if client_structure:
-        
-        g.clients_collection = model_client.get_all()
-    
-        return render_template("app/client_form.html", isediting=True, client = client_structure)
+        return render_template("app/client_form.html", isediting=True, client = client)
     
     else:
         error = "Something went wrong. Register a new client?"
@@ -70,14 +45,19 @@ def edit(id):
 def update(id):
     
     new_data = request.form.to_dict()
-
-    res = clients_ref.document(id).set(new_data)
-
     
-    if "update_time" in res:
+    if model_client.update(id, new_data):
+        
+        update_clients_collection()
+            
+        current_app.clients_collection = model_client.get_all()
 
         return redirect(url_for("home.index"))
     
     else:
         
         return False
+    
+def update_clients_collection():
+    
+    current_app.clients_collection = model_client.get_all()

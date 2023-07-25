@@ -24,9 +24,17 @@
         </nav>
     </header>
     <section id="content">
-        {% for message in get_flashed_messages() %}
-            <div class="flash">{{ message }}</div>
-        {% endfor %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {%if messages%}
+                {% for category, message in messages %}
+                    {%if message.category == "error"%}
+                        <div class="flash_error">{{ message }}</div> 
+                    {%else%}
+                        <div class="flash">{{ message }}</div>
+                    {%endif%}
+                {% endfor %}
+            {%endif%}
+        {%endwith%}
 
         {%block content%}
         {%endblock%}

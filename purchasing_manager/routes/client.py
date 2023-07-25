@@ -26,7 +26,7 @@ def new():
         
 @bp.route("/edit/<id>", methods = ("GET", "POST"))
 @auth.login_required
-async def edit(id):
+def edit(id):
 
     if request.method == "GET":
         

@@ -1,12 +1,12 @@
 {%extends "base.html"%}
-
 {%block content%}
-<a href="{{url_for('warehouse.index')}}">
+
+<a href="{{url_for('client.index')}}">
     <img class="return" src="{{url_for('static',filename='return.png')}}">
 </a>
-<h1>Formulario Armazém</h1>
 
 {%if not isediting%}
+<h1>Formulario Armazém </h1>
     <section class="lt_mgt">
         <form id="form" method="post">
             <ul>
@@ -19,8 +19,12 @@
                     <input type="email" id="email" name="email">
                 </li>
                 <li>
-                    <label for="doc">CNPJ/CPF</label>
-                    <input id="doc" name="doc">
+                    <label for="cnpj">CNPJ/CPF</label>
+                    <input id="cnpj" name="cnpj">
+                </li>
+                <li>
+                    <label for="ie">I.E.</label>
+                    <input id="ie" name="ie">
                 </li>
                 <li>
                     <label for="tel">Telefone</label>
@@ -35,7 +39,7 @@
                     <input id="end" name="end">
                 </li>
                 <li>
-                    <label for="num">Num</label>
+                    <label for="num">Num.</label>
                     <input id="num" name="num">
                 </li>
                 <li>
@@ -51,6 +55,10 @@
                     <input id="uf" name="uf" >
                 </li>
                 <li>
+                    <label for="conta">Conta P/ Pagamento</label>
+                    <input id="conta" name="conta" >
+                </li>
+                <li>
                     <label for="obs">OBS</label>
                     <textarea id="obs" name="obs"></textarea>
                 </li>
@@ -60,7 +68,8 @@
             </ul>
         </form>
     </section>
-{%else%} 
+{%else%}
+<h1>Editando Armazém </h1> 
 <section class="lt_mgt">
     <form id="form" method="post">
         <ul>
@@ -73,8 +82,12 @@
                 <input type="email" id="email" name="email" value="{{warehouse.email}}">
             </li>
             <li>
-                <label for="doc">CNPJ/CPF</label>
-                <input id="doc" name="doc" value="{{warehouse.doc}}">
+                <label for="cnpj">CNPJ/CPF</label>
+                <input id="cnpj" name="cnpj" value="{{warehouse.cnpj}}">
+            </li>
+            <li>
+                <label for="ie">I.E.</label>
+                <input id="ie" name="ie" value="{{warehouse.ie}}">
             </li>
             <li>
                 <label for="tel">Telefone</label>
@@ -109,7 +122,7 @@
                 <textarea id="obs" name="obs">{{warehouse.obs}}</textarea>
             </li>
             <li>
-                <button type="submit">Atualizar </button>
+                <button type="submit">Atualizar</button>
             </li>
         </ul>
     </form>

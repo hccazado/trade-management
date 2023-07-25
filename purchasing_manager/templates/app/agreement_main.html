@@ -14,26 +14,42 @@
         <div class="mgt_table">
             <table>
                 <thead>
+                    <td>Data</td>
                     <td>Num Fechamento</td>
                     <td>Ordem Compra</td>
                     <td>Vendedor</td>
-                    <td>Descarga</td>
+                    <td>Comprador</td>
                     <td>Quantidade</td>
+                    <td>Editar</td>
                 </thead>
                 <tbody>
                     {%for agreement in agreements%}
                     <tr>
                         <td>
+                            {{agreement['data']}}
+                        </td>
+                        <td>
                             {{agreement['num_fechamento']}}
+                        </td>
+                        <td>
+                            {{agreement['rc']}}
                         </td>
                         <td>
                             {{agreement['vendedor']}}
                         </td>
                         <td>
-                            {{agreement['descarga']}}  
+                            {{agreement['comprador']}}  
                         </td>
                         <td>
                             {{agreement['quantidade']}}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('agreement.edit', id=agreement['id']) }}">
+                                <img class="edit" src="{{ url_for('static', filename='edit.png') }}">
+                            </a>
+                            <a href="{{ url_for('agreement.print', id=agreement['id']) }}">
+                                <img class="edit" src="{{ url_for('static', filename='print.png') }}">
+                            </a>
                         </td>
                     </tr>
                     {%endfor%}

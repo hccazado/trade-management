@@ -25,20 +25,19 @@
                     {%for warehouse in warehouses%}
                     <tr>
                         <td>
-                            {{warehouse.id}}
-                            
+                            {{warehouse['id']}}
                         </td>
                         <td>
-                            {{warehouse.nome}}
+                            {{warehouse['nome']}}
                         </td>
                         <td>
-                            {{warehouse.doc}}  
+                            {{warehouse['doc']}}  
                         </td>
                         <td>
-                            {{warehouse.cidade}} / {{warehouse.uf}}
+                            {{warehouse['cidade']}} / {{warehouse['uf']}}
                         </td>
                         <td>
-                            <a href="{{url_for('warehouse.edit', id=warehouse.id)}}">
+                            <a href="{{url_for('warehouse.edit', id=warehouse['id'])}}">
                                 <img class="edit" src="{{url_for('static', filename='edit.png')}}">
                             </a>
                         </td>
