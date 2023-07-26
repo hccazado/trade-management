@@ -13,7 +13,7 @@ def index():
 
 def new():
     
-    return render_template("app/client_form.html")
+    return render_template("app/client_form.html", uf=current_app.uf_list)
 
 def create():
     
@@ -35,12 +35,12 @@ def edit(id):
     
     if 'id' in client:
         
-        return render_template("app/client_form.html", isediting=True, client = client)
+        return render_template("app/client_form.html", isediting=True, client = client, uf=current_app.uf_list)
     
     else:
         error = "Something went wrong. Register a new client?"
         flash(error)
-        return render_template("app/client_form.html", isediting=False)
+        return render_template("app/client_form.html", isediting=False, uf=current_app.uf_list)
 
 def update(id):
     

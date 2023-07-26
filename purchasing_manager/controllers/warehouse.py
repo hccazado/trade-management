@@ -10,11 +10,11 @@ def index():
     
     warehouses = current_app.warehouses_collection
             
-    return render_template("app/warehouse_main.html", warehouses = warehouses)
+    return render_template("app/warehouse_main.html", warehouses = warehouses, uf=current_app.uf_list)
 
 def new():
     
-    return render_template("app/warehouse_form.html")
+    return render_template("app/warehouse_form.html", uf=current_app.uf_list)
 
 def create():
     
@@ -36,7 +36,7 @@ def edit(id):
     
     if 'id' in warehouse:
 
-        return render_template("app/warehouse_form.html", isediting=True, warehouse = warehouse)
+        return render_template("app/warehouse_form.html", isediting=True, warehouse = warehouse, uf=current_app.uf_list)
     
     else:
         

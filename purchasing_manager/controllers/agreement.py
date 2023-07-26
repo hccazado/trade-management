@@ -8,6 +8,7 @@ from ..db import db
 
 from ..models import client as model_client, warehouse as model_warehouse, agreement as model_agreement
 
+
 def index():
 
     agreements = model_agreement.get_all()
@@ -18,10 +19,6 @@ def index():
         item['vendedor'] = model_client.get_name(item['vendedor'])
         item['retirada'] = model_warehouse.get_name(item['retirada'])
         item['descarga'] = model_warehouse.get_name(item['descarga'])
-
-    print(current_app.agreements_collection)
-    
-    generate_agreement_number()
     
     return render_template("app/agreement_main.html", agreements=agreements)
 
@@ -40,6 +37,10 @@ def create():
     new_agreement["data"] = current_date()
     
     new_agreement["created_at"] = datetime.now().strftime("%d/%m/%y - %H:%M")
+    
+    if len(new_agreement["num_fechamento"]) == 0:
+        
+        new_agreement["num_fechamento"] = generate_agreement_number()
     
     if model_agreement.create(new_agreement):
         
@@ -112,27 +113,42 @@ def current_date():
     
     return current_dt
 
+
 def generate_agreement_number():
     
+    def current_year():
+
+        current_year = datetime.now().strftime("%y")
+
+        return current_year
+
     created_at_function = lambda item: item['created_at']
-    
+
     if len(current_app.agreements_collection) > 0:
-    
+
         ordered_list = sorted(current_app.agreements_collection, key=created_at_function)
-            
+
         identifier_struct = ordered_list[-1]['num_fechamento'].split("/")
-        
-        print(identifier_struct[0])
+
+        actual = int(identifier_struct[0])
+
+        actual += 1
+
+        actual = str(actual).zfill(3)
+
+        actual += "/" + current_year()
+
+        return actual
+
+    else:
+
+        actual = 1
+
+        actual = str(actual).zfill(3)
+
+        actual += "/" + current_year()
     
-    #print (identifier_struct)
-    
-    #actual_agreement_count = identifier_struct[0]
-    
-    #if not actual_agreement_count:
-        
-    #    actual_agreement_count = "Not found"
-    
-    #print(actual_agreement_count)
+        return actual
         
 def print(id):
     

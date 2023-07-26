@@ -32,15 +32,19 @@
                 </li>
                 <li>
                     <label for="cep">CEP</label>
-                    <input id="cep" name="cep">
+                    <input id="cep" type="number" name="cep">
                 </li>
                 <li>
-                    <label for="end">End.</label>
-                    <input id="end" name="end">
+                    <label for="endereco">End.</label>
+                    <input id="endereco" name="endereco">
                 </li>
                 <li>
                     <label for="num">Num.</label>
                     <input id="num" name="num">
+                </li>
+                <li>
+                    <label for="comp">Complemento</label>
+                    <input id="complemento" name="complemento">
                 </li>
                 <li>
                     <label for="bairro">Bairro</label>
@@ -52,7 +56,12 @@
                 </li>
                 <li>
                     <label for="uf">UF</label>
-                    <input id="uf" name="uf" >
+                <select name="uf" id="uf">
+                    <option value="--" disabled selected>Selecione UF</option>
+                    {%for item in uf%}
+                        <option value="{{item['uf']}}">{{item.name}}</option>
+                    {% endfor %}
+                </select>
                 </li>
                 <li>
                     <label for="conta">Conta P/ Pagamento</label>
@@ -95,15 +104,19 @@
             </li>
             <li>
                 <label for="cep">CEP</label>
-                <input id="cep" name="cep" value="{{warehouse.cep}}">
+                <input id="cep" name="cep" type="number" value="{{warehouse.cep}}">
             </li>
             <li>
-                <label for="end">End.</label>
-                <input id="end" name="end" value="{{warehouse.end}}">
+                <label for="endereco">End.</label>
+                <input id="endereco" name="end" value="{{warehouse.end}}">
             </li>
             <li>
                 <label for="num">Num</label>
                 <input id="num" name="num" value="{{warehouse.num}}">
+            </li>
+            <li>
+                <label for="complemento">Complemento</label>
+                <input id="complemento" name="complemento" value="{{warehouse.complemento}}">
             </li>
             <li>
                 <label for="bairro">Bairro</label>
@@ -115,7 +128,16 @@
             </li>
             <li>
                 <label for="uf">UF</label>
-                <input id="uf" name="uf">
+                <select name="uf" id="uf">
+                    <option value="--" disabled selected>Selecione UF</option>
+                    {%for item in uf%}
+                        {% if warehouse['uf'] == item['uf'] %}
+                            <option value="{{item['uf']}}" selected>{{item.name}}</option>
+                        {% else %}
+                            <option value="{{item['uf']}}">{{item.name}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
             </li>
             <li>
                 <label for="obs">OBS</label>
@@ -128,4 +150,6 @@
     </form>
 </section>
 {%endif%}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script rel="script" src="{{url_for('static', filename='cep.js')}}"></script>
 {%endblock%}

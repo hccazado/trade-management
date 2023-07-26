@@ -16,9 +16,9 @@
         <nav>
             <ul>
             {% if "user" in session %}
-                <li><a class="green" href="{{url_for('auth.logout')}}">Log Out</a>
+                <li><a id="login" href="{{url_for('auth.logout')}}">Log Out</a>
             {% else %}
-                <li><a class="green" href="{{url_for('auth.login')}}">Log In</a>
+                <li><a id="login" href="{{url_for('auth.login')}}">Log In</a>
             {% endif %}
             </ul>
         </nav>

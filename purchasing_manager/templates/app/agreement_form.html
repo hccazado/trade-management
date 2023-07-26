@@ -99,13 +99,10 @@
 <section class="lt_mgt">
     <form id="form" method="post">
         <ul>
-            <li>
-                <label for="created_at">Criado em</label>
-                <input name="created_at" value="{{old_agreement['created_at']}}" readonly>
-            </li>
+                <input name="created_at" value="{{old_agreement['created_at']}}" readonly hidden>
             <li>
                 <label for="date">Data</label>
-                <input id="data" name="data" value="{{old_agreement['data']}}" readonly>
+                <input id="data" name="data" value="{{old_agreement['data']}}">
             </li>
             <li>
                 <label for="rc">Ref. Compra</label>
@@ -115,65 +112,73 @@
                 <label for="num_fechamento">Número de Fechamento</label>
                 <input id="num_fechamento" name="num_fechamento" value="{{old_agreement['num_fechamento']}}">
             </li>
-            <li>
-                <label for="vendedor">Vendedor</label>
-                <select name="vendedor" id="vendedor">
-                    {% for client in clients %}
-                        {%if old_agreement['vendedor'] == client.id %}
-                            <option value="{{client['id']}}" selected>{{client.nome}}</option>
-                        {%else%}
-                            <option value="{{client['id']}}">{{client.nome}}</option>
-                        {%endif%}
-                    {% endfor %}
-                </select>
-            </li>
-            <li>
-                <label for="comprador">Comprador</label>
-                <select name="comprador" id="comprador">
-                    {%for client in clients%}
+            <li class="form_grid">
+                <div>
+                    <label for="vendedor">Vendedor</label>
+                    <select name="vendedor" id="vendedor">
+                        {% for client in clients %}
+                            {%if old_agreement['vendedor'] == client.id %}
+                                <option value="{{client['id']}}" selected>{{client.nome}}</option>
+                            {%else%}
+                                <option value="{{client['id']}}">{{client.nome}}</option>
+                            {%endif%}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="comprador">Comprador</label>
+                    <select name="comprador" id="comprador">
+                        {%for client in clients%}
                         {%if old_agreement['comprador'] == client['id'] %}
-                            <option value="{{client['id']}}" selected>{{client.nome}}</option>
+                        <option value="{{client['id']}}" selected>{{client.nome}}</option>
                         {%else%}
-                            <option value="{{client['id']}}">{{client.nome}}</option>
+                        <option value="{{client['id']}}">{{client.nome}}</option>
                         {%endif%}
-                    {% endfor %}
-                </select>
+                        {% endfor %}
+                    </select>
+                </div>
             </li>
-            <li>
-                <label for="retirada">Local de Retirada</label>
-                <select name="retirada" id="retirada">
-                    {% for warehouse in warehouses %}
-                        {%if old_agreement['retirada'] == warehouse.id %}
-                            <option value="{{warehouse['id']}}" selected>{{warehouse.nome}}</option>
-                        {%else%}
-                            <option value="{{warehouse['id']}}">{{warehouse.nome}}</option>
-                        {%endif%}
-                    {% endfor %}
-                </select>
+
+            <li class="form_grid">
+                <div>
+                    <label for="retirada">Local de Retirada</label>
+                    <select name="retirada" id="retirada">
+                        {% for warehouse in warehouses %}
+                            {%if old_agreement['retirada'] == warehouse.id %}
+                                <option value="{{warehouse['id']}}" selected>{{warehouse.nome}}</option>
+                            {%else%}
+                                <option value="{{warehouse['id']}}">{{warehouse.nome}}</option>
+                            {%endif%}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="descarga">Local de Descarga</label>
+                    <select name="descarga" id="descarga">
+                        {% for warehouse in warehouses %}
+                            {%if old_agreement['descarga'] == warehouse.id %}
+                                <option value="{{warehouse['id']}}" selected>{{warehouse.nome}}</option>
+                            {%else%}
+                                <option value="{{warehouse['id']}}">{{warehouse.nome}}</option>
+                            {%endif%}
+                        {% endfor %}
+                    </select>
+                </div>
             </li>
-            <li>
-                <label for="descarga">Local de Descarga</label>
-                <select name="descarga" id="descarga">
-                    {% for warehouse in warehouses %}
-                        {%if old_agreement['descarga'] == warehouse.id %}
-                            <option value="{{warehouse['id']}}" selected>{{warehouse.nome}}</option>
-                        {%else%}
-                            <option value="{{warehouse['id']}}">{{warehouse.nome}}</option>
-                        {%endif%}
-                    {% endfor %}
-                </select>
-            </li>
+
             <li>
                 <label for="cond_venda">Condição de Venda</label>
                 <input id="cond_venda" name="cond_venda" value="{{old_agreement['cond_venda']}}">
             </li>
-            <li>
-                <label for="preco">Preço</label>
-                <input id="preco" name="preco" value="{{old_agreement['preco']}}">
-            </li>
-            <li>
-                <label for="quantidade">Quantidade</label>
-                <input id="quantidade" name="quantidade" value="{{old_agreement['quantidade']}}">
+            <li class="form_grid">
+                <div>
+                    <label for="preco">Preço</label>
+                    <input id="preco" name="preco" value="{{old_agreement['preco']}}">
+                </div>
+                <div>
+                    <label for="quantidade">Quantidade</label>
+                    <input id="quantidade" name="quantidade" value="{{old_agreement['quantidade']}}">
+                </div>
             </li>
             <li>
                 <label for="modalidade">Modalidade</label>

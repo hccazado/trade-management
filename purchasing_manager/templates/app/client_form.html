@@ -52,7 +52,12 @@
                 </li>
                 <li>
                     <label for="uf">UF</label>
-                    <input id="uf" name="uf" >
+                    <select name="uf" id="uf">
+                        <option value="--" disabled selected>Selecione UF</option>
+                        {%for item in uf%}
+                            <option value="{{item['uf']}}">{{item.name}}</option>
+                        {% endfor %}
+                    </select>
                 </li>
                 <li>
                     <label for="conta">Conta P/ Pagamento</label>
@@ -114,11 +119,20 @@
             </li>
             <li>
                 <label for="uf">UF</label>
-                <input id="uf" name="uf">
+                <select name="uf" id="uf">
+                    <option value="--" disabled selected>Selecione UF</option>
+                    {%for item in uf%}
+                        {% if client['uf'] == item['uf'] %}
+                            <option value="{{item['uf']}}" selected>{{item.name}}</option>
+                        {% else %}
+                            <option value="{{item['uf']}}">{{item.name}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
             </li>
             <li>
-                <label for="conta">Conta</label>
-                <input id="conta" name="conta">
+                <label for="conta">Conta P/ Pagamento</label>
+                <input id="conta" name="conta" value="{{client.conta}}">
             </li>
             <li>
                 <label for="obs">OBS</label>
@@ -131,4 +145,6 @@
     </form>
 </section>
 {%endif%}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script rel="script" src="{{url_for('static', filename='cep.js')}}"></script>
 {%endblock%}
