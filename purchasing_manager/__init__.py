@@ -1,11 +1,13 @@
 import os, requests, sys
 
 from flask import Flask, url_for, redirect, current_app
+from flask_cors import CORS
 
 
 def create_app (test_config = None):
     """App factory"""
     app = Flask(__name__, instance_relative_config = True)
+    CORS(app)
     
     app.config.from_mapping(
         #SECRET_KEY= os.urandom(24)
@@ -45,6 +47,9 @@ def create_app (test_config = None):
     
     from .routes import auth
     app.register_blueprint(auth.bp)
+
+    from .routes import api
+    app.register_blueprint(api.bp)
     
     
     @app.route("/")

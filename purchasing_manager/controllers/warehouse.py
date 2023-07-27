@@ -7,10 +7,21 @@ from ..db import db
 from ..models import warehouse as model_warehouse
 
 def index():
-    
+
     warehouses = current_app.warehouses_collection
-            
-    return render_template("app/warehouse_main.html", warehouses = warehouses, uf=current_app.uf_list)
+    
+    if len(warehouses) > 0:
+        
+        return render_template("app/warehouse_main.html", warehouses = warehouses, uf=current_app.uf_list)
+    
+    else:
+
+        current_app.warehouses_collection = model_warehouse.get_all()
+
+        warehouses = current_app.warehouses_collection
+
+        return render_template("app/warehouse_main.html", warehouses = warehouses, uf=current_app.uf_list)
+
 
 def new():
     
@@ -59,4 +70,7 @@ def update(id):
     else:
         
         return render_template(url_for('app/warehouse_main.html', flash("Something went wrong!")))
-        #return False
+    
+def update_warehouses_collection():
+
+    current_app.warehouses_collection = model_warehouse.get_all()

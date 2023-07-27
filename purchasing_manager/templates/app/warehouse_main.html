@@ -9,10 +9,10 @@
             <a class="transparent" href="{{url_for('home.index')}}">
                 <img class="return" src="{{url_for('static',filename='return.png')}}">
             </a>
-            <input name="search" id="input_search" placeholder="filtrar"> 
+            <input name="search" id="input_search" placeholder="filtrar nome"> 
             <a class="button" href="{{url_for('warehouse.new')}}">Cadastrar</a>
         </div>
-        <div class="mgt_table">
+        <div class="mgt_container">
             <table>
                 <thead>
                     <td>ID</td>
@@ -21,7 +21,7 @@
                     <td>Cidade / UF</td>
                     <td>Editar</td>
                 </thead>
-                <tbody>
+                <tbody id="mgt_body">
                     {%for warehouse in warehouses%}
                     <tr>
                         <td>
@@ -47,4 +47,6 @@
             </table>
         </div>
     </section>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{{url_for('static', filename='find_warehouse.js')}}"></script>
 {%endblock%}

@@ -8,10 +8,10 @@
         <a class="transparent" href="{{url_for('home.index')}}">
             <img class="return" src="{{url_for('static',filename='return.png')}}">
         </a>
-        <input name="search" id="input_search" placeholder="filtrar"> 
+        <input name="search" id="input_search" placeholder="filtrar fechamento"> 
         <a class="button" href="{{url_for('agreement.new')}}">Cadastrar</a>
     </div>
-        <div class="mgt_table">
+        <div class="mgt_container">
             <table>
                 <thead>
                     <td>Data</td>
@@ -22,7 +22,7 @@
                     <td>Quantidade</td>
                     <td>Editar</td>
                 </thead>
-                <tbody>
+                <tbody id="mgt_body">
                     {%for agreement in agreements%}
                     <tr>
                         <td>
@@ -57,4 +57,6 @@
             </table>
         </div>
     </section>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{{url_for('static', filename='find_agreements.js')}}"
 {%endblock%}

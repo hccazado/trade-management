@@ -7,9 +7,19 @@ from ..models import client as model_client
 
 def index():
             
-    clients= current_app.clients_collection
+    clients = current_app.clients_collection
+
+    if len(clients) > 0:
     
-    return render_template("app/client_main.html", clients = clients)
+        return render_template("app/client_main.html", clients = clients)
+    
+    else:
+
+        current_app.clients_collection = model_client.get_all()
+
+        clients = current_app.clients_collection
+
+        return render_template("app/client_main.html", clients = clients)
 
 def new():
     
@@ -57,7 +67,7 @@ def update(id):
     else:
         
         return False
-    
+       
 def update_clients_collection():
     
     current_app.clients_collection = model_client.get_all()

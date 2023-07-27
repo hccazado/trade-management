@@ -147,29 +147,29 @@ section{
     background-color: var(--background);
 }
 
-.mgt_table{
+.mgt_container{
     margin: 50px auto;
     width: 95%;
 }
-.mgt_table > table{
+.mgt_container > table{
     margin: auto;
     max-height: 500px;
     overflow-y: scroll;
 }
-.mgt_table > table a{
+.mgt_container > table a{
     text-decoration: none;
 }
-.mgt_table > table td{
+.mgt_container > table td{
     column-width: 150px;
     height: 1.3em;
 }
 
-.mgt_table > table thead{
+.mgt_container > table thead{
     background-color: #aaa;
     height: 2em;
 }
 
-.mgt_table > table tbody tr:nth-child(even){
+.mgt_container > table tbody tr:nth-child(even){
     background-color: #ccc;
 }
 .edit{

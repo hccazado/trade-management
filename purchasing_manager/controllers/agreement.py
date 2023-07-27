@@ -4,14 +4,19 @@ from datetime import datetime
 
 from flask import Blueprint, url_for, request, session, redirect, render_template, flash, current_app
 
-from ..db import db
-
 from ..models import client as model_client, warehouse as model_warehouse, agreement as model_agreement
 
 
 def index():
 
     agreements = model_agreement.get_all()
+
+    if len(current_app.clients_collection) == 0:
+
+        current_app.clients_collection = model_client.get_all()
+
+        current_app.warehouses_collection = model_warehouse.get_all()
+
 
     for item in agreements:
 
@@ -151,15 +156,24 @@ def generate_agreement_number():
         return actual
         
 def print(id):
+
+    current_app.agreements_collection = model_agreement.get_all()
+
+    current_app.clients_collection = model_client.get_all()
+    
+    current_app.warehouses_collection = model_warehouse.get_all()
     
     for item in current_app.agreements_collection:
         
         if item['id'] == id:
             
             buyer = model_client.get_one(item["comprador"])
+
             seller = model_client.get_one(item["vendedor"])
-            origin = model_client.get_one(item["retirada"])
-            delivery = model_client.get_one(item["descarga"])
+
+            origin = model_warehouse.get_one(item["retirada"])
+            
+            delivery = model_warehouse.get_one(item["descarga"])
             
             return render_template("app/agreement.html", agreement = item, buyer = buyer, seller = seller, origin = origin, delivery = delivery)
     

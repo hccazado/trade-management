@@ -78,6 +78,3 @@ def update(id, new_data):
         print(fire_error.http_response, fire_error.cause)
             
         return False
-    
-    
-
