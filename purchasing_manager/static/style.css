@@ -61,6 +61,13 @@ header > img {
 
 #clock{
     color: #fff;
+    font-weight: 400;
+    font-size: 1.2em;
+}
+
+.center{
+    text-align: center;
+    margin: 20px;
 }
 
 .menu{
@@ -89,9 +96,15 @@ header > img {
 }
 
 section{
-    margin: 40px auto;
-    width: 90%;
+    width: 95%;
+    margin: auto 30px;
 }
+
+section >hr{
+    margin: 0;
+    width:100%;
+}
+
 #content > h1{
     margin-top: 40px;
     text-align: center;
@@ -106,21 +119,16 @@ section{
     margin-top: 30px;
 }
 
-.lt_mgt{
-    width: 90%;
-    align-self: center;
-}
-
 .mgt_row{
     display: flex;
     justify-content: space-evenly;
     text-align: center;
-    align-content: center;
+    width:100%;
     border-bottom: 1px solid var(--contrast);
 }
 
 .mgt_row > input{
-    width: 150px;
+    width: 170px;
     justify-self: center;
     align-self: center;
     height: 1.7em;
@@ -131,15 +139,12 @@ section{
     text-decoration: none;
     border-radius: 8px;
     color: #eee;
-    width: 100px;
     justify-self: center;
     align-self: center;
 }
-
 .return{
     width: 36px;
     display: table;
-    margin-top: 20px;
     margin-left: 20px;
     
 }
@@ -214,6 +219,12 @@ section{
 .lt_mgt > form li +li {
     margin-top: 20px;
 }
+.lt_mgt > form li input{
+    height: 1.7em;
+}
+.lt_mgt > form li select{
+    height:1.8em;
+}
 .lt_mgt > form li input, textarea{
     display: block;
     width: 90%;
@@ -235,4 +246,38 @@ section{
     color: #000;
     margin: 20px;
     width: 100%;
+}
+
+@media screen and (max-width:900px) {
+    .menu{
+        flex-direction: column;
+        margin: 30px auto;
+        align-items: center;
+        gap:20px;
+    }
+    section{
+        margin: 30px auto;
+    }
+    .mgt_row{
+        display: grid;
+        grid-template-columns: 90px 1.2fr .8fr;
+    }
+    .mgt_row > input{
+        width:85%;
+    }
+    .mgt_container{
+        width:95%;
+        overflow-x: scroll;
+        overflow-y: scroll;
+        height: 600px;
+    }
+    .mgt_container > table{
+        box-sizing: border-box;
+        table-layout:fixed;
+        overflow-x: scroll;
+        overflow-y: scroll;
+    }
+    .mgt_container > table td{
+        width:150px;
+    }
 }

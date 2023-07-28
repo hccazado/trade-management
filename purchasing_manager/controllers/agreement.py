@@ -57,35 +57,30 @@ def create():
         
         return render_template("app/agreement_form.html", flash("Something Went Wrong!"))
     
-def edit(id):
-    
-    if (id == None):
-        
-        return render_template("app/agreement_form.html", flash("Something Went Wrong! An ID must be informed!"))
+def edit(id):    
     
     old_agreement = model_agreement.get_one(id)
-    
-    if 'id' in old_agreement:
-        
-        clients = current_app.clients_collection
-    
-        warehouses = current_app.warehouses_collection
-        
-        for client in clients:
+
+    #if len(current_app.clients_collection) == 0:
             
-            if client['id'] == old_agreement['vendedor']:
-                print("vendedor - match")
-                
-            if client['id'] == old_agreement['comprador']:
-                print("comprador - match")
+    #current_app.clients_collection = model_client.get_all()
         
-        return render_template("app/agreement_form.html", old_agreement = old_agreement, clients = clients, warehouses = warehouses, isEditing = True)
+    #clients = current_app.agreements_collection
+            
+    #elif len(current_app.warehouses_collection) == 0:
     
-    else:
+    current_app.clients_collection = model_client.get_all()
+
+    current_app.warehouses_collection = model_warehouse.get_all()
+    
+    warehouses = current_app.warehouses_collection
         
-        flash("Something Went Wrong! Informed ID Not Found!")
+    clients = current_app.agreements_collection
         
-        return render_template("app/agreement_main.html")
+    #warehouses = current_app.warehouses_collection
+        
+    return render_template("app/agreement_form.html", old_agreement = old_agreement, clients = clients, warehouses = warehouses, isEditing = True)
+        
 
 def update (id):
     

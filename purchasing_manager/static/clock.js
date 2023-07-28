@@ -1,9 +1,11 @@
-document.addEventListener("DOMContentLoaded", ()=>{
+window.addEventListener("load", ()=>{
     
     startTime(clock)
 })
 
 function startTime() {
+    
+    clock = document.getElementById("clock")
 
     const today = new Date();
 
@@ -16,8 +18,6 @@ function startTime() {
     let m = today.getMinutes();
 
     m = checkTime(m);
-
-    clock = document.getElementById("clock")
 
     clock.innerHTML = d + " / " + mo + " - " + h + ":" + m;
     

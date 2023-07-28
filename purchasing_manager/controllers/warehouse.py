@@ -40,6 +40,19 @@ def create():
     else:
         
         return False
+    
+def create_from_dict(new_data):
+    
+    if model_warehouse.create(new_data):
+        
+        current_app.warehouses_collection = model_warehouse.get_all()
+    
+        return True
+    
+    else:
+        
+        return False
+    
 
 def edit(id):
     

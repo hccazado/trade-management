@@ -1,8 +1,8 @@
 {%extends "base.html"%}
 
-<h1>{%block title%} {%endblock%}</h1>
 
 {%block content%}
+<h1 class="center">Fechamentos</h1>
 <section class="lt_mgt">
     <div class="mgt_row">
         <a class="transparent" href="{{url_for('home.index')}}">
@@ -11,7 +11,7 @@
         <input name="search" id="input_search" placeholder="filtrar fechamento"> 
         <a class="button" href="{{url_for('agreement.new')}}">Cadastrar</a>
     </div>
-        <div class="mgt_container">
+    <div class="mgt_container">
             <table>
                 <thead>
                     <td>Data</td>
@@ -55,8 +55,8 @@
                     {%endfor%}
                 </tbody>
             </table>
-        </div>
-    </section>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="{{url_for('static', filename='find_agreements.js')}}"
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{{url_for('static', filename='find_agreements.js')}}"></script>
 {%endblock%}

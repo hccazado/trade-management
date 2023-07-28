@@ -1,9 +1,8 @@
 {%extends "base.html"%}
 
 
-<h1>{%block title%} {%endblock%}</h1>
-
 {%block content%}
+<h1>Armazéns</h1>
     <section class="lt_mgt">
         <div class="mgt_row">
             <a class="transparent" href="{{url_for('home.index')}}">
@@ -15,7 +14,6 @@
         <div class="mgt_container">
             <table>
                 <thead>
-                    <td>ID</td>
                     <td>Nome</td>
                     <td>CPF/CNPJ</td>
                     <td>Cidade / UF</td>
@@ -25,13 +23,10 @@
                     {%for warehouse in warehouses%}
                     <tr>
                         <td>
-                            {{warehouse['id']}}
-                        </td>
-                        <td>
                             {{warehouse['nome']}}
                         </td>
                         <td>
-                            {{warehouse['doc']}}  
+                            {{warehouse['cnpj']}}  
                         </td>
                         <td>
                             {{warehouse['cidade']}} / {{warehouse['uf']}}

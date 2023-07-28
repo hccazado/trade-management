@@ -31,6 +31,10 @@ def get_one(id = None):
     
     else:
         
+        if len(current_app.agreements_collection) == 0:
+            
+            current_app.agreements_collection = get_all()
+        
         for agreement in current_app.agreements_collection:
         
             if agreement['id'] == id:
@@ -38,8 +42,7 @@ def get_one(id = None):
                 return agreement
 
 def create(new_agreement):
-
-
+    
     try:
         
         doc = agreement_ref.document()

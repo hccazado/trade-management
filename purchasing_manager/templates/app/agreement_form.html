@@ -70,7 +70,7 @@
                 </li>
                 <li>
                     <label for="pagamento">Dados Para Pagamento do Fechamento</label>
-                    <input id="paramento" name="paramento">
+                    <input id="pagamento" name="pagamento">
                 </li>
                 <li>
                     <label for="corretor">Corretor</label>
@@ -129,11 +129,11 @@
                     <label for="comprador">Comprador</label>
                     <select name="comprador" id="comprador">
                         {%for client in clients%}
-                        {%if old_agreement['comprador'] == client['id'] %}
-                        <option value="{{client['id']}}" selected>{{client.nome}}</option>
-                        {%else%}
-                        <option value="{{client['id']}}">{{client.nome}}</option>
-                        {%endif%}
+                            {%if old_agreement['comprador'] == client.id %}
+                                <option value="{{client['id']}}" selected>{{client.nome}}</option>
+                            {%else%}
+                                <option value="{{client['id']}}">{{client.nome}}</option>
+                            {%endif%}
                         {% endfor %}
                     </select>
                 </div>
@@ -186,7 +186,7 @@
             </li>
             <li>
                 <label for="pagamento">Dados Para Pagamento do Fechamento</label>
-                <input id="paramento" name="paramento" value="{{old_agreement['paramento']}}">
+                <input id="pagamento" name="pagamento" value="{{old_agreement['paramento']}}">
             </li>
             <li>
                 <label for="corretor">Corretor</label>

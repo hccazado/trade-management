@@ -1,8 +1,9 @@
 {%extends "base.html"%}
 
-<h1>{%block title%} {%endblock%}</h1>
+
 
 {%block content%}
+<h1 class="center">Clientes</h1>
     <section class="lt_mgt">
         <div class="mgt_row">
             <a class="transparent" href="{{url_for('home.index')}}">
@@ -14,7 +15,6 @@
         <div class="mgt_container">
             <table>
                 <thead>
-                    <td>ID</td>
                     <td>Nome</td>
                     <td>CPF/CNPJ</td>
                     <td>Cidade / UF</td>
@@ -23,9 +23,6 @@
                 <tbody id="mgt_body">
                     {%for client in clients%}
                     <tr>
-                        <td>
-                            {{client.id}}
-                        </td>
                         <td>
                             {{client.nome}}
                         </td>
@@ -47,5 +44,5 @@
         </div>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="{{url_for('static', filename='find_clients.js')}}"
+    <script src="{{url_for('static', filename='find_clients.js')}}"></script>
 {%endblock%}

@@ -21,24 +21,20 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 for (item of warehouses){
 
                     var row = table.insertRow();
-                       
-                    var date_0 = row.insertCell(0);
-                        
-                    date_0.innerHTML = item.id;
     
-                    var date_1 = row.insertCell(1);
+                    var date_1 = row.insertCell(0);
                         
                     date_1.innerHTML = item.nome;
     
-                    var date_2 = row.insertCell(2);
+                    var date_2 = row.insertCell(1);
                         
                     date_2.innerHTML = item.cnpj;
     
-                    var date_3 = row.insertCell(3);
+                    var date_3 = row.insertCell(2);
                         
                     date_3.innerHTML = `${item.cidade} / ${item.uf}`;
     
-                    var date_4 = row.insertCell(4);
+                    var date_4 = row.insertCell(3);
                     
                     date_4.innerHTML = `<a href='/warehouse/edit/${item.id}'><img class='edit' src='/static/edit.png'></a>`;
     
