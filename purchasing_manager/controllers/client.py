@@ -71,3 +71,17 @@ def update(id):
 def update_clients_collection():
     
     current_app.clients_collection = model_client.get_all()
+    
+def get_conta(id):
+    
+    if len(current_app.clients_collection) == 0:
+        
+        update_clients_collection()
+        
+    for client in current_app.clients_collection:
+        
+        if client["id"] == id:
+            
+            return client["conta"]
+        
+    

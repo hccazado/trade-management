@@ -6,6 +6,13 @@ from flask import Blueprint, url_for, request, session, redirect, render_templat
 
 from ..models import client as model_client, warehouse as model_warehouse, agreement as model_agreement
 
+from ..controllers import client as controller_client
+
+def split_agreement(agreement):
+    
+    splited = agreement.split("/")
+    
+    return splited[0] + ", " + splited[1]
 
 def index():
 
@@ -21,11 +28,18 @@ def index():
     for item in agreements:
 
         item['comprador'] = model_client.get_name(item['comprador'])
+        
         item['vendedor'] = model_client.get_name(item['vendedor'])
+        
         item['retirada'] = model_warehouse.get_name(item['retirada'])
+        
         item['descarga'] = model_warehouse.get_name(item['descarga'])
+        
+    num_fechamento_function = lambda item: split_agreement(item['num_fechamento'])
+        
+    ordered_list = sorted(agreements, key=num_fechamento_function)
     
-    return render_template("app/agreement_main.html", agreements=agreements)
+    return render_template("app/agreement_main.html", agreements=ordered_list)
 
 def new():
     
@@ -46,6 +60,10 @@ def create():
     if len(new_agreement["num_fechamento"]) == 0:
         
         new_agreement["num_fechamento"] = generate_agreement_number()
+        
+    if len(new_agreement["pagamento"]) == 0:
+        
+        new_agreement["pagamento"] = controller_client.get_conta(new_agreement["vendedor"])
     
     if model_agreement.create(new_agreement):
         
@@ -60,14 +78,6 @@ def create():
 def edit(id):    
     
     old_agreement = model_agreement.get_one(id)
-
-    #if len(current_app.clients_collection) == 0:
-            
-    #current_app.clients_collection = model_client.get_all()
-        
-    #clients = current_app.agreements_collection
-            
-    #elif len(current_app.warehouses_collection) == 0:
     
     current_app.clients_collection = model_client.get_all()
 
@@ -75,9 +85,7 @@ def edit(id):
     
     warehouses = current_app.warehouses_collection
         
-    clients = current_app.agreements_collection
-        
-    #warehouses = current_app.warehouses_collection
+    clients = current_app.clients_collection
         
     return render_template("app/agreement_form.html", old_agreement = old_agreement, clients = clients, warehouses = warehouses, isEditing = True)
         
@@ -105,6 +113,7 @@ def update (id):
            return render_template("app/agreement_form.html", flash("Something Went Wrong!")) 
        
 def update_agreements_collection():
+    
     current_app.agreements_collection = model_agreement.get_all()
     
 def current_date():
@@ -113,42 +122,54 @@ def current_date():
     
     return current_dt
 
+def agreements_current_year(agreement):
+    """returns only dictionaries from current year"""
+    
+    current_yr = datetime.now().strftime("%y")
+    
+    split_dt = agreement["data"].split("/")
+    
+    agreement_yr = split_dt[2]
+    
+    if agreement_yr == current_yr:
+        
+        return agreement
 
 def generate_agreement_number():
     
-    def current_year():
-
-        current_year = datetime.now().strftime("%y")
-
-        return current_year
-
-    created_at_function = lambda item: item['created_at']
-
-    if len(current_app.agreements_collection) > 0:
-
-        ordered_list = sorted(current_app.agreements_collection, key=created_at_function)
-
-        identifier_struct = ordered_list[-1]['num_fechamento'].split("/")
-
-        actual = int(identifier_struct[0])
-
-        actual += 1
-
-        actual = str(actual).zfill(3)
-
-        actual += "/" + current_year()
-
-        return actual
-
-    else:
-
-        actual = 1
-
-        actual = str(actual).zfill(3)
-
-        actual += "/" + current_year()
+    num_fechamento_function = lambda item: item['num_fechamento']
     
-        return actual
+    if len(current_app.agreements_collection) == 0:
+        
+        current_app.agreements_collection = model_agreement.get_all()
+        
+    current_year = datetime.now().strftime("%y")
+
+    current_agreements = list(filter(agreements_current_year ,current_app.agreements_collection))
+
+    if len(current_agreements) > 0:
+        
+        ordered_agreements = sorted(current_agreements, key=num_fechamento_function, reverse=True)
+    
+        actual_agreement_number = ordered_agreements[0]["num_fechamento"]
+        
+        actual_agreement_number = actual_agreement_number.split("/")[0]
+        
+        nxt_agreement = int(actual_agreement_number) + 1 
+        
+        nxt_agreement = str(nxt_agreement).zfill(3)
+        
+        nxt_agreement += "/" + current_year
+        
+        return nxt_agreement
+        
+    else:
+        
+        nxt_agreement = str(1).zfill(3)
+        
+        nxt_agreement += "/" + current_year
+        
+        return nxt_agreement
         
 def print(id):
 

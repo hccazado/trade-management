@@ -39,7 +39,15 @@ def get_all():
 
     return clients
 
-def get_one(id):
+def get_one(id = None):
+    
+    if id == None:
+        
+        return {}
+    
+    if len(current_app.clients_collection) == 0:
+        
+        current_app.clients_collection = get_all()
     
     for client in current_app.clients_collection:
         
@@ -47,8 +55,6 @@ def get_one(id):
             
             return client
         
-    return {}
-
 def get_name(id):
     
     for client in current_app.clients_collection:

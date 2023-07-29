@@ -23,15 +23,21 @@ def get_all():
         
     return warehouses
 
-def get_one(id):
+def get_one(id = None):
+    
+    if id == None:
+        
+        return {}
+    
+    if len(current_app.warehouses_collection) == 0:
+        
+        current_app.warehouses_collection = get_all()
     
     for warehouse in current_app.warehouses_collection:
         
         if warehouse['id'] == id:
     
             return warehouse    
-    
-    return []
 
 def get_name(id):
     

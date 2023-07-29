@@ -117,10 +117,10 @@
                     <label for="vendedor">Vendedor</label>
                     <select name="vendedor" id="vendedor">
                         {% for client in clients %}
-                            {%if old_agreement['vendedor'] == client.id %}
-                                <option value="{{client['id']}}" selected>{{client.nome}}</option>
+                            {%if old_agreement['vendedor'] == client['id'] %}
+                                <option value="{{client['id']}}" selected>{{client['nome']}}</option>
                             {%else%}
-                                <option value="{{client['id']}}">{{client.nome}}</option>
+                                <option value="{{client['id']}}">{{client['nome']}}</option>
                             {%endif%}
                         {% endfor %}
                     </select>
@@ -129,10 +129,10 @@
                     <label for="comprador">Comprador</label>
                     <select name="comprador" id="comprador">
                         {%for client in clients%}
-                            {%if old_agreement['comprador'] == client.id %}
-                                <option value="{{client['id']}}" selected>{{client.nome}}</option>
+                            {%if old_agreement['comprador'] == client['id'] %}
+                                <option value="{{client['id']}}" selected>{{client['nome']}}></option>
                             {%else%}
-                                <option value="{{client['id']}}">{{client.nome}}</option>
+                                <option value="{{client['id']}}">{{client['nome']}}</option>
                             {%endif%}
                         {% endfor %}
                     </select>
@@ -144,10 +144,10 @@
                     <label for="retirada">Local de Retirada</label>
                     <select name="retirada" id="retirada">
                         {% for warehouse in warehouses %}
-                            {%if old_agreement['retirada'] == warehouse.id %}
-                                <option value="{{warehouse['id']}}" selected>{{warehouse.nome}}</option>
+                            {%if old_agreement['retirada'] == warehouse['id'] %}
+                                <option value="{{warehouse['id']}}" selected>{{warehouse['nome']}}</option>
                             {%else%}
-                                <option value="{{warehouse['id']}}">{{warehouse.nome}}</option>
+                                <option value="{{warehouse['id']}}">{{warehouse['nome']}}</option>
                             {%endif%}
                         {% endfor %}
                     </select>
@@ -156,10 +156,10 @@
                     <label for="descarga">Local de Descarga</label>
                     <select name="descarga" id="descarga">
                         {% for warehouse in warehouses %}
-                            {%if old_agreement['descarga'] == warehouse.id %}
-                                <option value="{{warehouse['id']}}" selected>{{warehouse.nome}}</option>
+                            {%if old_agreement['descarga'] == warehouse['id'] %}
+                                <option value="{{warehouse['id']}}" selected>{{warehouse['nome']}}</option>
                             {%else%}
-                                <option value="{{warehouse['id']}}">{{warehouse.nome}}</option>
+                                <option value="{{warehouse['id']}}">{{warehouse['nome']}}</option>
                             {%endif%}
                         {% endfor %}
                     </select>
@@ -186,7 +186,7 @@
             </li>
             <li>
                 <label for="pagamento">Dados Para Pagamento do Fechamento</label>
-                <input id="pagamento" name="pagamento" value="{{old_agreement['paramento']}}">
+                <input id="pagamento" name="pagamento" value="{{old_agreement['pagamento']}}">
             </li>
             <li>
                 <label for="corretor">Corretor</label>
