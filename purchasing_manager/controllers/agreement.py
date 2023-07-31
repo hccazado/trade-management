@@ -6,7 +6,7 @@ from flask import Blueprint, url_for, request, session, redirect, render_templat
 
 from ..models import client as model_client, warehouse as model_warehouse, agreement as model_agreement
 
-from ..controllers import client as controller_client
+from ..controllers import client as controller_client, warehouse as controller_warehouse
 
 def split_agreement(agreement):
     
@@ -38,14 +38,20 @@ def index():
     num_fechamento_function = lambda item: split_agreement(item['num_fechamento'])
         
     ordered_list = sorted(agreements, key=num_fechamento_function)
-    
+   
     return render_template("app/agreement_main.html", agreements=ordered_list)
 
 def new():
     
-    clients = current_app.clients_collection
+    if len(current_app.clients_collection) == 0 or len(current_app.warehouses_collection) == 0:
+        
+            current_app.clients_collection = controller_client.update_clients_collection()
+            
+            current_app.warehouses_collection = controller_warehouse.update_warehouses_collection()
+        
+    clients = controller_client.sort_name(current_app.clients_collection)
     
-    warehouses = current_app.warehouses_collection
+    warehouses = controller_warehouse.sort_name(current_app.warehouses_collection)
 
     return render_template("app/agreement_form.html", warehouses=warehouses, clients = clients)
 
@@ -83,9 +89,9 @@ def edit(id):
 
     current_app.warehouses_collection = model_warehouse.get_all()
     
-    warehouses = current_app.warehouses_collection
+    warehouses = controller_warehouse.sort_name(current_app.warehouses_collection)
         
-    clients = current_app.clients_collection
+    clients = controller_client.sort_name(current_app.clients_collection)
         
     return render_template("app/agreement_form.html", old_agreement = old_agreement, clients = clients, warehouses = warehouses, isEditing = True)
         

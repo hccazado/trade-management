@@ -17,7 +17,7 @@ def index():
 
         current_app.clients_collection = model_client.get_all()
 
-        clients = current_app.clients_collection
+        clients = sort_name(current_app.clients_collection)
 
         return render_template("app/client_main.html", clients = clients)
 
@@ -84,4 +84,11 @@ def get_conta(id):
             
             return client["conta"]
         
+def sort_name(clients):
+     
+    function_name = lambda client: client["nome"]
+     
+    ordered_clients = sorted(clients, key=function_name)
+    
+    return ordered_clients
     

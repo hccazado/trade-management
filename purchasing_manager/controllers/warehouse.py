@@ -18,7 +18,7 @@ def index():
 
         current_app.warehouses_collection = model_warehouse.get_all()
 
-        warehouses = current_app.warehouses_collection
+        warehouses = sort_name(current_app.warehouses_collection)
 
         return render_template("app/warehouse_main.html", warehouses = warehouses, uf=current_app.uf_list)
 
@@ -87,3 +87,12 @@ def update(id):
 def update_warehouses_collection():
 
     current_app.warehouses_collection = model_warehouse.get_all()
+    
+def sort_name(warehouses):
+     
+    function_name = lambda warehouse: warehouse["nome"]
+     
+    ordered_warehouses = sorted(warehouses, key=function_name)
+    
+    return ordered_warehouses
+    
