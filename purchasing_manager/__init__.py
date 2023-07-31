@@ -10,8 +10,8 @@ def create_app (test_config = None):
     CORS(app)
     
     app.config.from_mapping(
-        #SECRET_KEY= os.urandom(24)
-        SECRET_KEY= "DEV"
+        SECRET_KEY= os.urandom(24)
+        #SECRET_KEY= "DEV"
     )
     
     if test_config is None:

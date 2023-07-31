@@ -7,20 +7,14 @@ from ..db import db
 from ..models import warehouse as model_warehouse
 
 def index():
-
-    warehouses = current_app.warehouses_collection
     
-    if len(warehouses) > 0:
-        
-        return render_template("app/warehouse_main.html", warehouses = warehouses, uf=current_app.uf_list)
-    
-    else:
+    if len(current_app.warehouses_collection) == 0:
 
         current_app.warehouses_collection = model_warehouse.get_all()
+          
+    warehouses = sort_name(current_app.warehouses_collection)
 
-        warehouses = sort_name(current_app.warehouses_collection)
-
-        return render_template("app/warehouse_main.html", warehouses = warehouses, uf=current_app.uf_list)
+    return render_template("app/warehouse_main.html", warehouses = warehouses, uf=current_app.uf_list)
 
 
 def new():

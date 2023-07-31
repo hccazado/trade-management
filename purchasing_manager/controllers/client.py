@@ -9,17 +9,13 @@ def index():
             
     clients = current_app.clients_collection
 
-    if len(clients) > 0:
+    if len(clients) == 0:
     
-        return render_template("app/client_main.html", clients = clients)
-    
-    else:
-
         current_app.clients_collection = model_client.get_all()
+        
+    clients = sort_name(current_app.clients_collection)
 
-        clients = sort_name(current_app.clients_collection)
-
-        return render_template("app/client_main.html", clients = clients)
+    return render_template("app/client_main.html", clients = clients)
 
 def new():
     
