@@ -100,6 +100,8 @@
     <form id="form" method="post">
         <ul>
                 <input name="created_at" value="{{old_agreement['created_at']}}" readonly hidden>
+
+                <input name="index" value="{{old_agreement['index']}}" readonly hidden>
             <li>
                 <label for="date">Data</label>
                 <input id="data" name="data" value="{{old_agreement['data']}}">

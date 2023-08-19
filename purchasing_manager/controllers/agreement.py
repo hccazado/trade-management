@@ -35,9 +35,9 @@ def index():
         
         item['descarga'] = model_warehouse.get_name(item['descarga'])
         
-    num_fechamento_function = lambda item: split_agreement(item['num_fechamento'])
+    index_function = lambda item: int(item['index'])
         
-    ordered_list = sorted(agreements, key=num_fechamento_function)
+    ordered_list = sorted(agreements, key=index_function, reverse=True)
    
     return render_template("app/agreement_main.html", agreements=ordered_list)
 
@@ -62,6 +62,8 @@ def create():
     new_agreement["data"] = current_date()
     
     new_agreement["created_at"] = datetime.now().strftime("%d/%m/%y - %H:%M")
+    
+    new_agreement["index"] = new_index()
     
     if len(new_agreement["num_fechamento"]) == 0:
         
@@ -141,6 +143,22 @@ def agreements_current_year(agreement):
         
         return agreement
 
+def new_index():
+    
+    if len(current_app.agreements_collection) == 0:
+        
+        current_app.agreements_collection = model_agreement.get_all()
+        
+    index_function = lambda item: item['index']
+        
+    current_app.agreements_collection = sorted(current_app.agreements_collection, key=index_function, reverse=True)    
+
+    actual_index = current_app.agreements_collection[0]['index']
+    
+    new_index = int(actual_index) + 1
+    
+    return new_index
+
 def generate_agreement_number():
     
     num_fechamento_function = lambda item: item['num_fechamento']
@@ -176,7 +194,7 @@ def generate_agreement_number():
         nxt_agreement += "/" + current_year
         
         return nxt_agreement
-        
+    
 def print(id):
 
     current_app.agreements_collection = model_agreement.get_all()
