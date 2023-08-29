@@ -149,7 +149,7 @@ def new_index():
         
         current_app.agreements_collection = model_agreement.get_all()
         
-    index_function = lambda item: item['index']
+    index_function = lambda item: int(item['index'])
         
     current_app.agreements_collection = sorted(current_app.agreements_collection, key=index_function, reverse=True)    
 
