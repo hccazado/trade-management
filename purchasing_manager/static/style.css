@@ -4,23 +4,23 @@ https://coolors.co/196774-9fb7b9-fca311-84c0c6
 https://coolors.co/196774-ebe9e9-fca311-6b5e62
 */
 
-:root{
+:root {
     --background: #196774;
     --primary: #FCA311;
     --secondary: #EBE9E9;
     --contrast: #6B5E62;
 }
 
-body{
+body {
     width: 100vw;
-    max-width: 1600px;
-    margin: 0 auto;
+    margin: 0;
+    padding: 0;
     background-color: var(--secondary);
 }
 
-header{
+header {
     position: sticky;
-    top:0;
+    top: 0;
     background-color: var(--background);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -28,30 +28,30 @@ header{
     align-items: center;
     margin-top: 0;
     height: 80px;
-    width: 100%;
+    width: 100vw;
     border-bottom: 1px solid #ccc;
     box-shadow: 0px 5px 5px rgba(25, 103, 116, .3);
 }
 
-header ul{
+header ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
 }
 
-header li{
+header li {
     margin: 10px;
 }
 
-header .logo{
+header .logo {
     width: 72px;
 }
 
-header > img {
+header>img {
     width: 72px;
 }
 
-#login{
+#login {
     background-color: var(--contrast);
     border-radius: 8px;
     padding: 15px;
@@ -59,25 +59,31 @@ header > img {
     text-decoration: none;
 }
 
-#clock{
+#clock {
     color: #fff;
     font-weight: 400;
     font-size: 1.2em;
 }
 
-.center{
+.center {
     text-align: center;
-    margin: 20px;
+    margin: 1rem auto;
 }
 
-.menu{
-    margin-top: 75px;
+.menu {
+    margin: 2rem auto;
     display: flex;
     justify-content: space-around;
     text-align: center;
+    width: 95%;
+    flex-flow: wrap;
 }
 
-.card{
+.menu:last-child {
+    margin-left: auto;
+}
+
+.card {
     border: 1px solid var(--contrast);
     border-radius: 8px;
     color: #000;
@@ -87,54 +93,55 @@ header > img {
     box-shadow: 2px 5px 5px #ccc;
 }
 
-.card > img {
+.card>img {
     width: 90%;
 }
 
-.card > a{
+.card>a {
     text-decoration: none;
 }
 
-section{
+section {
     width: 95%;
     margin: auto 30px;
 }
 
-section >hr{
+section>hr {
     margin: 0;
-    width:100%;
+    width: 100%;
 }
 
-#content > h1{
+#content>h1 {
     margin-top: 40px;
     text-align: center;
 }
 
-.login{
+.login {
     margin: 0 auto;
     height: 500px;
-    width:400px;
+    width: 400px;
     border: 1px solid #aaa;
     border-radius: 8px;
     margin-top: 30px;
 }
 
-.mgt_row{
+.mgt_row {
     display: flex;
     justify-content: space-evenly;
     text-align: center;
-    width:100%;
+    width: 100%;
     border-bottom: 1px solid var(--contrast);
 }
 
-.mgt_row > input{
+.mgt_row>input {
     width: 170px;
     justify-self: center;
     align-self: center;
     height: 1.7em;
     border-radius: 8px;
 }
-.mgt_row > a{
+
+.mgt_row>a {
     padding: 10px;
     text-decoration: none;
     border-radius: 8px;
@@ -142,108 +149,121 @@ section >hr{
     justify-self: center;
     align-self: center;
 }
-.return{
+
+.return {
     width: 36px;
     display: table;
     margin-left: 20px;
-    
+
 }
-.button{
+
+.button {
     background-color: var(--background);
 }
 
-.mgt_container{
+.mgt_container {
     margin: 50px auto;
     width: 95%;
     height: 60vh;
     overflow-x: scroll;
     overflow-y: scroll;
 }
-.mgt_container > table{
+
+.mgt_container>table {
     margin: auto;
     max-height: 500px;
     overflow-y: scroll;
 }
-.mgt_container > table a{
+
+.mgt_container>table a {
     text-decoration: none;
 }
-.mgt_container > table td{
+
+.mgt_container>table td {
     column-width: 150px;
     height: 1.3em;
 }
 
-.mgt_container > table thead{
+.mgt_container>table thead {
     background-color: #aaa;
     height: 2em;
     position: sticky;
     top: 0;
 }
 
-.mgt_container > table tbody tr:nth-child(even){
+.mgt_container>table tbody tr:nth-child(even) {
     background-color: #ccc;
 }
-.edit{
-    width:32px;
+
+.edit {
+    width: 32px;
     margin-left: 15px;
 }
 
-.lt_mgt > form{
+.lt_mgt>form {
     margin: 20px auto;
     width: 400px;
     border: 1px solid #ccc;
 }
 
-.lt_mgt > form > ul{
+.lt_mgt>form>ul {
     list-style: none;
     margin: 0;
     padding: 10px;
 }
 
-.form_grid{
+.form_grid {
     display: grid;
     width: 100%;
     grid-template-columns: repeat(2, 1fr);
 }
 
-.form_grid > div > input{
-    width:155px !important;
+.form_grid>div>input {
+    width: 155px !important;
 }
 
-.lt_mgt > form li label{
+.lt_mgt>form li label {
     display: inline-block;
     text-align: left;
     margin-left: 15px;
     width: 90%;
 }
-.lt_mgt > form li select{
+
+.lt_mgt>form li select {
     display: inline-block;
     text-align: left;
     width: 170px;
     margin: 10px;
 }
-.lt_mgt > form li +li {
+
+.lt_mgt>form li+li {
     margin-top: 20px;
 }
-.lt_mgt > form li input{
+
+.lt_mgt>form li input {
     height: 1.7em;
 }
-.lt_mgt > form li select{
-    height:1.8em;
+
+.lt_mgt>form li select {
+    height: 1.8em;
 }
-.lt_mgt > form li input, textarea{
+
+.lt_mgt>form li input,
+textarea {
     display: block;
     width: 90%;
     margin: 10px auto;
 }
-.lt_mgt > form li >textarea{
+
+.lt_mgt>form li>textarea {
     height: 3em;
 }
 
-.lt_mgt > form li:last-child{
+.lt_mgt>form li:last-child {
     text-align: right;
 }
 
-.flash{
+.flash {
     text-align: center;
     font-size: 1.2em;
     background-color: rgba(100, 100, 250, 0.05);
@@ -254,35 +274,39 @@ section >hr{
 }
 
 @media screen and (max-width:900px) {
-    .menu{
+    .menu {
         flex-direction: column;
         margin: 30px auto;
         align-items: center;
-        gap:20px;
+        gap: 20px;
     }
-    section{
+
+    section {
         margin: 30px auto;
     }
-    .mgt_row{
+
+    .mgt_row {
         display: grid;
         grid-template-columns: 90px 1.2fr .8fr;
     }
-    .mgt_row > input{
-        width:85%;
+
+    .mgt_row>input {
+        width: 85%;
     }
-    .mgt_container{
-        width:95%;
+
+    .mgt_container {
         overflow-x: scroll;
         overflow-y: scroll;
-        height: 600px;
     }
-    .mgt_container > table{
+
+    .mgt_container>table {
         box-sizing: border-box;
-        table-layout:fixed;
+        table-layout: fixed;
         overflow-x: scroll;
         overflow-y: scroll;
     }
-    .mgt_container > table td{
-        width:150px;
+
+    .mgt_container>table td {
+        width: 150px;
     }
 }
