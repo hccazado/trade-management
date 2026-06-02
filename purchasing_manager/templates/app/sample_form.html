@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block content %}
+
+<a href="{{ url_for('sample.index') }}">
+    <img class="return" src="{{ url_for('static', filename='return.png') }}">
+</a>
+
+{% if not isediting %}
+<h1>Cadastrar Amostra</h1>
+<section class="lt_mgt">
+    <form id="form" method="post">
+        <ul>
+            <li>
+                <label for="client">Cliente</label>
+                <select name="client" id="client">
+                    <option value="" selected>Sem Cliente / Nenhum</option>
+                    {% for client in clients %}
+                        <option value="{{ client.id }}">{{ client.nome }}</option>
+                    {% endfor %}
+                </select>
+            </li>
+            <li>
+                <label for="data">Data</label>
+                <input id="data" name="data" value="{{ today }}">
+            </li>
+            <li>
+                <label for="num_amostra">Número da Amostra</label>
+                <input id="num_amostra" name="num_amostra" placeholder="Deixar em branco para gerar automaticamente (ex: 001/26)">
+            </li>
+            
+            <li>
+                <label for="17/8">Peneira 17/8</label>
+                <input id="17/8" name="17/8" placeholder="e.g. 30%">
+            </li>
+            <li>
+                <label for="13">Peneira 13</label>
+                <input id="13" name="13" placeholder="e.g. 25%">
+            </li>
+            <li>
+                <label for="10">Peneira 10</label>
+                <input id="10" name="10" placeholder="e.g. 15%">
+            </li>
+            <li>
+                <label for="Mk">Moka (Mk)</label>
+                <input id="Mk" name="Mk" placeholder="e.g. 10%">
+            </li>
+            <li>
+                <label for="FD">Fundo (FD)</label>
+                <input id="FD" name="FD" placeholder="e.g. 20%">
+            </li>
+            <li>
+                <label for="Cata">Catado (Cata)</label>
+                <input id="Cata" name="Cata" placeholder="e.g. 12% ou 86 def">
+            </li>
+            <li>
+                <label for="PVA">Defeitos (PVA)</label>
+                <input id="PVA" name="PVA" placeholder="e.g. 10 def">
+            </li>
+            <li>
+                <label for="Broca">Broca</label>
+                <input id="Broca" name="Broca" placeholder="e.g. 2%">
+            </li>
+            
+            <li>
+                <label for="obs">Observações (OBS)</label>
+                <textarea id="obs" name="obs" placeholder="Conforme amostra..."></textarea>
+            </li>
+            
+            <li>
+                <button type="submit">Cadastrar</button>
+            </li>
+        </ul>
+    </form>
+</section>
+{% else %}
+<h1>Editar Amostra</h1>
+<section class="lt_mgt">
+    <form id="form" method="post">
+        <ul>
+            <li>
+                <label for="client">Cliente</label>
+                <select name="client" id="client">
+                    {% if not sample.client or sample.client == "" %}
+                        <option value="" selected>Sem Cliente / Nenhum</option>
+                    {% else %}
+                        <option value="">Sem Cliente / Nenhum</option>
+                    {% endif %}
+                    {% for client in clients %}
+                        {% if sample.client == client.id %}
+                            <option value="{{ client.id }}" selected>{{ client.nome }}</option>
+                        {% else %}
+                            <option value="{{ client.id }}">{{ client.nome }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </li>
+            <li>
+                <label for="data">Data</label>
+                <input id="data" name="data" value="{{ sample.data }}">
+            </li>
+            <li>
+                <label for="num_amostra">Número da Amostra</label>
+                <input id="num_amostra" name="num_amostra" value="{{ sample.num_amostra }}">
+            </li>
+            
+            <li>
+                <label for="17/8">Peneira 17/8</label>
+                <input id="17/8" name="17/8" value="{{ sample['17/8'] }}">
+            </li>
+            <li>
+                <label for="13">Peneira 13</label>
+                <input id="13" name="13" value="{{ sample.13 }}">
+            </li>
+            <li>
+                <label for="10">Peneira 10</label>
+                <input id="10" name="10" value="{{ sample.10 }}">
+            </li>
+            <li>
+                <label for="Mk">Moka (Mk)</label>
+                <input id="Mk" name="Mk" value="{{ sample.Mk }}">
+            </li>
+            <li>
+                <label for="FD">Fundo (FD)</label>
+                <input id="FD" name="FD" value="{{ sample.FD }}">
+            </li>
+            <li>
+                <label for="Cata">Catado (Cata)</label>
+                <input id="Cata" name="Cata" value="{{ sample.Cata }}">
+            </li>
+            <li>
+                <label for="PVA">Defeitos (PVA)</label>
+                <input id="PVA" name="PVA" value="{{ sample.PVA }}">
+            </li>
+            <li>
+                <label for="Broca">Broca</label>
+                <input id="Broca" name="Broca" value="{{ sample.Broca }}">
+            </li>
+            
+            <li>
+                <label for="obs">Observações (OBS)</label>
+                <textarea id="obs" name="obs">{{ sample.obs }}</textarea>
+            </li>
+            
+            <li>
+                <button type="submit">Atualizar</button>
+            </li>
+        </ul>
+    </form>
+</section>
+{% endif %}
+{% endblock %}

@@ -1,31 +1,29 @@
-import flask, json
+import json
 
 from flask_cors import cross_origin
+from flask import Blueprint
 
-from flask import Blueprint, url_for, request, session, redirect, jsonify
-
-from ..controllers import client, warehouse, agreement, auth, api
+from ..controllers import auth, api
 
 bp = Blueprint("api", __name__, url_prefix="/api")
 
 @bp.route("/client/<query>")
 @cross_origin()
+@auth.login_required
 def query_client(query):
-
-    result = api.query_clients(query)
-
-    return json.dumps(result)
+    return json.dumps(api.query_clients(query))
 
 @bp.route("/warehouse/<query>")
+@auth.login_required
 def query_warehouse(query):
-
-    result = api.query_warehouses(query)
-
-    return json.dumps(result)
+    return json.dumps(api.query_warehouses(query))
 
 @bp.route("/agreement/<query>")
+@auth.login_required
 def query_agreements(query):
+    return json.dumps(api.query_agreements(query))
 
-    result = api.query_agreements(query)
-
-    return json.dumps(result)
+@bp.route("/sample/<query>")
+@auth.login_required
+def query_samples(query):
+    return json.dumps(api.query_samples(query))

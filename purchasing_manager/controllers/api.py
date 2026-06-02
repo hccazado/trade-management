@@ -1,94 +1,37 @@
-import flask, asyncio, json
+from ..models import client as model_client, warehouse as model_warehouse, agreement as model_agreement, sample as model_sample
 
-from flask import Blueprint, url_for, request, session, redirect, render_template, flash, current_app
-
-from ..models import client as model_client, warehouse as model_warehouse, agreement as model_agreement
-
-from ..controllers import client as controller_client, warehouse as controller_warehouse, agreement as controller_agreement
 
 def query_clients(query):
+    clients = model_client.get_all()
+    result = [c for c in clients if query.upper() in c["nome"].upper()]
+    return sorted(result, key=lambda c: c["nome"])
 
-    if len(current_app.clients_collection) == 0:
-        
-        current_app.clients_collection = controller_client.update_clients_collection()
-
-    function_name = lambda item: item["nome"]
-
-    result = []
-
-    for client in current_app.clients_collection:
-
-        if query.upper() in  client["nome"].upper():
-
-            result.append(client)
-
-    if len(result) > 1:
-
-        result = sorted(result, key=function_name())
-
-        return result
-    
-    else:
-    
-        return result
-    
 def query_warehouses(query):
+    warehouses = model_warehouse.get_all()
+    result = [w for w in warehouses if query.upper() in w["nome"].upper()]
+    return sorted(result, key=lambda w: w["nome"])
 
-    if len(current_app.warehouses_collection) == 0:
-
-        controller_warehouse.update_warehouses_collection()
-
-    function_name = lambda item: item["nome"]
-
-    result = []
-
-    for warehouse in current_app.warehouses_collection:
-
-        if query.upper() in warehouse["nome"].upper():
-
-            result.append(warehouse)
-
-    if len(result) > 1:
-
-        result = sorted(result, key=function_name)
-
-        return result
-   
-    else:
-    
-        return result
-    
 def query_agreements(query):
-
-    if len(current_app.agreements_collection) == 0:
-
-        controller_agreement.update_agreements_collection()
-
-        current_app.clients_collection = model_client.get_all()
-
-        current_app.warehouses_collection = model_warehouse.get_all()
-
-    function_agreement = lambda item: item["num_fechamento"]
-
+    agreements = model_agreement.get_all()
+    clients = {c['id']: c['nome'] for c in model_client.get_all()}
+    warehouses = {w['id']: w['nome'] for w in model_warehouse.get_all()}
     result = []
-
-    for agreement in current_app.agreements_collection:
-
+    for agreement in agreements:
         if query in agreement["num_fechamento"]:
-
-            agreement['comprador'] = model_client.get_name(agreement['comprador'])
-            agreement['vendedor'] = model_client.get_name(agreement['vendedor'])
-            agreement['retirada'] = model_warehouse.get_name(agreement['retirada'])
-            agreement['descarga'] = model_warehouse.get_name(agreement['descarga'])
-
+            agreement['comprador'] = clients.get(agreement.get('comprador', ''), '')
+            agreement['vendedor'] = clients.get(agreement.get('vendedor', ''), '')
+            agreement['retirada'] = warehouses.get(agreement.get('retirada', ''), '')
+            agreement['descarga'] = warehouses.get(agreement.get('descarga', ''), '')
             result.append(agreement)
+    return sorted(result, key=lambda a: a["num_fechamento"])
 
-    if len(result) > 1:
-
-        result = sorted(result, key=function_agreement)
-
-        return result
-   
-    else:
-    
-        return result
+def query_samples(query):
+    samples = model_sample.get_all()
+    result = []
+    for sample in samples:
+        client_id = sample.get('client', '')
+        client_name = model_client.get_name(client_id) if client_id else "Sem Cliente"
+        if query.upper() in client_name.upper():
+            sample['client_name'] = client_name
+            result.append(sample)
+    return sorted(result, key=lambda s: s.get('client_name', '').lower())

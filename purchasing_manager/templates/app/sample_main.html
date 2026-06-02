@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="center">Amostras de Café</h1>
+<section class="lt_mgt">
+    <div class="mgt_row">
+        <a class="transparent" href="{{ url_for('home.index') }}">
+            <img class="return" src="{{ url_for('static', filename='return.png') }}">
+        </a>
+        <input name="search" id="input_search" placeholder="filtrar cliente"> 
+        <a class="button" href="{{ url_for('sample.new') }}">Cadastrar</a>
+    </div>
+    <div class="mgt_container">
+        <table>
+            <thead>
+                <tr>
+                    <td>Nº Amostra</td>
+                    <td>Cliente</td>
+                    <td>Data</td>
+                    <td>17/8</td>
+                    <td>13</td>
+                    <td>10</td>
+                    <td>Mk</td>
+                    <td>FD</td>
+                    <td>Cata</td>
+                    <td>PVA</td>
+                    <td>Broca</td>
+                    <td>Editar</td>
+                </tr>
+            </thead>
+            <tbody id="mgt_body">
+                {% for sample in samples %}
+                <tr>
+                    <td>
+                        {{ sample.num_amostra }}
+                    </td>
+                    <td>
+                        {{ sample.client_name }}
+                    </td>
+                    <td>
+                        {{ sample.data }}
+                    </td>
+                    <td>
+                        {{ sample['17/8'] }}
+                    </td>
+                    <td>
+                        {{ sample.13 }}
+                    </td>
+                    <td>
+                        {{ sample.10 }}
+                    </td>
+                    <td>
+                        {{ sample.Mk }}
+                    </td>
+                    <td>
+                        {{ sample.FD }}
+                    </td>
+                    <td>
+                        {{ sample.Cata }}
+                    </td>
+                    <td>
+                        {{ sample.PVA }}
+                    </td>
+                    <td>
+                        {{ sample.Broca }}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('sample.edit', id=sample.id) }}">
+                            <img class="edit" src="{{ url_for('static', filename='edit.png') }}">
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{{ url_for('static', filename='find_samples.js') }}"></script>
+{% endblock %}

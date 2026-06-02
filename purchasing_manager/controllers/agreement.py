@@ -1,219 +1,90 @@
-import flask
-
 from datetime import datetime
 
-from flask import Blueprint, url_for, request, session, redirect, render_template, flash, current_app
+from flask import url_for, request, redirect, render_template, flash
 
 from ..models import client as model_client, warehouse as model_warehouse, agreement as model_agreement
-
 from ..controllers import client as controller_client, warehouse as controller_warehouse
 
-def split_agreement(agreement):
-    
-    splited = agreement.split("/")
-    
-    return splited[0] + ", " + splited[1]
 
 def index():
-
     agreements = model_agreement.get_all()
-
-    if len(current_app.clients_collection) == 0:
-
-        current_app.clients_collection = model_client.get_all()
-
-        current_app.warehouses_collection = model_warehouse.get_all()
-
-
+    clients = {c['id']: c['nome'] for c in model_client.get_all()}
+    warehouses = {w['id']: w['nome'] for w in model_warehouse.get_all()}
     for item in agreements:
-
-        item['comprador'] = model_client.get_name(item['comprador'])
-        
-        item['vendedor'] = model_client.get_name(item['vendedor'])
-        
-        item['retirada'] = model_warehouse.get_name(item['retirada'])
-        
-        item['descarga'] = model_warehouse.get_name(item['descarga'])
-        
-    index_function = lambda item: int(item['index'])
-        
-    ordered_list = sorted(agreements, key=index_function, reverse=True)
-   
-    return render_template("app/agreement_main.html", agreements=ordered_list)
+        item['comprador'] = clients.get(item.get('comprador', ''), '')
+        item['vendedor'] = clients.get(item.get('vendedor', ''), '')
+        item['retirada'] = warehouses.get(item.get('retirada', ''), '')
+        item['descarga'] = warehouses.get(item.get('descarga', ''), '')
+    ordered = sorted(agreements, key=lambda i: int(i.get('index') or 0), reverse=True)
+    return render_template("app/agreement_main.html", agreements=ordered)
 
 def new():
-    
-    if len(current_app.clients_collection) == 0 or len(current_app.warehouses_collection) == 0:
-        
-            current_app.clients_collection = controller_client.update_clients_collection()
-            
-            current_app.warehouses_collection = controller_warehouse.update_warehouses_collection()
-        
-    clients = controller_client.sort_name(current_app.clients_collection)
-    
-    warehouses = controller_warehouse.sort_name(current_app.warehouses_collection)
-
-    return render_template("app/agreement_form.html", warehouses=warehouses, clients = clients)
+    clients = controller_client.sort_name(model_client.get_all())
+    warehouses = controller_warehouse.sort_name(model_warehouse.get_all())
+    return render_template("app/agreement_form.html", warehouses=warehouses, clients=clients)
 
 def create():
-    
     new_agreement = request.form.to_dict()
-    
     new_agreement["data"] = current_date()
-    
     new_agreement["created_at"] = datetime.now().strftime("%d/%m/%y - %H:%M")
-    
     new_agreement["index"] = new_index()
-    
     if len(new_agreement["num_fechamento"]) == 0:
-        
         new_agreement["num_fechamento"] = generate_agreement_number()
-        
     if len(new_agreement["pagamento"]) == 0:
-        
         new_agreement["pagamento"] = controller_client.get_conta(new_agreement["vendedor"])
-    
     if model_agreement.create(new_agreement):
-        
-        update_agreements_collection()
-
         return redirect(url_for("agreement.index"))
-    
-    else: 
-        
-        return render_template("app/agreement_form.html", flash("Something Went Wrong!"))
-    
-def edit(id):    
-    
+    return render_template("app/agreement_form.html", flash("Something Went Wrong!"))
+
+def edit(id):
     old_agreement = model_agreement.get_one(id)
-    
-    current_app.clients_collection = model_client.get_all()
+    clients = controller_client.sort_name(model_client.get_all())
+    warehouses = controller_warehouse.sort_name(model_warehouse.get_all())
+    return render_template("app/agreement_form.html", old_agreement=old_agreement, clients=clients, warehouses=warehouses, isEditing=True)
 
-    current_app.warehouses_collection = model_warehouse.get_all()
-    
-    warehouses = controller_warehouse.sort_name(current_app.warehouses_collection)
-        
-    clients = controller_client.sort_name(current_app.clients_collection)
-        
-    return render_template("app/agreement_form.html", old_agreement = old_agreement, clients = clients, warehouses = warehouses, isEditing = True)
-        
-
-def update (id):
-    
-    if (id == None):
-        
+def update(id):
+    if id is None:
         return render_template("app/agreement_form.html", flash("Something Went Wrong! An ID must be informed!"))
-    
-    else:
-    
-        new_data = request.form.to_dict()
-        
-        if model_agreement.update(id, new_data):
-            
-            update_agreements_collection()
-            
-            flash("Successfully Updated!")
-        
-            return redirect(url_for("agreement.index"))
-        
-        else:
-            
-           return render_template("app/agreement_form.html", flash("Something Went Wrong!")) 
-       
-def update_agreements_collection():
-    
-    current_app.agreements_collection = model_agreement.get_all()
-    
-def current_date():
-    
-    current_dt = datetime.now().strftime("%d/%m/%y")
-    
-    return current_dt
+    new_data = request.form.to_dict()
+    if model_agreement.update(id, new_data):
+        flash("Successfully Updated!")
+        return redirect(url_for("agreement.index"))
+    return render_template("app/agreement_form.html", flash("Something Went Wrong!"))
 
-def agreements_current_year(agreement):
-    """returns only dictionaries from current year"""
-    
-    current_yr = datetime.now().strftime("%y")
-    
-    split_dt = agreement["data"].split("/")
-    
-    agreement_yr = split_dt[2]
-    
-    if agreement_yr == current_yr:
-        
-        return agreement
+def print(id):
+    agreement = model_agreement.get_one(id)
+    if not agreement:
+        flash("Agreement not found.")
+        return redirect(url_for("agreement.index"))
+    buyer = model_client.get_one(agreement["comprador"])
+    seller = model_client.get_one(agreement["vendedor"])
+    origin = model_warehouse.get_one(agreement["retirada"])
+    delivery = model_warehouse.get_one(agreement["descarga"])
+    return render_template("app/agreement.html", agreement=agreement, buyer=buyer, seller=seller, origin=origin, delivery=delivery)
+
+def current_date():
+    return datetime.now().strftime("%d/%m/%y")
 
 def new_index():
-    
-    if len(current_app.agreements_collection) == 0:
-        
-        current_app.agreements_collection = model_agreement.get_all()
-        
-    index_function = lambda item: int(item['index'])
-        
-    current_app.agreements_collection = sorted(current_app.agreements_collection, key=index_function, reverse=True)    
-
-    actual_index = current_app.agreements_collection[0]['index']
-    
-    new_index = int(actual_index) + 1
-    
-    return new_index
+    agreements = model_agreement.get_all()
+    if not agreements:
+        return 1
+    return max(int(a['index']) for a in agreements) + 1
 
 def generate_agreement_number():
-    
-    num_fechamento_function = lambda item: item['num_fechamento']
-    
-    if len(current_app.agreements_collection) == 0:
-        
-        current_app.agreements_collection = model_agreement.get_all()
-        
+    agreements = model_agreement.get_all()
     current_year = datetime.now().strftime("%y")
+    current_agreements = [a for a in agreements if _is_current_year(a, current_year)]
+    if not current_agreements:
+        return "001/" + current_year
+    ordered = sorted(current_agreements, key=lambda a: a['num_fechamento'], reverse=True)
+    last_num = ordered[0]["num_fechamento"].split("/")[0]
+    return str(int(last_num) + 1).zfill(3) + "/" + current_year
 
-    current_agreements = list(filter(agreements_current_year ,current_app.agreements_collection))
+def _is_current_year(agreement, current_year):
+    parts = agreement.get("data", "").split("/")
+    return len(parts) >= 3 and parts[2] == current_year
 
-    if len(current_agreements) > 0:
-        
-        ordered_agreements = sorted(current_agreements, key=num_fechamento_function, reverse=True)
-    
-        actual_agreement_number = ordered_agreements[0]["num_fechamento"]
-        
-        actual_agreement_number = actual_agreement_number.split("/")[0]
-        
-        nxt_agreement = int(actual_agreement_number) + 1 
-        
-        nxt_agreement = str(nxt_agreement).zfill(3)
-        
-        nxt_agreement += "/" + current_year
-        
-        return nxt_agreement
-        
-    else:
-        
-        nxt_agreement = str(1).zfill(3)
-        
-        nxt_agreement += "/" + current_year
-        
-        return nxt_agreement
-    
-def print(id):
-
-    current_app.agreements_collection = model_agreement.get_all()
-
-    current_app.clients_collection = model_client.get_all()
-    
-    current_app.warehouses_collection = model_warehouse.get_all()
-    
-    for item in current_app.agreements_collection:
-        
-        if item['id'] == id:
-            
-            buyer = model_client.get_one(item["comprador"])
-
-            seller = model_client.get_one(item["vendedor"])
-
-            origin = model_warehouse.get_one(item["retirada"])
-            
-            delivery = model_warehouse.get_one(item["descarga"])
-            
-            return render_template("app/agreement.html", agreement = item, buyer = buyer, seller = seller, origin = origin, delivery = delivery)
-    
+def split_agreement(agreement):
+    splited = agreement.split("/")
+    return splited[0] + ", " + splited[1]

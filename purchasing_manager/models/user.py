@@ -22,16 +22,42 @@ def get():
     return users
     
 def create(user_data):
-    
+
     document = users_ref.document()
-    
+
     if document.set(user_data):
-        
+
         return True
-    
+
     else:
-        
+
         return False
+
+
+def get_by_email(email):
+    results = users_ref.where("email", "==", email).limit(1).get()
+    for doc in results:
+        user = doc.to_dict()
+        user["id"] = doc.id
+        return user
+    return None
+
+
+def get_or_create_google_user(google_info):
+    user = get_by_email(google_info["email"])
+    if user:
+        return user
+    from . import tenant as model_tenant
+    tenant_id = model_tenant.create(google_info.get("name", google_info["email"]))
+    name = google_info.get("name", google_info["email"])
+    doc = users_ref.document()
+    doc.set({
+        "name": name,
+        "email": google_info["email"],
+        "google_id": google_info["sub"],
+        "tenant_id": tenant_id,
+    })
+    return {"id": doc.id, "name": name, "email": google_info["email"], "tenant_id": tenant_id}
     
     
     

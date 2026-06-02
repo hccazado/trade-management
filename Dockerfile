@@ -1,5 +1,5 @@
 # start by pulling the python image
-FROM python:3.9.17-slim-bullseye
+FROM python:3.12-slim
 
 
 # timezone env and linking it to debian's OS config

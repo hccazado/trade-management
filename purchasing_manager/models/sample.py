@@ -2,15 +2,23 @@ from firebase_admin import exceptions
 from ..db.db import tenant_col
 
 def _ref():
-    return tenant_col("warehouses")
+    return tenant_col("samples")
+
+def create(new_data):
+    try:
+        _ref().document().set(new_data)
+        return True
+    except exceptions.FirebaseError as fire_error:
+        print(fire_error.http_response, fire_error.cause)
+        return False
 
 def get_all():
-    warehouses = []
+    samples = []
     for doc in _ref().get():
-        warehouse = doc.to_dict()
-        warehouse["id"] = doc.id
-        warehouses.append(warehouse)
-    return warehouses
+        sample = doc.to_dict()
+        sample["id"] = doc.id
+        samples.append(sample)
+    return samples
 
 def get_one(id=None):
     if not id:
@@ -21,18 +29,6 @@ def get_one(id=None):
         data["id"] = doc.id
         return data
     return {}
-
-def get_name(id):
-    warehouse = get_one(id)
-    return warehouse.get("nome", "")
-
-def create(new_data):
-    try:
-        _ref().document().set(new_data)
-        return True
-    except exceptions.FirebaseError as fire_error:
-        print(fire_error.http_response, fire_error.cause)
-        return False
 
 def update(id, new_data):
     try:

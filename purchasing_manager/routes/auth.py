@@ -30,5 +30,13 @@ def new():
     
 @bp.route("/logout")
 def logout():
-    
+
     return auth_controller.logout()
+
+@bp.route("/google")
+def google_login():
+    return auth_controller.google_login()
+
+@bp.route("/google/callback")
+def google_callback():
+    return auth_controller.google_callback()
