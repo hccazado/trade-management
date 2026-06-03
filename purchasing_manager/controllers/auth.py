@@ -31,6 +31,7 @@ def login():
             if check_password_hash(user["password"], upassword):
                 session["user"] = user["id"]
                 session["tenant_id"] = user.get("tenant_id")
+                session["is_admin"] = user.get("is_admin", False)
                 g.tenant_id = session["tenant_id"]
                 return redirect(url_for("home.index"))
 
@@ -62,13 +63,32 @@ def login_required(view):
     def wrapped_view(**kwargs):
         if "user" not in session:
             return redirect(url_for("auth.login"))
+        if session.get("onboarding"):
+            return redirect(url_for("onboarding.index"))
         g.tenant_id = session["tenant_id"]
         return view(**kwargs)
     return wrapped_view
 
 
+def admin_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if "user" not in session:
+            return redirect(url_for("auth.login"))
+        if not session.get("is_admin"):
+            flash("Acesso restrito.")
+            return redirect(url_for("home.index"))
+        return view(**kwargs)
+    return wrapped_view
+
+
 def google_login():
-    redirect_uri = url_for("auth.google_callback", _external=True)
+    import os
+    redirect_uri = os.environ.get(
+        "GOOGLE_REDIRECT_URI",
+        url_for("auth.google_callback", _external=True)
+    )
+    print(f"OAuth redirect_uri: {redirect_uri}")
     return oauth.google.authorize_redirect(redirect_uri)
 
 
@@ -82,5 +102,9 @@ def google_callback():
     user = model_user.get_or_create_google_user(google_info)
     session["user"] = user["id"]
     session["tenant_id"] = user.get("tenant_id")
+    session["is_admin"] = user.get("is_admin", False)
+    if user.get("onboarding"):
+        session["onboarding"] = True
+        return redirect(url_for("onboarding.index"))
     g.tenant_id = session["tenant_id"]
     return redirect(url_for("home.index"))

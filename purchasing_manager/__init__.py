@@ -1,4 +1,4 @@
-import os, requests, sys, json
+import os, sys, json
 
 from flask import Flask, url_for, redirect, current_app
 from flask_cors import CORS
@@ -69,6 +69,12 @@ def create_app (test_config = None):
     
     from .routes import sample
     app.register_blueprint(sample.bp)
+
+    from .routes import onboarding
+    app.register_blueprint(onboarding.bp)
+
+    from .routes import admin
+    app.register_blueprint(admin.bp)
     
     
     @app.route("/")

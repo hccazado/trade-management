@@ -1,0 +1,23 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<div class="login-card">
+
+    <h1>Bem-vindo!</h1>
+    <p class="onboarding-subtitle">Para começar, informe o nome do seu negócio.</p>
+
+    <form method="POST">
+        <ul>
+            <li>
+                <label for="business_name">Nome do negócio</label>
+                <input id="business_name" name="business_name" type="text" autofocus
+                       placeholder="ex: Fazenda São João">
+            </li>
+            <li>
+                <button type="submit">Começar</button>
+            </li>
+        </ul>
+    </form>
+
+</div>
+{%endblock%}

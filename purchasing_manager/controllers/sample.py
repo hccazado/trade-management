@@ -1,9 +1,22 @@
+import os
+import threading
 from datetime import datetime
 
+import requests
 from flask import url_for, request, redirect, render_template, flash
 
 from ..models import client as model_client, sample as model_sample
 from ..controllers import client as controller_client
+
+
+def _notify_buyers(payload):
+    webhook_url = os.environ.get("N8N_WEBHOOK_URL")
+    if not webhook_url:
+        return
+    try:
+        requests.post(webhook_url, json=payload, timeout=10)
+    except Exception as e:
+        print(f"Webhook notification failed: {e}")
 
 
 def index():
@@ -21,11 +34,14 @@ def new():
 
 def create():
     new_data = request.form.to_dict()
+    notify = new_data.pop("comunicar_compradores", None) == "on"
     if 'client' not in new_data:
         new_data['client'] = ""
     if not new_data.get("num_amostra"):
         new_data["num_amostra"] = generate_sample_number()
     if model_sample.create(new_data):
+        if notify:
+            threading.Thread(target=_notify_buyers, args=(new_data,), daemon=True).start()
         flash("Amostra cadastrada com sucesso!")
         return redirect(url_for("sample.index"))
     flash("Ocorreu um erro ao cadastrar a amostra.", "error")

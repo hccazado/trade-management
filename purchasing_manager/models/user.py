@@ -56,8 +56,17 @@ def get_or_create_google_user(google_info):
         "email": google_info["email"],
         "google_id": google_info["sub"],
         "tenant_id": tenant_id,
+        "onboarding": True,
     })
-    return {"id": doc.id, "name": name, "email": google_info["email"], "tenant_id": tenant_id}
+    return {"id": doc.id, "name": name, "email": google_info["email"], "tenant_id": tenant_id, "onboarding": True}
+
+
+def complete_onboarding(user_id):
+    users_ref.document(user_id).update({"onboarding": False})
+
+def reset_password(user_id, new_password):
+    from werkzeug.security import generate_password_hash
+    users_ref.document(user_id).update({"password": generate_password_hash(new_password)})
     
     
     

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="center">{{ tenant.get('name', 'Tenant') }}</h1>
+<section class="lt_mgt">
+    <a href="{{ url_for('admin.index') }}">
+        <img class="return" src="{{ url_for('static', filename='return.png') }}">
+    </a>
+
+    <form method="POST" action="{{ url_for('admin.update_tenant', id=tenant.id) }}"
+          enctype="multipart/form-data">
+        <ul>
+            <li>
+                <label for="name">Nome do negócio</label>
+                <input id="name" name="name" type="text" value="{{ tenant.get('name', '') }}">
+            </li>
+            <li>
+                <label for="logo">Logo (máx. 200 KB)</label>
+                {% if tenant.get('logo') %}
+                    <img src="{{ tenant.logo }}" alt="Logo atual" style="height:60px;display:block;margin:8px 0;">
+                {% endif %}
+                <input id="logo" name="logo" type="file" accept="image/*">
+            </li>
+            <li>
+                <button type="submit">Salvar</button>
+            </li>
+        </ul>
+    </form>
+
+    <h2 style="margin-top:2rem;">Usuários</h2>
+    <div class="mgt_container" style="height:auto;">
+        <table>
+            <thead>
+                <td>Nome</td>
+                <td>Email</td>
+                <td>Resetar Senha</td>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.get('name', '—') }}</td>
+                    <td>{{ user.get('email', '—') }}</td>
+                    <td>
+                        {% if user.get('google_id') %}
+                            <span style="color:#aaa;font-size:.85em;">Login Google</span>
+                        {% else %}
+                            <form method="POST"
+                                  action="{{ url_for('admin.reset_password', tenant_id=tenant.id, user_id=user.id) }}"
+                                  style="display:inline;">
+                                <button type="submit" class="btn-danger">Resetar</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

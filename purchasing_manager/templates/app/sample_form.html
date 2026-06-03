@@ -62,10 +62,32 @@
             </li>
             
             <li>
+                <fieldset>
+                    <legend>Bebida</legend>
+                    <label for="Duro">Duro</label>
+                    <input id="Duro" name="Duro" type="number" min="0" placeholder="num. copos">
+                    <label for="Riado">Riado</label>
+                    <input id="Riado" name="Riado" type="number" min="0" placeholder="num. copos">
+                    <label for="Rio">Rio</label>
+                    <input id="Rio" name="Rio" type="number" min="0" placeholder="num. copos">
+                    <label for="Fermentado">Fermentado</label>
+                    <input id="Fermentado" name="Fermentado" type="number" min="0" placeholder="num. copos">
+                    <label for="Sujo">Sujo</label>
+                    <input id="Sujo" name="Sujo" type="number" min="0" placeholder="num. copos">
+                </fieldset>
+            </li>
+
+            <li>
                 <label for="obs">Observações (OBS)</label>
                 <textarea id="obs" name="obs" placeholder="Conforme amostra..."></textarea>
             </li>
-            
+
+            <li>
+                <label for="comunicar_compradores">
+                    <input type="checkbox" id="comunicar_compradores" name="comunicar_compradores">
+                    Comunicar compradores
+                </label>
+            </li>
             <li>
                 <button type="submit">Cadastrar</button>
             </li>
@@ -136,6 +158,22 @@
                 <input id="Broca" name="Broca" value="{{ sample.Broca }}">
             </li>
             
+            <li>
+                <fieldset>
+                    <legend>Bebida</legend>
+                    <label for="Duro">Duro</label>
+                    <input id="Duro" name="Duro" type="number" min="0" placeholder="num. copos" value="{{ sample.Duro }}">
+                    <label for="Riado">Riado</label>
+                    <input id="Riado" name="Riado" type="number" min="0" placeholder="num. copos" value="{{ sample.Riado }}">
+                    <label for="Rio">Rio</label>
+                    <input id="Rio" name="Rio" type="number" min="0" placeholder="num. copos" value="{{ sample.Rio }}">
+                    <label for="Fermentado">Fermentado</label>
+                    <input id="Fermentado" name="Fermentado" type="number" min="0" placeholder="num. copos" value="{{ sample.Fermentado }}">
+                    <label for="Sujo">Sujo</label>
+                    <input id="Sujo" name="Sujo" type="number" min="0" placeholder="num. copos" value="{{ sample.Sujo }}">
+                </fieldset>
+            </li>
+
             <li>
                 <label for="obs">Observações (OBS)</label>
                 <textarea id="obs" name="obs">{{ sample.obs }}</textarea>

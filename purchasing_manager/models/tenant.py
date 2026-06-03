@@ -6,3 +6,6 @@ def create(name):
     tenant_id = str(uuid.uuid4())
     get_db().collection("tenants").document(tenant_id).set({"name": name})
     return tenant_id
+
+def update(tenant_id, data):
+    get_db().collection("tenants").document(tenant_id).update(data)

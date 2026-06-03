@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="center">Admin — Clientes</h1>
+<section class="lt_mgt">
+    <div class="mgt_row">
+        <a class="transparent" href="{{ url_for('home.index') }}">
+            <img class="return" src="{{ url_for('static', filename='return.png') }}">
+        </a>
+    </div>
+    <div class="mgt_container">
+        <table>
+            <thead>
+                <td>Nome</td>
+                <td>Username</td>
+                <td>Detalhe</td>
+            </thead>
+            <tbody>
+                {% for tenant in tenants %}
+                <tr>
+                    <td>{{ tenant.get('name', '—') }}</td>
+                    <td>{{ tenant.get('username', '—') }}</td>
+                    <td>
+                        <a href="{{ url_for('admin.tenant_detail', id=tenant.id) }}">
+                            <img class="edit" src="{{ url_for('static', filename='edit.png') }}">
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}
