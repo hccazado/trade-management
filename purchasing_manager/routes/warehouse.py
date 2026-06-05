@@ -13,6 +13,7 @@ def index():
     return warehouse.index()
 
 @bp.route("/new", methods=("GET", "POST"))
+@auth.login_required
 def new():
     if request.method == "GET":
        

@@ -90,6 +90,11 @@
             </li>
 
             <li>
+                <label for="quantidade">Quantidade (sacas)</label>
+                <input id="quantidade" name="quantidade" type="number" min="0" placeholder="e.g. 300">
+            </li>
+
+            <li>
                 <label for="obs">Observações (OBS)</label>
                 <textarea id="obs" name="obs" placeholder="Conforme amostra..."></textarea>
             </li>
@@ -154,11 +159,11 @@
             </li>
             <li>
                 <label for="13">Peneira 13</label>
-                <input id="13" name="13" value="{{ sample.13 }}">
+                <input id="13" name="13" value="{{ sample['13'] }}">
             </li>
             <li>
                 <label for="10">Peneira 10</label>
-                <input id="10" name="10" value="{{ sample.10 }}">
+                <input id="10" name="10" value="{{ sample['10'] }}">
             </li>
             <li>
                 <label for="Mk">Moka (Mk)</label>
@@ -198,10 +203,15 @@
             </li>
 
             <li>
+                <label for="quantidade">Quantidade (sacas)</label>
+                <input id="quantidade" name="quantidade" type="number" min="0" placeholder="e.g. 300" value="{{ sample.get('quantidade', '') }}">
+            </li>
+
+            <li>
                 <label for="obs">Observações (OBS)</label>
                 <textarea id="obs" name="obs">{{ sample.obs }}</textarea>
             </li>
-            
+
             <li>
                 <button type="submit">Atualizar</button>
             </li>

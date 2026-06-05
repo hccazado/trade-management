@@ -1,6 +1,66 @@
 {% extends 'base.html'%}
-{%block content%}
-<h1>Home</h1>
+{% block content %}
+<div class="dashboard">
+    <div class="dashboard-panel">
+        <h2>Próximas Vendas <span class="dashboard-subtitle">— próximos 15 dias</span></h2>
+        {% if upcoming %}
+        <div class="mgt_container" style="height:auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <td>Data</td>
+                        <td>Comprador</td>
+                        <td>Qtd</td>
+                        <td>Local Retirada</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in upcoming %}
+                    <tr>
+                        <td>{{ item.date.strftime('%d/%m') }}</td>
+                        <td>{{ item.comprador }}</td>
+                        <td>{{ item.quantidade }}</td>
+                        <td>{{ item.retirada }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="dashboard-empty">Nenhuma venda nos próximos 15 dias.</p>
+        {% endif %}
+    </div>
+
+    <div class="dashboard-panel">
+        <h2>Últimas Amostras</h2>
+        {% if recent_samples %}
+        <div class="mgt_container" style="height:auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <td>Nº</td>
+                        <td>Vendedor</td>
+                        <td>Tipo</td>
+                        <td>Sacas</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in recent_samples %}
+                    <tr>
+                        <td>{{ s.numero }}</td>
+                        <td>{{ s.vendedor }}</td>
+                        <td>{{ s.tipo }}</td>
+                        <td>{{ s.sacas }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="dashboard-empty">Nenhuma amostra cadastrada.</p>
+        {% endif %}
+    </div>
+</div>
 <div class="menu">
     <a href="{{url_for('client.index')}}">
         <div class="card">
@@ -27,4 +87,4 @@
         </div>
     </a>
 </div>
-{%endblock%}
+{% endblock %}

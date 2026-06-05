@@ -411,6 +411,46 @@ textarea {
     height: 20px;
 }
 
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    width: 95%;
+    margin: 32px auto;
+}
+
+.dashboard-panel {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.dashboard-panel h2 {
+    margin: 0 0 16px;
+    font-size: 1.05em;
+    color: var(--background);
+}
+
+.dashboard-subtitle {
+    font-weight: 400;
+    font-size: .85em;
+    color: #999;
+}
+
+.dashboard-empty {
+    color: #aaa;
+    font-size: .9em;
+    margin: 12px 0 0;
+}
+
+@media screen and (max-width: 900px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media screen and (max-width: 480px) {
     .login-card {
         width: 90%;

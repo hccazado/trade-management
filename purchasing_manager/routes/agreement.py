@@ -33,7 +33,8 @@ def edit(id):
         
         return agreement.update(id)
     
-@bp.route("/print/<id>",)
+@bp.route("/print/<id>")
+@auth.login_required
 def print(id):
     if(request.method == "GET"):
         
