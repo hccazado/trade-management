@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,37 +8,34 @@
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
     <title>{%block title%}{%endblock%}</title>
 </head>
+
 <body>
     <header>
         <div id="clock"></div>
         <a href="{{url_for('home.index')}}" class="header-brand">
             {% if tenant_logo %}
-                <img src="{{url_for('static', filename=tenant_logo)}}" alt="logo" class="logo">
+            <img src="{{url_for('static', filename=tenant_logo)}}" alt="logo" class="logo">
             {% else %}
-                <h1 class="header-title">CTMS</h1>
+            <h1 class="header-title">CTMS</h1>
             {% endif %}
         </a>
-        <nav>
-            <ul>
+        <div>
             {% if "user" in session %}
-                <li><a id="login" href="{{url_for('auth.logout')}}">Log Out</a>
-            {% else %}
-                <li><a id="login" href="{{url_for('auth.login')}}">Log In</a>
+            <span>Bem-vindo, {{session["name"]}}, </span><a href="{{url_for('auth.logout')}}">Sair</a>
             {% endif %}
-            </ul>
-        </nav>
+        </div>
     </header>
     <section id="content">
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {%if messages%}
-                {% for category, message in messages %}
-                    {%if message.category == "error"%}
-                        <div class="flash_error">{{ message }}</div> 
-                    {%else%}
-                        <div class="flash">{{ message }}</div>
-                    {%endif%}
-                {% endfor %}
-            {%endif%}
+        {%if messages%}
+        {% for category, message in messages %}
+        {%if message.category == "error"%}
+        <div class="flash_error">{{ message }}</div>
+        {%else%}
+        <div class="flash">{{ message }}</div>
+        {%endif%}
+        {% endfor %}
+        {%endif%}
         {%endwith%}
 
         {%block content%}
@@ -45,4 +43,5 @@
     </section>
     <script src="{{url_for('static', filename='clock.js')}}"></script>
 </body>
+
 </html>

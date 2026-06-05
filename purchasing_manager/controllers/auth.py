@@ -30,6 +30,7 @@ def login():
         if user["name"] == uname:
             if check_password_hash(user["password"], upassword):
                 session["user"] = user["id"]
+                session["name"] = user["name"]
                 session["tenant_id"] = user.get("tenant_id")
                 session["is_admin"] = user.get("is_admin", False)
                 g.tenant_id = session["tenant_id"]
@@ -37,7 +38,7 @@ def login():
                 session["tenant_logo"] = tenant.get("logo") if tenant else None
                 return redirect(url_for("home.index"))
 
-    flash("Invalid User/Password")
+    flash("Usuário ou senha invalido!")
     return render_template("auth/login.html")
 
 
@@ -64,6 +65,7 @@ def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if "user" not in session:
+            flash("Você precisa fazer login primeiro!")
             return redirect(url_for("auth.login"))
         if session.get("onboarding"):
             return redirect(url_for("onboarding.index"))
@@ -76,9 +78,10 @@ def admin_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if "user" not in session:
+            flash("O administrador precisa fazer login primeiro!")
             return redirect(url_for("auth.login"))
         if not session.get("is_admin"):
-            flash("Acesso restrito.")
+            flash("Você não é administrador!")
             return redirect(url_for("home.index"))
         return view(**kwargs)
     return wrapped_view
@@ -98,11 +101,12 @@ def google_callback():
     token = oauth.google.authorize_access_token()
     google_info = token.get("userinfo")
     if not google_info:
-        flash("Google login failed. Please try again.")
+        flash("Falha ao continuar com o Google. Tente novamente!")
         return redirect(url_for("auth.login"))
 
     user = model_user.get_or_create_google_user(google_info)
     session["user"] = user["id"]
+    session["name"] = user["name"]
     session["tenant_id"] = user.get("tenant_id")
     session["is_admin"] = user.get("is_admin", False)
     if user.get("onboarding"):

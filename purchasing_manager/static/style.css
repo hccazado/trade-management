@@ -281,7 +281,7 @@ textarea {
     border: 1px solid #ddd;
     border-radius: 12px;
     padding: 40px;
-    box-shadow: 0 4px 16px rgba(0,0,0,.10);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .10);
 }
 
 .login-card h1 {
@@ -322,7 +322,7 @@ textarea {
 .login-card form li input:focus {
     outline: none;
     border-color: var(--background);
-    box-shadow: 0 0 0 3px rgba(25,103,116,.15);
+    box-shadow: 0 0 0 3px rgba(25, 103, 116, .15);
 }
 
 .login-card form li:last-child {
@@ -424,7 +424,7 @@ textarea {
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 20px 24px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
 }
 
 .dashboard-panel h2 {
@@ -459,13 +459,31 @@ textarea {
 }
 
 .flash {
+    border-radius: .5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    font-size: 1.2em;
+    font-size: 1.2rem;
     background-color: rgba(100, 100, 250, 0.05);
-    border: 1px solid #05a;
-    color: #000;
-    margin: 20px;
-    width: 100%;
+    border: 2px solid #05a;
+    color: #00b;
+    margin: 20px auto;
+    padding: 1rem;
+}
+
+.flash-error {
+    border-radius: .5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.2rem;
+    background-color: rgba(250, 100, 100, 0.05);
+    border: 2px solid #a00;
+    color: #b00;
+    margin: 20px auto;
+    padding: 1rem;
 }
 
 @media screen and (max-width:900px) {
