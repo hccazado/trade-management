@@ -15,6 +15,7 @@
             <thead>
                 <tr>
                     <td>Nº Amostra</td>
+                    <td>Tipo</td>
                     <td>Cliente</td>
                     <td>Data</td>
                     <td>17/8</td>
@@ -33,6 +34,9 @@
                 <tr>
                     <td>
                         {{ sample.num_amostra }}
+                    </td>
+                    <td>
+                        {{ sample.get('type', '—')|capitalize }}
                     </td>
                     <td>
                         {{ sample.client_name }}

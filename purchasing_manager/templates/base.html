@@ -10,8 +10,12 @@
 <body>
     <header>
         <div id="clock"></div>
-        <a href="{{url_for('home.index')}}">
-            <img src="{{url_for('static', filename='logo.jpg')}}" alt="business logo" class="logo">
+        <a href="{{url_for('home.index')}}" class="header-brand">
+            {% if tenant_logo %}
+                <img src="{{url_for('static', filename=tenant_logo)}}" alt="logo" class="logo">
+            {% else %}
+                <h1 class="header-title">CTMS</h1>
+            {% endif %}
         </a>
         <nav>
             <ul>

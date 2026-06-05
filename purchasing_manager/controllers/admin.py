@@ -1,7 +1,8 @@
-import base64
+import glob
+import os
 import secrets
 
-from flask import request, render_template, redirect, url_for, flash
+from flask import current_app, request, render_template, redirect, url_for, flash, session
 
 from ..models import admin as model_admin
 from ..models import tenant as model_tenant
@@ -38,12 +39,20 @@ def update_tenant(id):
         if len(raw) > MAX_LOGO_BYTES:
             flash("Logo muito grande. Máximo 200 KB.")
             return redirect(url_for("admin.tenant_detail", id=id))
-        mime = logo_file.mimetype or "image/png"
-        encoded = base64.b64encode(raw).decode("utf-8")
-        data["logo"] = f"data:{mime};base64,{encoded}"
+        ext = logo_file.filename.rsplit(".", 1)[-1].lower() if "." in logo_file.filename else "png"
+        profile_dir = os.path.join(current_app.static_folder, "profile")
+        os.makedirs(profile_dir, exist_ok=True)
+        for old in glob.glob(os.path.join(profile_dir, f"{id}.*")):
+            os.remove(old)
+        filename = f"{id}.{ext}"
+        with open(os.path.join(profile_dir, filename), "wb") as f:
+            f.write(raw)
+        data["logo"] = f"profile/{filename}"
 
     if data:
         model_tenant.update(id, data)
+        if session.get("tenant_id") == id and "logo" in data:
+            session["tenant_logo"] = data["logo"]
         flash("Atualizado com sucesso.")
     return redirect(url_for("admin.tenant_detail", id=id))
 

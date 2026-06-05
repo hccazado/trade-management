@@ -33,6 +33,8 @@ def login():
                 session["tenant_id"] = user.get("tenant_id")
                 session["is_admin"] = user.get("is_admin", False)
                 g.tenant_id = session["tenant_id"]
+                tenant = model_tenant.get(session["tenant_id"])
+                session["tenant_logo"] = tenant.get("logo") if tenant else None
                 return redirect(url_for("home.index"))
 
     flash("Invalid User/Password")
@@ -107,4 +109,6 @@ def google_callback():
         session["onboarding"] = True
         return redirect(url_for("onboarding.index"))
     g.tenant_id = session["tenant_id"]
+    tenant = model_tenant.get(session["tenant_id"])
+    session["tenant_logo"] = tenant.get("logo") if tenant else None
     return redirect(url_for("home.index"))

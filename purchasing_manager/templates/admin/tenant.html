@@ -16,7 +16,7 @@
             <li>
                 <label for="logo">Logo (máx. 200 KB)</label>
                 {% if tenant.get('logo') %}
-                    <img src="{{ tenant.logo }}" alt="Logo atual" style="height:60px;display:block;margin:8px 0;">
+                    <img src="{{ url_for('static', filename=tenant.logo) }}" alt="Logo atual" style="height:60px;display:block;margin:8px 0;">
                 {% endif %}
                 <input id="logo" name="logo" type="file" accept="image/*">
             </li>

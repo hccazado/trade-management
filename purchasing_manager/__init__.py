@@ -1,6 +1,7 @@
 import os, sys, json
 
-from flask import Flask, url_for, redirect, current_app
+# pyrefly: ignore [missing-import]
+from flask import Flask, url_for, redirect, current_app, session
 from flask_cors import CORS
 from authlib.integrations.flask_client import OAuth
 
@@ -43,6 +44,10 @@ def create_app (test_config = None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
+
+    @app.context_processor
+    def inject_tenant_logo():
+        return {"tenant_logo": session.get("tenant_logo")}
             
     #defining a static starting page while developing app
     @app.route("/favicon.ico")

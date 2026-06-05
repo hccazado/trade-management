@@ -51,6 +51,17 @@ header>img {
     width: 72px;
 }
 
+.header-brand {
+    text-decoration: none;
+}
+
+.header-title {
+    color: #fff;
+    font-size: 1.4em;
+    margin: 0;
+    letter-spacing: 2px;
+}
+
 #login {
     background-color: var(--contrast);
     border-radius: 8px;

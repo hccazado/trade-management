@@ -20,6 +20,18 @@
                 </select>
             </li>
             <li>
+                <label for="type">Tipo</label>
+                <select name="type" id="type">
+                    <option value="" selected>— Selecionar —</option>
+                    <option value="fine">Fine</option>
+                    <option value="good">Good</option>
+                    <option value="bica">Bica</option>
+                    <option value="barrento">Barrento</option>
+                    <option value="escolha">Escolha</option>
+                    <option value="chuvado">Chuvado</option>
+                </select>
+            </li>
+            <li>
                 <label for="data">Data</label>
                 <input id="data" name="data" value="{{ today }}">
             </li>
@@ -113,6 +125,17 @@
                         {% else %}
                             <option value="{{ client.id }}">{{ client.nome }}</option>
                         {% endif %}
+                    {% endfor %}
+                </select>
+            </li>
+            <li>
+                <label for="type">Tipo</label>
+                <select name="type" id="type">
+                    <option value="" {% if not sample.get('type') %}selected{% endif %}>— Selecionar —</option>
+                    {% for opt in ['fine', 'good', 'bica', 'barrento', 'escolha', 'chuvado'] %}
+                        <option value="{{ opt }}" {% if sample.get('type') == opt %}selected{% endif %}>
+                            {{ opt|capitalize }}
+                        </option>
                     {% endfor %}
                 </select>
             </li>
