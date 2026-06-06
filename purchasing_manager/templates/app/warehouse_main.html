@@ -2,46 +2,46 @@
 
 
 {%block content%}
-<h1>Armazéns</h1>
-    <section class="lt_mgt">
-        <div class="mgt_row">
-            <a class="transparent" href="{{url_for('home.index')}}">
-                <img class="return" src="{{url_for('static',filename='return.png')}}">
-            </a>
-            <input name="search" id="input_search" placeholder="filtrar nome"> 
-            <a class="button" href="{{url_for('warehouse.new')}}">Cadastrar</a>
-        </div>
-        <div class="mgt_container">
-            <table>
-                <thead>
-                    <td>Nome</td>
-                    <td>CPF/CNPJ</td>
-                    <td>Cidade / UF</td>
-                    <td>Editar</td>
-                </thead>
-                <tbody id="mgt_body">
-                    {%for warehouse in warehouses%}
-                    <tr>
-                        <td>
-                            {{warehouse['nome']}}
-                        </td>
-                        <td>
-                            {{warehouse['cnpj']}}  
-                        </td>
-                        <td>
-                            {{warehouse['cidade']}} / {{warehouse['uf']}}
-                        </td>
-                        <td>
-                            <a href="{{url_for('warehouse.edit', id=warehouse['id'])}}">
-                                <img class="edit" src="{{url_for('static', filename='edit.png')}}">
-                            </a>
-                        </td>
-                    </tr>
-                    {%endfor%}
-                </tbody>
-            </table>
-        </div>
-    </section>
+<h2 class="center">Armazéns</h2>
+<section class="lt_mgt">
+    <div class="mgt_row">
+        <a class="transparent" href="{{url_for('home.index')}}">
+            <img class="return" src="{{url_for('static',filename='return.png')}}">
+        </a>
+        <input name="search" id="input_search" placeholder="filtrar nome">
+        <a class="button" href="{{url_for('warehouse.new')}}">Novo Armazém</a>
+    </div>
+    <div class="mgt_container">
+        <table>
+            <thead>
+                <td>Nome</td>
+                <td>CPF/CNPJ</td>
+                <td>Cidade / UF</td>
+                <td>Editar</td>
+            </thead>
+            <tbody id="mgt_body">
+                {%for warehouse in warehouses%}
+                <tr>
+                    <td>
+                        {{warehouse['nome']}}
+                    </td>
+                    <td>
+                        {{warehouse['cnpj']}}
+                    </td>
+                    <td>
+                        {{warehouse['cidade']}} / {{warehouse['uf']}}
+                    </td>
+                    <td>
+                        <a href="{{url_for('warehouse.edit', id=warehouse['id'])}}">
+                            <img class="edit" src="{{url_for('static', filename='edit.png')}}">
+                        </a>
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+</section>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{{url_for('static', filename='find_warehouse.js')}}"></script>
 {%endblock%}

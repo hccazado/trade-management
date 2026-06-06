@@ -5,7 +5,7 @@ https://coolors.co/196774-ebe9e9-fca311-6b5e62
 */
 
 :root {
-    --background: #196774;
+    --background: #ed7d05;
     --primary: #FCA311;
     --secondary: #EBE9E9;
     --contrast: #6B5E62;
@@ -16,6 +16,18 @@ body {
     margin: 0;
     padding: 0;
     background-color: var(--secondary);
+    color: #000;
+    font-size: 1.2rem;
+    font-family: "Roboto", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Roboto", sans-serif;
 }
 
 header {
@@ -27,10 +39,26 @@ header {
     justify-items: center;
     align-items: center;
     margin-top: 0;
-    height: 80px;
+    height: 90px;
     width: 100vw;
+    font-size: 1.2rem;
     border-bottom: 1px solid #ccc;
     box-shadow: 0px 5px 5px rgba(25, 103, 116, .3);
+}
+
+header a {
+    color: #000;
+    text-decoration: none;
+}
+
+header a:hover {
+    text-decoration: underline;
+}
+
+header div:last-child {
+    width: 120px;
+    text-align: left;
+    text-transform: capitalize;
 }
 
 header ul {
@@ -70,12 +98,6 @@ header>img {
     text-decoration: none;
 }
 
-#clock {
-    color: #fff;
-    font-weight: 400;
-    font-size: 1.2em;
-}
-
 .center {
     text-align: center;
     margin: 1rem auto;
@@ -90,25 +112,32 @@ header>img {
     flex-flow: wrap;
 }
 
-.menu:last-child {
-    margin-left: auto;
+.menu a {
+    text-decoration: none;
 }
 
 .card {
-    border: 1px solid var(--contrast);
+    border: 1px solid var(--background);
     border-radius: 8px;
     color: #000;
     padding: 15px;
     width: 250px;
     height: 300px;
-    box-shadow: 2px 5px 5px #ccc;
+    box-shadow: 2px 5px 5px #bbb;
+    /* text-decoration: none; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.card>img {
+.card img {
     width: 90%;
+    height: auto;
+
 }
 
-.card>a {
+.card span {
     text-decoration: none;
 }
 
@@ -145,11 +174,13 @@ section>hr {
 }
 
 .mgt_row>input {
-    width: 170px;
+    width: 80%;
     justify-self: center;
     align-self: center;
-    height: 1.7em;
-    border-radius: 8px;
+    /* height: 1.7em; */
+    border-radius: .5rem;
+    padding: .5rem;
+    font-size: 1rem;
 }
 
 .mgt_row>a {
@@ -288,7 +319,7 @@ textarea {
     text-align: center;
     margin: 0 0 28px;
     color: var(--background);
-    font-size: 1.6em;
+    font-size: 1.6rem;
 }
 
 .login-card form ul {
@@ -430,17 +461,17 @@ textarea {
 .dashboard-panel h2 {
     margin: 0 0 16px;
     font-size: 1.05em;
-    color: var(--background);
+
 }
 
 .dashboard-subtitle {
     font-weight: 400;
     font-size: .85em;
-    color: #999;
+    color: #555;
 }
 
 .dashboard-empty {
-    color: #aaa;
+    color: #555;
     font-size: .9em;
     margin: 12px 0 0;
 }

@@ -6,7 +6,7 @@
 </a>
 
 {% if not isediting %}
-<h1>Cadastrar Amostra</h1>
+<h2 class="center">Cadastrar Amostra</h2>
 <section class="lt_mgt">
     <form id="form" method="post">
         <ul>
@@ -15,7 +15,7 @@
                 <select name="client" id="client">
                     <option value="" selected>Sem Cliente / Nenhum</option>
                     {% for client in clients %}
-                        <option value="{{ client.id }}">{{ client.nome }}</option>
+                    <option value="{{ client.id }}">{{ client.nome }}</option>
                     {% endfor %}
                 </select>
             </li>
@@ -24,11 +24,13 @@
                 <select name="type" id="type">
                     <option value="" selected>— Selecionar —</option>
                     <option value="fine">Fine</option>
+                    <option value="verygood">Very Good</option>
                     <option value="good">Good</option>
                     <option value="bica">Bica</option>
                     <option value="barrento">Barrento</option>
                     <option value="escolha">Escolha</option>
                     <option value="chuvado">Chuvado</option>
+                    <option value="fd10">FD10</option>
                 </select>
             </li>
             <li>
@@ -37,9 +39,10 @@
             </li>
             <li>
                 <label for="num_amostra">Número da Amostra</label>
-                <input id="num_amostra" name="num_amostra" placeholder="Deixar em branco para gerar automaticamente (ex: 001/26)">
+                <input id="num_amostra" name="num_amostra"
+                    placeholder="Deixar em branco para gerar automaticamente (ex: 001/26)">
             </li>
-            
+
             <li>
                 <label for="17/8">Peneira 17/8</label>
                 <input id="17/8" name="17/8" placeholder="e.g. 30%">
@@ -72,7 +75,7 @@
                 <label for="Broca">Broca</label>
                 <input id="Broca" name="Broca" placeholder="e.g. 2%">
             </li>
-            
+
             <li>
                 <fieldset>
                     <legend>Bebida</legend>
@@ -120,16 +123,16 @@
                 <label for="client">Cliente</label>
                 <select name="client" id="client">
                     {% if not sample.client or sample.client == "" %}
-                        <option value="" selected>Sem Cliente / Nenhum</option>
+                    <option value="" selected>Sem Cliente / Nenhum</option>
                     {% else %}
-                        <option value="">Sem Cliente / Nenhum</option>
+                    <option value="">Sem Cliente / Nenhum</option>
                     {% endif %}
                     {% for client in clients %}
-                        {% if sample.client == client.id %}
-                            <option value="{{ client.id }}" selected>{{ client.nome }}</option>
-                        {% else %}
-                            <option value="{{ client.id }}">{{ client.nome }}</option>
-                        {% endif %}
+                    {% if sample.client == client.id %}
+                    <option value="{{ client.id }}" selected>{{ client.nome }}</option>
+                    {% else %}
+                    <option value="{{ client.id }}">{{ client.nome }}</option>
+                    {% endif %}
                     {% endfor %}
                 </select>
             </li>
@@ -137,10 +140,10 @@
                 <label for="type">Tipo</label>
                 <select name="type" id="type">
                     <option value="" {% if not sample.get('type') %}selected{% endif %}>— Selecionar —</option>
-                    {% for opt in ['fine', 'good', 'bica', 'barrento', 'escolha', 'chuvado'] %}
-                        <option value="{{ opt }}" {% if sample.get('type') == opt %}selected{% endif %}>
-                            {{ opt|capitalize }}
-                        </option>
+                    {% for opt in ['fine', 'verygood', 'good', 'bica', 'barrento', 'escolha', 'chuvado', 'fd10'] %}
+                    <option value="{{ opt }}" {% if sample.get('type')==opt %}selected{% endif %}>
+                        {{ opt|capitalize }}
+                    </option>
                     {% endfor %}
                 </select>
             </li>
@@ -152,7 +155,7 @@
                 <label for="num_amostra">Número da Amostra</label>
                 <input id="num_amostra" name="num_amostra" value="{{ sample.num_amostra }}">
             </li>
-            
+
             <li>
                 <label for="17/8">Peneira 17/8</label>
                 <input id="17/8" name="17/8" value="{{ sample['17/8'] }}">
@@ -185,26 +188,31 @@
                 <label for="Broca">Broca</label>
                 <input id="Broca" name="Broca" value="{{ sample.Broca }}">
             </li>
-            
+
             <li>
                 <fieldset>
                     <legend>Bebida</legend>
                     <label for="Duro">Duro</label>
-                    <input id="Duro" name="Duro" type="number" min="0" placeholder="num. copos" value="{{ sample.Duro }}">
+                    <input id="Duro" name="Duro" type="number" min="0" placeholder="num. copos"
+                        value="{{ sample.Duro }}">
                     <label for="Riado">Riado</label>
-                    <input id="Riado" name="Riado" type="number" min="0" placeholder="num. copos" value="{{ sample.Riado }}">
+                    <input id="Riado" name="Riado" type="number" min="0" placeholder="num. copos"
+                        value="{{ sample.Riado }}">
                     <label for="Rio">Rio</label>
                     <input id="Rio" name="Rio" type="number" min="0" placeholder="num. copos" value="{{ sample.Rio }}">
                     <label for="Fermentado">Fermentado</label>
-                    <input id="Fermentado" name="Fermentado" type="number" min="0" placeholder="num. copos" value="{{ sample.Fermentado }}">
+                    <input id="Fermentado" name="Fermentado" type="number" min="0" placeholder="num. copos"
+                        value="{{ sample.Fermentado }}">
                     <label for="Sujo">Sujo</label>
-                    <input id="Sujo" name="Sujo" type="number" min="0" placeholder="num. copos" value="{{ sample.Sujo }}">
+                    <input id="Sujo" name="Sujo" type="number" min="0" placeholder="num. copos"
+                        value="{{ sample.Sujo }}">
                 </fieldset>
             </li>
 
             <li>
                 <label for="quantidade">Quantidade (sacas)</label>
-                <input id="quantidade" name="quantidade" type="number" min="0" placeholder="e.g. 300" value="{{ sample.get('quantidade', '') }}">
+                <input id="quantidade" name="quantidade" type="number" min="0" placeholder="e.g. 300"
+                    value="{{ sample.get('quantidade', '') }}">
             </li>
 
             <li>

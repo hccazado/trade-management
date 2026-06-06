@@ -8,53 +8,53 @@
         <a class="transparent" href="{{url_for('home.index')}}">
             <img class="return" src="{{url_for('static',filename='return.png')}}">
         </a>
-        <input name="search" id="input_search" placeholder="filtrar fechamento"> 
-        <a class="button" href="{{url_for('agreement.new')}}">Cadastrar</a>
+        <input name="search" id="input_search" placeholder="filtrar fechamento">
+        <a class="button" href="{{url_for('agreement.new')}}">Novo Fechamento</a>
     </div>
     <div class="mgt_container">
-            <table>
-                <thead>
-                    <td>Data</td>
-                    <td>Num Fechamento</td>
-                    <td>Ordem Compra</td>
-                    <td>Vendedor</td>
-                    <td>Comprador</td>
-                    <td>Quantidade</td>
-                    <td>Editar</td>
-                </thead>
-                <tbody id="mgt_body">
-                    {%for agreement in agreements%}
-                    <tr>
-                        <td>
-                            {{agreement['data']}}
-                        </td>
-                        <td>
-                            {{agreement['num_fechamento']}}
-                        </td>
-                        <td>
-                            {{agreement['rc']}}
-                        </td>
-                        <td>
-                            {{agreement['vendedor']}}
-                        </td>
-                        <td>
-                            {{agreement['comprador']}}  
-                        </td>
-                        <td>
-                            {{agreement['quantidade']}}
-                        </td>
-                        <td>
-                            <a href="{{ url_for('agreement.edit', id=agreement['id']) }}">
-                                <img class="edit" src="{{ url_for('static', filename='edit.png') }}">
-                            </a>
-                            <a href="{{ url_for('agreement.print', id=agreement['id']) }}">
-                                <img class="edit" src="{{ url_for('static', filename='print.png') }}">
-                            </a>
-                        </td>
-                    </tr>
-                    {%endfor%}
-                </tbody>
-            </table>
+        <table>
+            <thead>
+                <td>Data</td>
+                <td>Num Fechamento</td>
+                <td>Ordem Compra</td>
+                <td>Vendedor</td>
+                <td>Comprador</td>
+                <td>Quantidade</td>
+                <td>Editar</td>
+            </thead>
+            <tbody id="mgt_body">
+                {%for agreement in agreements%}
+                <tr>
+                    <td>
+                        {{agreement['data']}}
+                    </td>
+                    <td>
+                        {{agreement['num_fechamento']}}
+                    </td>
+                    <td>
+                        {{agreement['rc']}}
+                    </td>
+                    <td>
+                        {{agreement['vendedor']}}
+                    </td>
+                    <td>
+                        {{agreement['comprador']}}
+                    </td>
+                    <td>
+                        {{agreement['quantidade']}}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('agreement.edit', id=agreement['id']) }}">
+                            <img class="edit" src="{{ url_for('static', filename='edit.png') }}">
+                        </a>
+                        <a href="{{ url_for('agreement.print', id=agreement['id']) }}">
+                            <img class="edit" src="{{ url_for('static', filename='print.png') }}">
+                        </a>
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
     </div>
 </section>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

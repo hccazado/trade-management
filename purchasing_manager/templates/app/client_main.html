@@ -3,46 +3,46 @@
 
 
 {%block content%}
-<h1 class="center">Clientes</h1>
-    <section class="lt_mgt">
-        <div class="mgt_row">
-            <a class="transparent" href="{{url_for('home.index')}}">
-                <img class="return" src="{{url_for('static',filename='return.png')}}">
-            </a>
-            <input name="search" id="input_search" placeholder="filtrar nome"> 
-            <a class="button" href="{{url_for('client.new')}}">Cadastrar</a>
-        </div>
-        <div class="mgt_container">
-            <table>
-                <thead>
-                    <td>Nome</td>
-                    <td>CPF/CNPJ</td>
-                    <td>Cidade / UF</td>
-                    <td>Editar</td>
-                </thead>
-                <tbody id="mgt_body">
-                    {%for client in clients%}
-                    <tr>
-                        <td>
-                            {{client.nome}}
-                        </td>
-                        <td>
-                            {{client.cnpj}}  
-                        </td>
-                        <td>
-                            {{client.cidade}} / {{client.uf}}
-                        </td>
-                        <td>
-                            <a href="{{url_for('client.edit', id=client.id)}}">
-                                <img class="edit" src="{{url_for('static', filename='edit.png')}}">
-                            </a>
-                        </td>
-                    </tr>
-                    {%endfor%}
-                </tbody>
-            </table>
-        </div>
-    </section>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="{{url_for('static', filename='find_clients.js')}}"></script>
+<h2 class="center">Clientes</h2>
+<section class="lt_mgt">
+    <div class="mgt_row">
+        <a class="transparent" href="{{url_for('home.index')}}">
+            <img class="return" src="{{url_for('static',filename='return.png')}}">
+        </a>
+        <input name="search" id="input_search" placeholder="Buscar por nome">
+        <a class="button" href="{{url_for('client.new')}}">Novo Cliente</a>
+    </div>
+    <div class="mgt_container">
+        <table>
+            <thead>
+                <td>Nome</td>
+                <td>CPF/CNPJ</td>
+                <td>Cidade / UF</td>
+                <td>Editar</td>
+            </thead>
+            <tbody id="mgt_body">
+                {%for client in clients%}
+                <tr>
+                    <td>
+                        {{client.nome}}
+                    </td>
+                    <td>
+                        {{client.cnpj}}
+                    </td>
+                    <td>
+                        {{client.cidade}} / {{client.uf}}
+                    </td>
+                    <td>
+                        <a href="{{url_for('client.edit', id=client.id)}}">
+                            <img class="edit" src="{{url_for('static', filename='edit.png')}}">
+                        </a>
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{{url_for('static', filename='find_clients.js')}}"></script>
 {%endblock%}

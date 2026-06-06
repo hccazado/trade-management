@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="center">Amostras de Café</h1>
+<h2 class="center">Amostras de Café</h2>
 <section class="lt_mgt">
     <div class="mgt_row">
         <a class="transparent" href="{{ url_for('home.index') }}">
             <img class="return" src="{{ url_for('static', filename='return.png') }}">
         </a>
-        <input name="search" id="input_search" placeholder="filtrar cliente"> 
-        <a class="button" href="{{ url_for('sample.new') }}">Cadastrar</a>
+        <input name="search" id="input_search" placeholder="filtrar cliente">
+        <a class="button" href="{{ url_for('sample.new') }}">Nova Amostra</a>
     </div>
     <div class="mgt_container">
         <table>
