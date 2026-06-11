@@ -45,35 +45,35 @@
 
             <li>
                 <label for="17/8">Peneira 17/8</label>
-                <input id="17/8" name="17/8" placeholder="e.g. 30%">
+                <input id="17/8" name="17/8" type="number" step="0.1" min="0" placeholder="ex: 30.5">
             </li>
             <li>
                 <label for="13">Peneira 13</label>
-                <input id="13" name="13" placeholder="e.g. 25%">
+                <input id="13" name="13" type="number" step="0.1" min="0" placeholder="ex: 25.0">
             </li>
             <li>
                 <label for="10">Peneira 10</label>
-                <input id="10" name="10" placeholder="e.g. 15%">
+                <input id="10" name="10" type="number" step="0.1" min="0" placeholder="ex: 15.0">
             </li>
             <li>
                 <label for="Mk">Moka (Mk)</label>
-                <input id="Mk" name="Mk" placeholder="e.g. 10%">
+                <input id="Mk" name="Mk" type="number" step="0.1" min="0" placeholder="ex: 10.0">
             </li>
             <li>
                 <label for="FD">Fundo (FD)</label>
-                <input id="FD" name="FD" placeholder="e.g. 20%">
+                <input id="FD" name="FD" type="number" step="0.1" min="0" placeholder="ex: 20.0">
             </li>
             <li>
                 <label for="Cata">Catado (Cata)</label>
-                <input id="Cata" name="Cata" placeholder="e.g. 12% ou 86 def">
+                <input id="Cata" name="Cata" type="number" step="0.1" min="0" placeholder="ex: 12.0">
             </li>
             <li>
                 <label for="PVA">Defeitos (PVA)</label>
-                <input id="PVA" name="PVA" placeholder="e.g. 10 def">
+                <input id="PVA" name="PVA" type="number" step="0.1" min="0" placeholder="ex: 10.0">
             </li>
             <li>
                 <label for="Broca">Broca</label>
-                <input id="Broca" name="Broca" placeholder="e.g. 2%">
+                <input id="Broca" name="Broca" type="number" step="0.1" min="0" placeholder="ex: 2.0">
             </li>
 
             <li>
@@ -158,35 +158,35 @@
 
             <li>
                 <label for="17/8">Peneira 17/8</label>
-                <input id="17/8" name="17/8" value="{{ sample['17/8'] }}">
+                <input id="17/8" name="17/8" type="number" step="0.1" min="0" value="{{ sample['17/8'] }}">
             </li>
             <li>
                 <label for="13">Peneira 13</label>
-                <input id="13" name="13" value="{{ sample['13'] }}">
+                <input id="13" name="13" type="number" step="0.1" min="0" value="{{ sample['13'] }}">
             </li>
             <li>
                 <label for="10">Peneira 10</label>
-                <input id="10" name="10" value="{{ sample['10'] }}">
+                <input id="10" name="10" type="number" step="0.1" min="0" value="{{ sample['10'] }}">
             </li>
             <li>
                 <label for="Mk">Moka (Mk)</label>
-                <input id="Mk" name="Mk" value="{{ sample.Mk }}">
+                <input id="Mk" name="Mk" type="number" step="0.1" min="0" value="{{ sample.Mk }}">
             </li>
             <li>
                 <label for="FD">Fundo (FD)</label>
-                <input id="FD" name="FD" value="{{ sample.FD }}">
+                <input id="FD" name="FD" type="number" step="0.1" min="0" value="{{ sample.FD }}">
             </li>
             <li>
                 <label for="Cata">Catado (Cata)</label>
-                <input id="Cata" name="Cata" value="{{ sample.Cata }}">
+                <input id="Cata" name="Cata" type="number" step="0.1" min="0" value="{{ sample.Cata }}">
             </li>
             <li>
                 <label for="PVA">Defeitos (PVA)</label>
-                <input id="PVA" name="PVA" value="{{ sample.PVA }}">
+                <input id="PVA" name="PVA" type="number" step="0.1" min="0" value="{{ sample.PVA }}">
             </li>
             <li>
                 <label for="Broca">Broca</label>
-                <input id="Broca" name="Broca" value="{{ sample.Broca }}">
+                <input id="Broca" name="Broca" type="number" step="0.1" min="0" value="{{ sample.Broca }}">
             </li>
 
             <li>
@@ -220,11 +220,13 @@
                 <textarea id="obs" name="obs">{{ sample.obs }}</textarea>
             </li>
 
-            <li>
+            <li style="display:flex;gap:10px;align-items:center">
                 <button type="submit">Atualizar</button>
+                <button type="button" id="btn-copy-form">📋 Copiar amostra</button>
             </li>
         </ul>
     </form>
 </section>
+<script src="{{ url_for('static', filename='copy_sample.js') }}"></script>
 {% endif %}
 {% endblock %}

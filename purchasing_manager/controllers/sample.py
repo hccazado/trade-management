@@ -7,12 +7,18 @@ from flask import url_for, request, redirect, render_template, flash
 
 from ..models import client as model_client, sample as model_sample
 from ..controllers import client as controller_client
+from ..controllers.buyer import get_matching_buyers
 
 
-def _notify_buyers(payload):
+def _notify_buyers(sample_data):
     webhook_url = os.environ.get("N8N_WEBHOOK_URL")
     if not webhook_url:
         return
+    matched = get_matching_buyers(sample_data)
+    if not matched:
+        print("No matching buyers found, skipping webhook.")
+        return
+    payload = {"sample": sample_data, "buyers": matched}
     try:
         requests.post(webhook_url, json=payload, timeout=10)
     except Exception as e:

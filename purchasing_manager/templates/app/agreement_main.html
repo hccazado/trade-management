@@ -14,33 +14,33 @@
     <div class="mgt_container">
         <table>
             <thead>
-                <td>Data</td>
+                <td class="hide-mobile">Data</td>
                 <td>Num Fechamento</td>
-                <td>Ordem Compra</td>
-                <td>Vendedor</td>
+                <td class="hide-mobile">Ordem Compra</td>
+                <td class="hide-mobile">Vendedor</td>
                 <td>Comprador</td>
-                <td>Quantidade</td>
+                <td class="hide-mobile">Quantidade</td>
                 <td>Editar</td>
             </thead>
             <tbody id="mgt_body">
                 {%for agreement in agreements%}
                 <tr>
-                    <td>
+                    <td class="hide-mobile">
                         {{agreement['data']}}
                     </td>
                     <td>
                         {{agreement['num_fechamento']}}
                     </td>
-                    <td>
+                    <td class="hide-mobile">
                         {{agreement['rc']}}
                     </td>
-                    <td>
+                    <td class="hide-mobile">
                         {{agreement['vendedor']}}
                     </td>
                     <td>
                         {{agreement['comprador']}}
                     </td>
-                    <td>
+                    <td class="hide-mobile">
                         {{agreement['quantidade']}}
                     </td>
                     <td>

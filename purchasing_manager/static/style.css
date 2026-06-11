@@ -143,7 +143,8 @@ header>img {
 
 section {
     width: 95%;
-    margin: auto 30px;
+    margin: auto;
+    box-sizing: border-box;
 }
 
 section>hr {
@@ -157,12 +158,12 @@ section>hr {
 }
 
 .login {
-    margin: 0 auto;
+    margin: 30px auto 0;
     height: 500px;
-    width: 400px;
+    max-width: 400px;
+    width: 95%;
     border: 1px solid #aaa;
     border-radius: 8px;
-    margin-top: 30px;
 }
 
 .mgt_row {
@@ -244,7 +245,8 @@ section>hr {
 
 .lt_mgt>form {
     margin: 20px auto;
-    width: 400px;
+    max-width: 480px;
+    width: calc(100% - 32px);
     border: 1px solid #ccc;
 }
 
@@ -526,7 +528,7 @@ textarea {
     }
 
     section {
-        margin: 30px auto;
+        margin: 16px auto;
     }
 
     .mgt_row {
@@ -541,6 +543,7 @@ textarea {
     .mgt_container {
         overflow-x: scroll;
         overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
     }
 
     .mgt_container>table {
@@ -552,5 +555,163 @@ textarea {
 
     .mgt_container>table td {
         width: 150px;
+    }
+}
+
+/* ── Mobile (phones) ──────────────────────────────────────────────────────── */
+@media screen and (max-width: 600px) {
+
+    /* header: keep 3 equal columns, shrink content to fit */
+    header {
+        grid-template-columns: repeat(3, 1fr);
+        height: 64px;
+        padding: 0 8px;
+    }
+
+    #clock {
+        font-size: 0.72rem;
+    }
+
+    header .logo {
+        max-width: 44px;
+    }
+
+    .header-title {
+        font-size: 1rem;
+        letter-spacing: 1px;
+    }
+
+    /* hide greeting text, keep only the logout link */
+    header div:last-child {
+        font-size: 0.85rem;
+        width: auto;
+    }
+
+    header div:last-child span {
+        display: none;
+    }
+
+    /* prevent iOS auto-zoom on focus — inputs must be >= 16px */
+    input, select, textarea, button {
+        font-size: 1rem;
+    }
+
+    /* touch-friendly targets */
+    button,
+    .button,
+    input[type="submit"] {
+        min-height: 44px;
+        padding: 10px 18px;
+    }
+
+    .lt_mgt>form li input,
+    .lt_mgt>form li select {
+        min-height: 44px;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    .lt_mgt>form li textarea {
+        min-height: 80px;
+        padding: 8px 10px;
+        box-sizing: border-box;
+    }
+
+    /* form fills screen width on phones */
+    .lt_mgt>form {
+        width: calc(100% - 16px);
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+    }
+
+    /* bigger tap area for checkboxes */
+    .lt_mgt>form input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        min-height: 20px;
+    }
+
+    /* cards stretch on very small screens */
+    .card {
+        width: 85vw;
+        height: auto;
+        min-height: 120px;
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 16px;
+        gap: 16px;
+    }
+
+    .card img {
+        width: 48px;
+        height: 48px;
+    }
+
+    /* smooth table scroll */
+    .mgt_container {
+        height: 55vh;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* edit/copy icons: bigger tap area */
+    .edit, .btn-copy {
+        width: 36px;
+        height: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* return arrow: bigger tap area */
+    .return {
+        width: 44px;
+        padding: 4px;
+    }
+
+    /* search bar row — flex so each element sizes predictably */
+    .mgt_row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+    }
+
+    /* return arrow: fixed, doesn't grow */
+    .mgt_row>a:first-child {
+        flex: 0 0 auto;
+    }
+
+    /* search input: takes all remaining space */
+    .mgt_row>input {
+        flex: 1 1 0;
+        min-width: 0;
+        width: auto;
+        min-height: 44px;
+        padding: 0 10px;
+        box-sizing: border-box;
+        font-size: 1rem;
+    }
+
+    /* action button: fixed, text never wraps */
+    .mgt_row>a.button {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        font-size: 0.8rem;
+        padding: 8px 10px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+
+    /* flash messages */
+    .flash, .flash-error {
+        font-size: 1rem;
+        padding: 0.75rem;
+    }
+
+    /* table columns hidden on mobile */
+    .hide-mobile {
+        display: none;
     }
 }

@@ -15,63 +15,67 @@
             <thead>
                 <tr>
                     <td>Nº Amostra</td>
-                    <td>Tipo</td>
+                    <td class="hide-mobile">Tipo</td>
                     <td>Cliente</td>
-                    <td>Data</td>
-                    <td>17/8</td>
-                    <td>13</td>
-                    <td>10</td>
-                    <td>Mk</td>
-                    <td>FD</td>
-                    <td>Cata</td>
-                    <td>PVA</td>
-                    <td>Broca</td>
+                    <td class="hide-mobile">Data</td>
+                    <td class="hide-mobile">17/8</td>
+                    <td class="hide-mobile">13</td>
+                    <td class="hide-mobile">10</td>
+                    <td class="hide-mobile">Mk</td>
+                    <td class="hide-mobile">FD</td>
+                    <td class="hide-mobile">Cata</td>
+                    <td class="hide-mobile">PVA</td>
+                    <td class="hide-mobile">Broca</td>
                     <td>Editar</td>
+                    <td>Copiar</td>
                 </tr>
             </thead>
             <tbody id="mgt_body">
                 {% for sample in samples %}
-                <tr>
+                <tr data-sample='{{ sample | tojson }}'>
                     <td>
                         {{ sample.num_amostra }}
                     </td>
-                    <td>
+                    <td class="hide-mobile">
                         {{ sample.get('type', '—')|capitalize }}
                     </td>
                     <td>
                         {{ sample.client_name }}
                     </td>
-                    <td>
+                    <td class="hide-mobile">
                         {{ sample.data }}
                     </td>
-                    <td>
+                    <td class="hide-mobile">
                         {{ sample['17/8'] }}
                     </td>
-                    <td>
+                    <td class="hide-mobile">
                         {{ sample['13'] }}
                     </td>
-                    <td>
+                    <td class="hide-mobile">
                         {{ sample['10'] }}
                     </td>
-                    <td>
+                    <td class="hide-mobile">
                         {{ sample.Mk }}
                     </td>
-                    <td>
+                    <td class="hide-mobile">
                         {{ sample.FD }}
                     </td>
-                    <td>
+                    <td class="hide-mobile">
                         {{ sample.Cata }}
                     </td>
-                    <td>
+                    <td class="hide-mobile">
                         {{ sample.PVA }}
                     </td>
-                    <td>
+                    <td class="hide-mobile">
                         {{ sample.Broca }}
                     </td>
                     <td>
                         <a href="{{ url_for('sample.edit', id=sample.id) }}">
                             <img class="edit" src="{{ url_for('static', filename='edit.png') }}">
                         </a>
+                    </td>
+                    <td>
+                        <button type="button" class="btn-copy">📋</button>
                     </td>
                 </tr>
                 {% endfor %}
@@ -81,4 +85,5 @@
 </section>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{{ url_for('static', filename='find_samples.js') }}"></script>
+<script src="{{ url_for('static', filename='copy_sample.js') }}"></script>
 {% endblock %}

@@ -1,4 +1,4 @@
-from ..models import client as model_client, warehouse as model_warehouse, agreement as model_agreement, sample as model_sample
+from ..models import client as model_client, warehouse as model_warehouse, agreement as model_agreement, sample as model_sample, buyer as model_buyer
 
 
 def query_clients(query):
@@ -35,3 +35,8 @@ def query_samples(query):
             sample['client_name'] = client_name
             result.append(sample)
     return sorted(result, key=lambda s: s.get('client_name', '').lower())
+
+def query_buyers(query):
+    buyers = model_buyer.get_all()
+    result = [b for b in buyers if query.upper() in b.get("nome", "").upper()]
+    return sorted(result, key=lambda b: b.get("nome", ""))

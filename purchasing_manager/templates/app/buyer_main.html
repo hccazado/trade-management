@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="center">Compradores</h2>
+<section class="lt_mgt">
+    <div class="mgt_row">
+        <a class="transparent" href="{{ url_for('home.index') }}">
+            <img class="return" src="{{ url_for('static', filename='return.png') }}">
+        </a>
+        <input name="search" id="input_search" placeholder="Buscar por nome">
+        <a class="button" href="{{ url_for('buyer.new') }}">Novo Comprador</a>
+    </div>
+    <div class="mgt_container">
+        <table>
+            <thead>
+                <td>Nome</td>
+                <td class="hide-mobile">WhatsApp</td>
+                <td class="hide-mobile">Tipo</td>
+                <td class="hide-mobile">Qtd (sacas)</td>
+                <td>Ativo</td>
+                <td>Editar</td>
+            </thead>
+            <tbody id="mgt_body">
+                {% for buyer in buyers %}
+                <tr>
+                    <td>{{ buyer.nome }}</td>
+                    <td class="hide-mobile">{{ buyer.whatsapp }}</td>
+                    <td class="hide-mobile">{{ (buyer.get('tipo') or []) | join(', ') }}</td>
+                    <td class="hide-mobile">{{ buyer.get('quantidade_minima', '') }}</td>
+                    <td>{{ 'Sim' if buyer.get('ativo') else 'Não' }}</td>
+                    <td>
+                        <a href="{{ url_for('buyer.edit', id=buyer.id) }}">
+                            <img class="edit" src="{{ url_for('static', filename='edit.png') }}">
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{{ url_for('static', filename='find_buyers.js') }}"></script>
+{% endblock %}

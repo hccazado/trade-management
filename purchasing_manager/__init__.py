@@ -80,6 +80,9 @@ def create_app (test_config = None):
 
     from .routes import admin
     app.register_blueprint(admin.bp)
+
+    from .routes import buyer
+    app.register_blueprint(buyer.bp)
     
     
     @app.route("/")

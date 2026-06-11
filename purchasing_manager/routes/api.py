@@ -27,3 +27,8 @@ def query_agreements(query):
 @auth.login_required
 def query_samples(query):
     return json.dumps(api.query_samples(query))
+
+@bp.route("/buyer/<query>")
+@auth.login_required
+def query_buyers(query):
+    return json.dumps(api.query_buyers(query))
