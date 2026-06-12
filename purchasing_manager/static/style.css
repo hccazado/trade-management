@@ -972,7 +972,7 @@ textarea {
     }
 
     .main-content {
-        padding: 0;
+        padding: 1rem;
     }
 
     /* header: keep 3 equal columns, shrink content to fit */
