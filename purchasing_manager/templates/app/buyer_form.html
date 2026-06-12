@@ -1,167 +1,100 @@
 {% extends "base.html" %}
 {% block content %}
 
-<a href="{{ url_for('buyer.index') }}">
-    <img class="return" src="{{ url_for('static', filename='return.png') }}">
+<a href="{{ url_for('buyer.index') }}" class="btn btn-sm btn-outline-secondary mb-3">
+    <span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle">arrow_back</span> Voltar
 </a>
 
-{% if not isediting %}
-<h2 class="center">Cadastrar Comprador</h2>
-<section class="lt_mgt">
+<div class="form-card">
+    <h2 class="form-title">{% if isediting %}Editar Comprador{% else %}Cadastrar Comprador{% endif %}</h2>
     <form id="form" method="post">
-        <ul>
-            <li>
-                <label for="nome">Nome <span style="color:red">*</span></label>
-                <input id="nome" name="nome" required>
-            </li>
-            <li>
-                <label for="whatsapp">WhatsApp <span style="color:red">*</span></label>
-                <div class="whatsapp-prefix">
-                    <span>+55</span>
-                    <input id="whatsapp" name="whatsapp" placeholder="(11) 99999-9999" required
-                        pattern="\(?\d{2}\)?\s?\d{4,5}-?\d{4}">
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="nome">Nome <span class="text-danger">*</span></label>
+            <input class="form-control" id="nome" name="nome" required
+                value="{{ buyer.nome if isediting else '' }}">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">WhatsApp <span class="text-danger">*</span></label>
+            <div class="input-group">
+                <span class="input-group-text">+55</span>
+                <input class="form-control" id="whatsapp" name="whatsapp" required
+                    pattern="\(?\d{2}\)?\s?\d{4,5}-?\d{4}"
+                    placeholder="(11) 99999-9999"
+                    value="{{ buyer.get('whatsapp', '')|replace('+55','',1) if isediting else '' }}">
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="endereco">Endereço</label>
+            <textarea class="form-control" id="endereco" name="endereco" rows="3">{{ buyer.get('endereco', '') if isediting else '' }}</textarea>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header fw-semibold">Preferências de Amostra</div>
+            <div class="card-body">
+                <label class="form-label fw-semibold">Tipos aceitos</label>
+                <div class="checkbox-group">
+                    {% for opt in tipo_options %}
+                    <label>
+                        <input type="checkbox" name="tipo" value="{{ opt }}"
+                            {% if isediting and opt in (buyer.get('tipo') or []) %}checked{% endif %}>
+                        {{ opt|capitalize }}
+                    </label>
+                    {% endfor %}
                 </div>
-            </li>
-            <li>
-                <label for="endereco">Endereço</label>
-                <textarea id="endereco" name="endereco" rows="2"></textarea>
-            </li>
-            <li>
-                <fieldset>
-                    <legend>Preferências de Amostra</legend>
 
-                    <label>Tipos aceitos</label>
-                    <div class="checkbox-group">
-                        {% for opt in tipo_options %}
-                        <label><input type="checkbox" name="tipo" value="{{ opt }}"> {{ opt|capitalize }}</label>
-                        {% endfor %}
-                    </div>
+                <hr class="section-divider">
 
-                    <hr class="section-divider">
-
-                    <label>Bebida aceita</label>
-                    <div class="checkbox-group">
-                        {% for b in bebida_options %}
-                        <label><input type="checkbox" name="bebida" value="{{ b }}"> {{ b }}</label>
-                        {% endfor %}
-                    </div>
-                    <label for="bebida_tolerancia">Tolerância bebida (máx. copos de outros tipos)</label>
-                    <input id="bebida_tolerancia" name="bebida_tolerancia" type="number" min="0" value="0" placeholder="0">
-
-                    <hr class="section-divider">
-
-                    <label>Peneiras mínimas (%)</label>
-                    <div class="peneiras-grid">
-                        {% for p in peneira_options %}
-                        <div class="peneira-row">
-                            <label for="{{ p.field }}">{{ p.label }}</label>
-                            <input id="{{ p.field }}" name="{{ p.field }}" type="number" step="0.1" min="0" placeholder="mín.">
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <label for="peneiras_tolerancia">Tolerância peneiras (% abaixo do mínimo aceito)</label>
-                    <input id="peneiras_tolerancia" name="peneiras_tolerancia" type="number" step="0.1" min="0" value="0" placeholder="0.0">
-                    <label for="quantidade_minima">Quantidade mínima (sacas)</label>
-                    <input id="quantidade_minima" name="quantidade_minima" type="number" min="0" placeholder="ex: 100">
-                </fieldset>
-            </li>
-            <li>
-                <label for="ativo">
-                    <input type="checkbox" id="ativo" name="ativo" checked>
-                    Comprador ativo
-                </label>
-            </li>
-            <li>
-                <button type="submit">Cadastrar</button>
-            </li>
-        </ul>
-    </form>
-</section>
-
-{% else %}
-<h2 class="center">Editar Comprador</h2>
-<section class="lt_mgt">
-    <form id="form" method="post">
-        <ul>
-            <li>
-                <label for="nome">Nome <span style="color:red">*</span></label>
-                <input id="nome" name="nome" value="{{ buyer.nome }}" required>
-            </li>
-            <li>
-                <label for="whatsapp">WhatsApp <span style="color:red">*</span></label>
-                <div class="whatsapp-prefix">
-                    <span>+55</span>
-                    <input id="whatsapp" name="whatsapp" required
-                        pattern="\(?\d{2}\)?\s?\d{4,5}-?\d{4}"
-                        value="{{ buyer.whatsapp | replace('+55', '', 1) }}">
+                <label class="form-label fw-semibold">Bebida aceita</label>
+                <div class="checkbox-group">
+                    {% for b in bebida_options %}
+                    <label>
+                        <input type="checkbox" name="bebida" value="{{ b }}"
+                            {% if isediting and b in (buyer.get('bebida') or []) %}checked{% endif %}>
+                        {{ b }}
+                    </label>
+                    {% endfor %}
                 </div>
-            </li>
-            <li>
-                <label for="endereco">Endereço</label>
-                <textarea id="endereco" name="endereco" rows="2">{{ buyer.get('endereco', '') }}</textarea>
-            </li>
-            <li>
-                <fieldset>
-                    <legend>Preferências de Amostra</legend>
+                <div class="mb-3 mt-2">
+                    <label class="form-label fw-semibold" for="bebida_tolerancia">Tolerância bebida (máx. copos de outros tipos)</label>
+                    <input class="form-control" id="bebida_tolerancia" name="bebida_tolerancia" type="number" min="0" placeholder="0"
+                        value="{{ buyer.get('bebida_tolerancia', 0) if isediting else 0 }}">
+                </div>
 
-                    <label>Tipos aceitos</label>
-                    <div class="checkbox-group">
-                        {% for opt in tipo_options %}
-                        <label>
-                            <input type="checkbox" name="tipo" value="{{ opt }}"
-                                {% if opt in (buyer.get('tipo') or []) %}checked{% endif %}>
-                            {{ opt|capitalize }}
-                        </label>
-                        {% endfor %}
+                <hr class="section-divider">
+
+                <label class="form-label fw-semibold">Peneiras mínimas (%)</label>
+                <div class="peneiras-grid">
+                    {% for p in peneira_options %}
+                    <div class="peneira-row">
+                        <label for="{{ p.field }}">{{ p.label }}</label>
+                        <input id="{{ p.field }}" name="{{ p.field }}" type="number" step="0.1" min="0"
+                            placeholder="mín." value="{{ buyer.get(p.field, '') if isediting else '' }}">
                     </div>
+                    {% endfor %}
+                </div>
+                <div class="mb-3 mt-2">
+                    <label class="form-label fw-semibold" for="peneiras_tolerancia">Tolerância peneiras (% abaixo do mínimo aceito)</label>
+                    <input class="form-control" id="peneiras_tolerancia" name="peneiras_tolerancia" type="number" step="0.1" min="0" placeholder="0.0"
+                        value="{{ buyer.get('peneiras_tolerancia', 0) if isediting else 0 }}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold" for="quantidade_minima">Quantidade mínima (sacas)</label>
+                    <input class="form-control" id="quantidade_minima" name="quantidade_minima" type="number" min="0" placeholder="ex: 100"
+                        value="{{ buyer.get('quantidade_minima', '') if isediting else '' }}">
+                </div>
+            </div>
+        </div>
 
-                    <hr class="section-divider">
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="ativo" name="ativo"
+                {% if isediting %}{% if buyer.get('ativo') %}checked{% endif %}{% else %}checked{% endif %}>
+            <label class="form-check-label" for="ativo">Comprador ativo</label>
+        </div>
 
-                    <label>Bebida aceita</label>
-                    <div class="checkbox-group">
-                        {% for b in bebida_options %}
-                        <label>
-                            <input type="checkbox" name="bebida" value="{{ b }}"
-                                {% if b in (buyer.get('bebida') or []) %}checked{% endif %}>
-                            {{ b }}
-                        </label>
-                        {% endfor %}
-                    </div>
-                    <label for="bebida_tolerancia">Tolerância bebida (máx. copos de outros tipos)</label>
-                    <input id="bebida_tolerancia" name="bebida_tolerancia" type="number" min="0"
-                        value="{{ buyer.get('bebida_tolerancia', 0) }}" placeholder="0">
-
-                    <hr class="section-divider">
-
-                    <label>Peneiras mínimas (%)</label>
-                    <div class="peneiras-grid">
-                        {% for p in peneira_options %}
-                        <div class="peneira-row">
-                            <label for="{{ p.field }}">{{ p.label }}</label>
-                            <input id="{{ p.field }}" name="{{ p.field }}" type="number" step="0.1" min="0"
-                                placeholder="mín." value="{{ buyer.get(p.field, '') }}">
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <label for="peneiras_tolerancia">Tolerância peneiras (% abaixo do mínimo aceito)</label>
-                    <input id="peneiras_tolerancia" name="peneiras_tolerancia" type="number" step="0.1" min="0"
-                        value="{{ buyer.get('peneiras_tolerancia', 0) }}" placeholder="0.0">
-                    <label for="quantidade_minima">Quantidade mínima (sacas)</label>
-                    <input id="quantidade_minima" name="quantidade_minima" type="number" min="0"
-                        value="{{ buyer.get('quantidade_minima', '') }}">
-                </fieldset>
-            </li>
-            <li>
-                <label for="ativo">
-                    <input type="checkbox" id="ativo" name="ativo" {% if buyer.get('ativo') %}checked{% endif %}>
-                    Comprador ativo
-                </label>
-            </li>
-            <li>
-                <button type="submit">Atualizar</button>
-            </li>
-        </ul>
+        <button type="submit" class="btn btn-teal">{% if isediting %}Atualizar{% else %}Cadastrar{% endif %}</button>
     </form>
-</section>
-{% endif %}
+</div>
+
 {% endblock %}

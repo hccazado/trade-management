@@ -1,150 +1,75 @@
-{%extends "base.html"%}
-{%block content%}
+{% extends "base.html" %}
+{% block content %}
 
-<a href="{{url_for('client.index')}}">
-    <img class="return" src="{{url_for('static',filename='return.png')}}">
+<a href="{{ url_for('client.index') }}" class="btn btn-sm btn-outline-secondary mb-3">
+    <span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle">arrow_back</span> Voltar
 </a>
-<h2 class="center">Formulario Cliente</h2>
 
-{%if not isediting%}
-<section class="lt_mgt">
+{% set v = client if isediting else {} %}
+
+<div class="form-card">
+    <h2 class="form-title">{% if isediting %}Editar Cliente{% else %}Cadastrar Cliente{% endif %}</h2>
     <form id="form" method="post">
-        <ul>
-            <li>
-                <label for="nome">Nome</label>
-                <input id="nome" name="nome">
-            </li>
-            <li>
-                <label for="email">E-mail</label>
-                <input type="email" id="email" name="email">
-            </li>
-            <li>
-                <label for="cnpj">CNPJ/CPF</label>
-                <input id="cnpj" name="cnpj">
-            </li>
-            <li>
-                <label for="ie">I.E.</label>
-                <input id="ie" name="ie">
-            </li>
-            <li>
-                <label for="tel">Telefone</label>
-                <input id="tel" name="tel">
-            </li>
-            <li>
-                <label for="cep">CEP</label>
-                <input id="cep" name="cep">
-            </li>
-            <li>
-                <label for="end">End.</label>
-                <input id="end" name="end">
-            </li>
-            <li>
-                <label for="num">Num.</label>
-                <input id="num" name="num">
-            </li>
-            <li>
-                <label for="bairro">Bairro</label>
-                <input id="bairro" name="bairro">
-            </li>
-            <li>
-                <label for="cidade">Cidade</label>
-                <input id="cidade" name="cidade">
-            </li>
-            <li>
-                <label for="uf">UF</label>
-                <select name="uf" id="uf">
-                    <option value="--" disabled selected>Selecione UF</option>
-                    {%for item in uf%}
-                    <option value="{{item['uf']}}">{{item.name}}</option>
-                    {% endfor %}
-                </select>
-            </li>
-            <li>
-                <label for="conta">Conta P/ Pagamento</label>
-                <input id="conta" name="conta">
-            </li>
-            <li>
-                <label for="obs">OBS</label>
-                <textarea id="obs" name="obs"></textarea>
-            </li>
-            <li>
-                <button type="submit">Cadastrar</button>
-            </li>
-        </ul>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="nome">Nome</label>
+            <input class="form-control" id="nome" name="nome" value="{{ v.get('nome', '') }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="email">E-mail</label>
+            <input class="form-control" type="email" id="email" name="email" value="{{ v.get('email', '') }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="cnpj">CNPJ/CPF</label>
+            <input class="form-control" id="cnpj" name="cnpj" value="{{ v.get('cnpj', '') }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="ie">I.E.</label>
+            <input class="form-control" id="ie" name="ie" value="{{ v.get('ie', '') }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="tel">Telefone</label>
+            <input class="form-control" id="tel" name="tel" value="{{ v.get('tel', '') }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="cep">CEP</label>
+            <input class="form-control" id="cep" name="cep" value="{{ v.get('cep', '') }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="end">End.</label>
+            <input class="form-control" id="end" name="end" value="{{ v.get('end', '') }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="num">Num.</label>
+            <input class="form-control" id="num" name="num" value="{{ v.get('num', '') }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="bairro">Bairro</label>
+            <input class="form-control" id="bairro" name="bairro" value="{{ v.get('bairro', '') }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="cidade">Cidade</label>
+            <input class="form-control" id="cidade" name="cidade" value="{{ v.get('cidade', '') }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="uf">UF</label>
+            <select class="form-select" name="uf" id="uf">
+                <option value="" disabled {% if not v.get('uf') %}selected{% endif %}>Selecione UF</option>
+                {% for item in uf %}
+                <option value="{{ item['uf'] }}" {% if v.get('uf') == item['uf'] %}selected{% endif %}>{{ item.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="conta">Conta P/ Pagamento</label>
+            <input class="form-control" id="conta" name="conta" value="{{ v.get('conta', '') }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="obs">OBS</label>
+            <textarea class="form-control" rows="3" id="obs" name="obs">{{ v.get('obs', '') }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-teal">{% if isediting %}Atualizar{% else %}Cadastrar{% endif %}</button>
     </form>
-</section>
-{%else%}
-<section class="lt_mgt">
-    <form id="form" method="post">
-        <ul>
-            <li>
-                <label for="nome">Nome</label>
-                <input id="nome" name="nome" value="{{client.nome}}">
-            </li>
-            <li>
-                <label for="email">E-mail</label>
-                <input type="email" id="email" name="email" value="{{client.email}}">
-            </li>
-            <li>
-                <label for="cnpj">CNPJ/CPF</label>
-                <input id="cnpj" name="cnpj" value="{{client.cnpj}}">
-            </li>
-            <li>
-                <label for="ie">I.E.</label>
-                <input id="ie" name="ie" value="{{client.ie}}">
-            </li>
-            <li>
-                <label for="tel">Telefone</label>
-                <input id="tel" name="tel" value="{{client.tel}}">
-            </li>
-            <li>
-                <label for="cep">CEP</label>
-                <input id="cep" name="cep" value="{{client.cep}}">
-            </li>
-            <li>
-                <label for="end">End.</label>
-                <input id="end" name="end" value="{{client.end}}">
-            </li>
-            <li>
-                <label for="num">Num</label>
-                <input id="num" name="num" value="{{client.num}}">
-            </li>
-            <li>
-                <label for="bairro">Bairro</label>
-                <input id="bairro" name="bairro" value="{{client.bairro}}">
-            </li>
-            <li>
-                <label for="cidade">Cidade</label>
-                <input id="cidade" name="cidade" value="{{client.cidade}}">
-            </li>
-            <li>
-                <label for="uf">UF</label>
-                <select name="uf" id="uf">
-                    <option value="--" disabled selected>Selecione UF</option>
-                    {%for item in uf%}
-                    {% if client['uf'] == item['uf'] %}
-                    <option value="{{item['uf']}}" selected>{{item.name}}</option>
-                    {% else %}
-                    <option value="{{item['uf']}}">{{item.name}}</option>
-                    {% endif %}
-                    {% endfor %}
-                </select>
-            </li>
-            <li>
-                <label for="conta">Conta P/ Pagamento</label>
-                <input id="conta" name="conta" value="{{client.conta}}">
-            </li>
-            <li>
-                <label for="obs">OBS</label>
-                <textarea id="obs" name="obs">{{client.obs}}</textarea>
-            </li>
-            <li>
-                <button type="submit">Atualizar</button>
-            </li>
-        </ul>
-    </form>
-</section>
-{%endif%}
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="{{url_for('static', filename='cep.js')}}"></script>
-{%endblock%}
+</div>
+
+<script src="{{ url_for('static', filename='cep.js') }}"></script>
+{% endblock %}
