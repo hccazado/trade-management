@@ -2,16 +2,19 @@
 {% block content %}
 <div class="dashboard">
     <div class="dashboard-panel">
-        <h2>Próximas Vendas <span class="dashboard-subtitle">— próximos 15 dias</span></h2>
+        <h2 class="d-flex align-items-center justify-content-between">
+            Próximas Vendas
+            <span class="dashboard-subtitle">próximos 15 dias</span>
+        </h2>
         {% if upcoming %}
-        <div class="mgt_container" style="height:auto;">
-            <table>
-                <thead>
+        <div class="table-responsive" style="max-height:260px;overflow-y:auto;">
+            <table class="table table-sm table-hover table-striped align-middle mb-0">
+                <thead class="table-secondary">
                     <tr>
-                        <td>Data</td>
-                        <td>Comprador</td>
-                        <td>Qtd</td>
-                        <td>Local Retirada</td>
+                        <th>Data</th>
+                        <th>Comprador</th>
+                        <th>Qtd</th>
+                        <th>Local Retirada</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,14 +37,14 @@
     <div class="dashboard-panel">
         <h2>Últimas Amostras</h2>
         {% if recent_samples %}
-        <div class="mgt_container" style="height:auto;">
-            <table>
-                <thead>
+        <div class="table-responsive" style="max-height:260px;overflow-y:auto;">
+            <table class="table table-sm table-hover table-striped align-middle mb-0">
+                <thead class="table-secondary">
                     <tr>
-                        <td>Nº</td>
-                        <td>Vendedor</td>
-                        <td>Tipo</td>
-                        <td>Sacas</td>
+                        <th>Nº</th>
+                        <th>Vendedor</th>
+                        <th>Tipo</th>
+                        <th>Sacas</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,9 +72,9 @@
     </div>
 
     <div class="dashboard-panel">
-        <h2>
+        <h2 class="d-flex align-items-center justify-content-between">
             Mercado
-            <span class="dashboard-subtitle">— atualizado às {{ market.updated_at }}</span>
+            <span class="dashboard-subtitle">atualizado às {{ market.updated_at }}</span>
         </h2>
 
         <div class="market-row market-row--header">
