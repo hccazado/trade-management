@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: purchasing-manager
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn "purchasing_manager:create_app()"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: FIREBASE_CREDENTIALS
+        sync: false
+      - key: N8N_WEBHOOK_URL
+        sync: false
