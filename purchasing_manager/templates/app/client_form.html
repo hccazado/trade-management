@@ -18,46 +18,55 @@
             <label class="form-label fw-semibold" for="email">E-mail</label>
             <input class="form-control" type="email" id="email" name="email" value="{{ v.get('email', '') }}">
         </div>
-        <div class="mb-3">
-            <label class="form-label fw-semibold" for="cnpj">CNPJ/CPF</label>
-            <input class="form-control" id="cnpj" name="cnpj" value="{{ v.get('cnpj', '') }}">
+        <!-- Row: Tel / CEP / CNPJ -->
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label class="form-label fw-semibold" for="tel">Telefone</label>
+                <input class="form-control" id="tel" name="tel" value="{{ v.get('tel', '') }}">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label fw-semibold" for="cep">CEP</label>
+                <input class="form-control" id="cep" name="cep" value="{{ v.get('cep', '') }}">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label fw-semibold" for="cnpj">CNPJ/CPF</label>
+                <input class="form-control" id="cnpj" name="cnpj" value="{{ v.get('cnpj', '') }}">
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label fw-semibold" for="ie">I.E.</label>
             <input class="form-control" id="ie" name="ie" value="{{ v.get('ie', '') }}">
         </div>
-        <div class="mb-3">
-            <label class="form-label fw-semibold" for="tel">Telefone</label>
-            <input class="form-control" id="tel" name="tel" value="{{ v.get('tel', '') }}">
+        <!-- Row: End / Num -->
+        <div class="row mb-3">
+            <div class="col-md-8">
+                <label class="form-label fw-semibold" for="end">End.</label>
+                <input class="form-control" id="end" name="end" value="{{ v.get('end', '') }}">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label fw-semibold" for="num">Num.</label>
+                <input class="form-control" id="num" name="num" value="{{ v.get('num', '') }}">
+            </div>
         </div>
-        <div class="mb-3">
-            <label class="form-label fw-semibold" for="cep">CEP</label>
-            <input class="form-control" id="cep" name="cep" value="{{ v.get('cep', '') }}">
-        </div>
-        <div class="mb-3">
-            <label class="form-label fw-semibold" for="end">End.</label>
-            <input class="form-control" id="end" name="end" value="{{ v.get('end', '') }}">
-        </div>
-        <div class="mb-3">
-            <label class="form-label fw-semibold" for="num">Num.</label>
-            <input class="form-control" id="num" name="num" value="{{ v.get('num', '') }}">
-        </div>
-        <div class="mb-3">
-            <label class="form-label fw-semibold" for="bairro">Bairro</label>
-            <input class="form-control" id="bairro" name="bairro" value="{{ v.get('bairro', '') }}">
-        </div>
-        <div class="mb-3">
-            <label class="form-label fw-semibold" for="cidade">Cidade</label>
-            <input class="form-control" id="cidade" name="cidade" value="{{ v.get('cidade', '') }}">
-        </div>
-        <div class="mb-3">
-            <label class="form-label fw-semibold" for="uf">UF</label>
-            <select class="form-select" name="uf" id="uf">
-                <option value="" disabled {% if not v.get('uf') %}selected{% endif %}>Selecione UF</option>
-                {% for item in uf %}
-                <option value="{{ item['uf'] }}" {% if v.get('uf') == item['uf'] %}selected{% endif %}>{{ item.name }}</option>
-                {% endfor %}
-            </select>
+        <!-- Row: Bairro / Cidade / UF -->
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label class="form-label fw-semibold" for="bairro">Bairro</label>
+                <input class="form-control" id="bairro" name="bairro" value="{{ v.get('bairro', '') }}">
+            </div>
+            <div class="col-md-5">
+                <label class="form-label fw-semibold" for="cidade">Cidade</label>
+                <input class="form-control" id="cidade" name="cidade" value="{{ v.get('cidade', '') }}">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label fw-semibold" for="uf">UF</label>
+                <select class="form-select" name="uf" id="uf">
+                    <option value="" disabled {% if not v.get('uf') %}selected{% endif %}>Selecione UF</option>
+                    {% for item in uf %}
+                    <option value="{{ item['uf'] }}" {% if v.get('uf') == item['uf'] %}selected{% endif %}>{{ item.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label fw-semibold" for="conta">Conta P/ Pagamento</label>
