@@ -37,11 +37,18 @@ def edit(id):
 @auth.login_required
 def print(id):
     if(request.method == "GET"):
-        
+
         return agreement.print(id)
-        
+
     else:
-        
+
         flash("Invalid Operation!")
-        
+
         return redirect(url_for("home.index"))
+
+@bp.route("/view/<id>")
+@auth.login_required
+def view(id):
+    return flask.render_template("app/agreement_view.html",
+                                 print_url=url_for("agreement.print", id=id),
+                                 back_url=url_for("agreement.index"))

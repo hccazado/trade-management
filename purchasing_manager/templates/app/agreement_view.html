@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mt-3 mb-2">
+    <a href="{{ back_url }}" class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1">
+        <span class="material-symbols-outlined" style="font-size:1rem">arrow_back</span> Voltar
+    </a>
+    <button class="btn btn-sm btn-teal d-flex align-items-center gap-1"
+            onclick="document.getElementById('agreement-frame').contentWindow.print()">
+        <span class="material-symbols-outlined" style="font-size:1rem">print</span> Imprimir
+    </button>
+</div>
+<iframe id="agreement-frame"
+        src="{{ print_url }}"
+        style="width:100%; height:calc(100vh - 140px); border:none; border-radius:8px; background:#fff;">
+</iframe>
+{% endblock %}
