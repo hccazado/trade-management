@@ -436,10 +436,10 @@ section>hr {
 }
 
 .mgt_container {
-    margin: 50px auto;
-    width: 95%;
+    margin: 24px 0;
+    width: 100%;
     height: 60vh;
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-y: scroll;
 }
 
@@ -453,9 +453,46 @@ section>hr {
     text-decoration: none;
 }
 
+.mgt_container>table {
+    width: 100%;
+    table-layout: fixed;
+}
+
 .mgt_container>table td {
-    column-width: 150px;
     height: 1.3em;
+    padding: 4px 10px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* CNPJ / CPF: fixed width, never wraps */
+.mgt_container>table td:nth-child(2) {
+    width: 160px;
+}
+
+/* Edit column and icon-only columns: minimal width */
+.mgt_container>table td:last-child,
+.mgt_container>table td.col-icon {
+    width: 80px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* force horizontal scroll when columns overflow */
+.mgt_container>table {
+    min-width: 700px;
+}
+
+.btn-copy {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 2px 4px;
+    line-height: 1;
+    vertical-align: middle;
 }
 
 .mgt_container>table thead {
@@ -476,8 +513,7 @@ section>hr {
 
 .lt_mgt>form {
     margin: 20px auto;
-    max-width: 480px;
-    width: calc(100% - 32px);
+    width: min(680px, calc(100% - 32px));
     border: 1px solid #ccc;
     box-sizing: border-box;
 }

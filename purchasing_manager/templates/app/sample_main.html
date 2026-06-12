@@ -11,7 +11,7 @@
         <table>
             <thead>
                 <tr>
-                    <td>Nº Amostra</td>
+                    <td>Nº</td>
                     <td class="hide-mobile">Tipo</td>
                     <td>Cliente</td>
                     <td class="hide-mobile">Data</td>
@@ -20,11 +20,10 @@
                     <td class="hide-mobile">10</td>
                     <td class="hide-mobile">Mk</td>
                     <td class="hide-mobile">FD</td>
-                    <td class="hide-mobile">Cata</td>
-                    <td class="hide-mobile">PVA</td>
-                    <td class="hide-mobile">Broca</td>
-                    <td>Editar</td>
-                    <td>Copiar</td>
+                    <td class="hide-mobile">Ct</td>
+                    <td class="hide-mobile">Def</td>
+                    <td class="hide-mobile">Br</td>
+                    <td class="col-icon"></td>
                 </tr>
             </thead>
             <tbody id="mgt_body">
@@ -66,12 +65,10 @@
                     <td class="hide-mobile">
                         {{ sample.Broca }}
                     </td>
-                    <td>
+                    <td class="col-icon">
                         <a href="{{ url_for('sample.edit', id=sample.id) }}">
                             <img class="edit" src="{{ url_for('static', filename='edit.png') }}">
                         </a>
-                    </td>
-                    <td>
                         <button type="button" class="btn-copy">📋</button>
                     </td>
                 </tr>
