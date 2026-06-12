@@ -1,9 +1,13 @@
 import firebase_admin
 from firebase_admin import credentials, firestore, exceptions
-import requests, os
+import requests, os, json
 
-#Initialize Firebase Firestore connection
-CREDENTIAL = credentials.Certificate("./prc-mgt.json")
+_cred_json = os.environ.get("FIREBASE_CREDENTIALS")
+if _cred_json:
+    CREDENTIAL = credentials.Certificate(json.loads(_cred_json))
+else:
+    _cert_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "prc-mgt.json")
+    CREDENTIAL = credentials.Certificate(_cert_path)
 
 app = firebase_admin.initialize_app(CREDENTIAL)
 

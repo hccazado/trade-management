@@ -12,14 +12,19 @@ def create_app (test_config = None):
     app = Flask(__name__, instance_relative_config = True)
     CORS(app)
 
-    _secret_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "client_secret.json")
-    with open(_secret_path) as f:
-        _google_creds = json.load(f)["web"]
+    _google_client_id = os.environ.get("GOOGLE_CLIENT_ID")
+    _google_client_secret = os.environ.get("GOOGLE_CLIENT_SECRET")
+    if not _google_client_id or not _google_client_secret:
+        _secret_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "client_secret.json")
+        with open(_secret_path) as f:
+            _google_creds = json.load(f)["web"]
+        _google_client_id = _google_creds["client_id"]
+        _google_client_secret = _google_creds["client_secret"]
 
     app.config.from_mapping(
         SECRET_KEY=os.environ.get("SECRET_KEY", "change-me-in-production"),
-        GOOGLE_CLIENT_ID=_google_creds["client_id"],
-        GOOGLE_CLIENT_SECRET=_google_creds["client_secret"],
+        GOOGLE_CLIENT_ID=_google_client_id,
+        GOOGLE_CLIENT_SECRET=_google_client_secret,
     )
     
     if test_config is None:
