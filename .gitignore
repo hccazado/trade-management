@@ -18,4 +18,4 @@ controler
 .auto_parking/__pycache__/
 .auto_parking/controller/__pycache__
 .auto_parking/dao/__pycache__
-.auto_parking/dao/__pycache__
+.auto_parking/dao/__pycache__.env

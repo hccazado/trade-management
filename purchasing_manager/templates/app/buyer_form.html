@@ -16,62 +16,55 @@
             </li>
             <li>
                 <label for="whatsapp">WhatsApp <span style="color:red">*</span></label>
-                <div style="display:flex;align-items:center;gap:6px">
-                    <span style="font-weight:600;white-space:nowrap">+55</span>
+                <div class="whatsapp-prefix">
+                    <span>+55</span>
                     <input id="whatsapp" name="whatsapp" placeholder="(11) 99999-9999" required
-                        style="flex:1" pattern="\(?\d{2}\)?\s?\d{4,5}-?\d{4}">
+                        pattern="\(?\d{2}\)?\s?\d{4,5}-?\d{4}">
                 </div>
             </li>
             <li>
                 <label for="endereco">Endereço</label>
-                <input id="endereco" name="endereco">
+                <textarea id="endereco" name="endereco" rows="2"></textarea>
             </li>
-
             <li>
                 <fieldset>
                     <legend>Preferências de Amostra</legend>
 
                     <label>Tipos aceitos</label>
-                    <div style="display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:4px;margin-bottom:12px">
+                    <div class="checkbox-group">
                         {% for opt in tipo_options %}
-                        <label style="font-weight:normal;display:flex;align-items:center;gap:4px">
-                            <input type="checkbox" name="tipo" value="{{ opt }}">
-                            {{ opt|capitalize }}
-                        </label>
+                        <label><input type="checkbox" name="tipo" value="{{ opt }}"> {{ opt|capitalize }}</label>
                         {% endfor %}
                     </div>
+
+                    <hr class="section-divider">
 
                     <label>Bebida aceita</label>
-                    <div style="display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:4px;margin-bottom:4px">
+                    <div class="checkbox-group">
                         {% for b in bebida_options %}
-                        <label style="font-weight:normal;display:flex;align-items:center;gap:4px">
-                            <input type="checkbox" name="bebida" value="{{ b }}">
-                            {{ b }}
-                        </label>
+                        <label><input type="checkbox" name="bebida" value="{{ b }}"> {{ b }}</label>
                         {% endfor %}
                     </div>
-                    <label for="bebida_tolerancia">Tolerância bebida (max. copos de outros tipos)</label>
+                    <label for="bebida_tolerancia">Tolerância bebida (máx. copos de outros tipos)</label>
                     <input id="bebida_tolerancia" name="bebida_tolerancia" type="number" min="0" value="0" placeholder="0">
 
-                    <label style="margin-top:12px">Peneiras mínimas (%)</label>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;margin-top:4px;margin-bottom:4px">
+                    <hr class="section-divider">
+
+                    <label>Peneiras mínimas (%)</label>
+                    <div class="peneiras-grid">
                         {% for p in peneira_options %}
-                        <div style="display:flex;align-items:center;gap:6px">
-                            <label for="{{ p.field }}" style="font-weight:normal;min-width:80px">{{ p.label }}</label>
-                            <input id="{{ p.field }}" name="{{ p.field }}" type="number" step="0.1" min="0"
-                                placeholder="mín." style="width:80px">
+                        <div class="peneira-row">
+                            <label for="{{ p.field }}">{{ p.label }}</label>
+                            <input id="{{ p.field }}" name="{{ p.field }}" type="number" step="0.1" min="0" placeholder="mín.">
                         </div>
                         {% endfor %}
                     </div>
                     <label for="peneiras_tolerancia">Tolerância peneiras (% abaixo do mínimo aceito)</label>
-                    <input id="peneiras_tolerancia" name="peneiras_tolerancia" type="number" step="0.1" min="0"
-                        value="0" placeholder="0.0">
-
-                    <label for="quantidade_minima" style="margin-top:12px">Quantidade mínima (sacas)</label>
+                    <input id="peneiras_tolerancia" name="peneiras_tolerancia" type="number" step="0.1" min="0" value="0" placeholder="0.0">
+                    <label for="quantidade_minima">Quantidade mínima (sacas)</label>
                     <input id="quantidade_minima" name="quantidade_minima" type="number" min="0" placeholder="ex: 100">
                 </fieldset>
             </li>
-
             <li>
                 <label for="ativo">
                     <input type="checkbox" id="ativo" name="ativo" checked>
@@ -96,26 +89,25 @@
             </li>
             <li>
                 <label for="whatsapp">WhatsApp <span style="color:red">*</span></label>
-                <div style="display:flex;align-items:center;gap:6px">
-                    <span style="font-weight:600;white-space:nowrap">+55</span>
-                    <input id="whatsapp" name="whatsapp" required style="flex:1"
+                <div class="whatsapp-prefix">
+                    <span>+55</span>
+                    <input id="whatsapp" name="whatsapp" required
                         pattern="\(?\d{2}\)?\s?\d{4,5}-?\d{4}"
                         value="{{ buyer.whatsapp | replace('+55', '', 1) }}">
                 </div>
             </li>
             <li>
                 <label for="endereco">Endereço</label>
-                <input id="endereco" name="endereco" value="{{ buyer.get('endereco', '') }}">
+                <textarea id="endereco" name="endereco" rows="2">{{ buyer.get('endereco', '') }}</textarea>
             </li>
-
             <li>
                 <fieldset>
                     <legend>Preferências de Amostra</legend>
 
                     <label>Tipos aceitos</label>
-                    <div style="display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:4px;margin-bottom:12px">
+                    <div class="checkbox-group">
                         {% for opt in tipo_options %}
-                        <label style="font-weight:normal;display:flex;align-items:center;gap:4px">
+                        <label>
                             <input type="checkbox" name="tipo" value="{{ opt }}"
                                 {% if opt in (buyer.get('tipo') or []) %}checked{% endif %}>
                             {{ opt|capitalize }}
@@ -123,41 +115,42 @@
                         {% endfor %}
                     </div>
 
+                    <hr class="section-divider">
+
                     <label>Bebida aceita</label>
-                    <div style="display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:4px;margin-bottom:4px">
+                    <div class="checkbox-group">
                         {% for b in bebida_options %}
-                        <label style="font-weight:normal;display:flex;align-items:center;gap:4px">
+                        <label>
                             <input type="checkbox" name="bebida" value="{{ b }}"
                                 {% if b in (buyer.get('bebida') or []) %}checked{% endif %}>
                             {{ b }}
                         </label>
                         {% endfor %}
                     </div>
-                    <label for="bebida_tolerancia">Tolerância bebida (max. copos de outros tipos)</label>
+                    <label for="bebida_tolerancia">Tolerância bebida (máx. copos de outros tipos)</label>
                     <input id="bebida_tolerancia" name="bebida_tolerancia" type="number" min="0"
                         value="{{ buyer.get('bebida_tolerancia', 0) }}" placeholder="0">
 
-                    <label style="margin-top:12px">Peneiras mínimas (%)</label>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;margin-top:4px;margin-bottom:4px">
+                    <hr class="section-divider">
+
+                    <label>Peneiras mínimas (%)</label>
+                    <div class="peneiras-grid">
                         {% for p in peneira_options %}
-                        <div style="display:flex;align-items:center;gap:6px">
-                            <label for="{{ p.field }}" style="font-weight:normal;min-width:80px">{{ p.label }}</label>
+                        <div class="peneira-row">
+                            <label for="{{ p.field }}">{{ p.label }}</label>
                             <input id="{{ p.field }}" name="{{ p.field }}" type="number" step="0.1" min="0"
-                                placeholder="mín." style="width:80px"
-                                value="{{ buyer.get(p.field, '') }}">
+                                placeholder="mín." value="{{ buyer.get(p.field, '') }}">
                         </div>
                         {% endfor %}
                     </div>
                     <label for="peneiras_tolerancia">Tolerância peneiras (% abaixo do mínimo aceito)</label>
                     <input id="peneiras_tolerancia" name="peneiras_tolerancia" type="number" step="0.1" min="0"
                         value="{{ buyer.get('peneiras_tolerancia', 0) }}" placeholder="0.0">
-
-                    <label for="quantidade_minima" style="margin-top:12px">Quantidade mínima (sacas)</label>
+                    <label for="quantidade_minima">Quantidade mínima (sacas)</label>
                     <input id="quantidade_minima" name="quantidade_minima" type="number" min="0"
                         value="{{ buyer.get('quantidade_minima', '') }}">
                 </fieldset>
             </li>
-
             <li>
                 <label for="ativo">
                     <input type="checkbox" id="ativo" name="ativo" {% if buyer.get('ativo') %}checked{% endif %}>

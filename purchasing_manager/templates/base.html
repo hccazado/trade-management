@@ -16,7 +16,12 @@
 
 <body>
     <header>
-        <div id="clock"></div>
+        <div class="header-left">
+            <div id="clock"></div>
+            {% if "user" in session %}
+            <button class="hamburger" id="hamburger" aria-label="Abrir menu">&#9776;</button>
+            {% endif %}
+        </div>
         <a href="{{url_for('home.index')}}" class="header-brand">
             {% if tenant_logo %}
             <img src="{{url_for('static', filename=tenant_logo)}}" alt="logo" class="logo">
@@ -30,23 +35,91 @@
             {% endif %}
         </div>
     </header>
-    <section id="content">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {%if messages%}
-        {% for category, message in messages %}
-        {%if message.category == "error"%}
-        <div class="flash_error">{{ message }}</div>
-        {%else%}
-        <div class="flash">{{ message }}</div>
-        {%endif%}
-        {% endfor %}
-        {%endif%}
-        {%endwith%}
 
-        {%block content%}
-        {%endblock%}
-    </section>
+    {% if "user" in session %}
+    <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+    <nav class="mobile-nav" id="mobile-nav">
+        <button class="mobile-nav-close" id="mobile-nav-close" aria-label="Fechar menu">&#10005;</button>
+        <ul>
+            <li><a href="{{ url_for('sample.index') }}">Amostras</a></li>
+            <li><a href="{{ url_for('client.index') }}">Clientes</a></li>
+            <li><a href="{{ url_for('buyer.index') }}">Compradores</a></li>
+            <li><a href="{{ url_for('agreement.index') }}">Fechamentos</a></li>
+            <li><a href="{{ url_for('warehouse.index') }}">Armazéns</a></li>
+        </ul>
+    </nav>
+    {% endif %}
+
+    <div class="app-layout">
+        {% if "user" in session %}
+        <nav class="sidebar">
+            <ul>
+                <li>
+                    <a href="{{ url_for('sample.index') }}"
+                        class="{{ 'active' if request.blueprint == 'sample' else '' }}">
+                        Amostras
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('client.index') }}"
+                        class="{{ 'active' if request.blueprint == 'client' else '' }}">
+                        Clientes
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('buyer.index') }}"
+                        class="{{ 'active' if request.blueprint == 'buyer' else '' }}">
+                        Compradores
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('agreement.index') }}"
+                        class="{{ 'active' if request.blueprint == 'agreement' else '' }}">
+                        Fechamentos
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('warehouse.index') }}"
+                        class="{{ 'active' if request.blueprint == 'warehouse' else '' }}">
+                        Armazéns
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        {% endif %}
+
+        <main class="main-content">
+            <section id="content">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {%if messages%}
+                {% for category, message in messages %}
+                {%if message.category == "error"%}
+                <div class="flash_error">{{ message }}</div>
+                {%else%}
+                <div class="flash">{{ message }}</div>
+                {%endif%}
+                {% endfor %}
+                {%endif%}
+                {%endwith%}
+
+                {%block content%}
+                {%endblock%}
+            </section>
+        </main>
+    </div>
+
     <script src="{{url_for('static', filename='clock.js')}}"></script>
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobile-nav');
+        const overlay   = document.getElementById('mobile-nav-overlay');
+        const closeBtn  = document.getElementById('mobile-nav-close');
+        const open  = () => { mobileNav.classList.add('open'); overlay.classList.add('open'); };
+        const close = () => { mobileNav.classList.remove('open'); overlay.classList.remove('open'); };
+        hamburger?.addEventListener('click', open);
+        closeBtn?.addEventListener('click', close);
+        overlay?.addEventListener('click', close);
+    </script>
 </body>
 
 </html>

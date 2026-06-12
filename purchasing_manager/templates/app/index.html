@@ -60,37 +60,51 @@
         <p class="dashboard-empty">Nenhuma amostra cadastrada.</p>
         {% endif %}
     </div>
+
+    <div class="dashboard-panel">
+        <h2>Clima <span class="dashboard-subtitle" id="weather-location"></span></h2>
+        <div id="weather-content">
+            <p class="weather-loading">Obtendo localização...</p>
+        </div>
+    </div>
+
+    <div class="dashboard-panel">
+        <h2>
+            Mercado
+            <span class="dashboard-subtitle">— atualizado às {{ market.updated_at }}</span>
+        </h2>
+
+        <div class="market-row market-row--header">
+            <span>Dólar (USD/BRL)</span>
+            {% if market.usd_brl %}
+            <span class="market-price">R$ {{ '%.4f' | format(market.usd_brl) }}</span>
+            <span class="market-change {{ 'positive' if market.usd_brl_change >= 0 else 'negative' }}">
+                {{ '%+.4f' | format(market.usd_brl_change) }}
+                ({{ '%+.2f' | format(market.usd_brl_change_pct) }}%)
+            </span>
+            {% else %}
+            <span class="dashboard-empty">—</span>
+            {% endif %}
+        </div>
+
+        <hr class="section-divider">
+
+        <p class="market-section-label">KC Futuros (cts/lb)</p>
+        {% for c in market.kc %}
+        <div class="market-row">
+            <span class="market-month">{{ c.label }}</span>
+            {% if c.price %}
+            <span class="market-price">{{ '%.2f' | format(c.price) }}</span>
+            <span class="market-change {{ 'positive' if c.change >= 0 else 'negative' }}">
+                {{ '%+.2f' | format(c.change) }}
+                ({{ '%+.2f' | format(c.change_pct) }}%)
+            </span>
+            {% else %}
+            <span class="dashboard-empty">—</span>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
 </div>
-<div class="menu">
-    <a href="{{url_for('client.index')}}">
-        <div class="card">
-            <img src="{{url_for('static', filename='client.png')}}">
-            <span>Clientes</span>
-        </div>
-    </a>
-    <a href="{{url_for('warehouse.index')}}">
-        <div class="card">
-            <img src="{{url_for('static', filename='warehouse.png')}}">
-            <p>Armazéns</p>
-        </div>
-    </a>
-    <a href="{{url_for('agreement.index')}}">
-        <div class="card">
-            <img src="{{url_for('static', filename='contract.png')}}">
-            <p>Fechamentos</p>
-        </div>
-    </a>
-    <a href="{{url_for('sample.index')}}">
-        <div class="card">
-            <img src="{{url_for('static', filename='sample.png')}}">
-            <p>Amostras</p>
-        </div>
-    </a>
-    <a href="{{url_for('buyer.index')}}">
-        <div class="card">
-            <img src="{{url_for('static', filename='client.png')}}">
-            <p>Compradores</p>
-        </div>
-    </a>
-</div>
+<script src="{{ url_for('static', filename='weather.js') }}"></script>
 {% endblock %}

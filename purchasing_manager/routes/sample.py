@@ -24,3 +24,8 @@ def edit(id):
         return sample.edit(id)
     elif request.method == "POST":
         return sample.update(id)
+
+@bp.route("/notify/<id>", methods=("POST",))
+@auth.login_required
+def notify(id):
+    return sample.notify(id)

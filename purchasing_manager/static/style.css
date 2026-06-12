@@ -11,8 +11,12 @@ https://coolors.co/196774-ebe9e9-fca311-6b5e62
     --contrast: #6B5E62;
 }
 
+html {
+    overflow-x: hidden;
+}
+
 body {
-    width: 100vw;
+    width: 100%;
     margin: 0;
     padding: 0;
     background-color: var(--secondary);
@@ -40,10 +44,17 @@ header {
     align-items: center;
     margin-top: 0;
     height: 90px;
-    width: 100vw;
+    width: 100%;
     font-size: 1.2rem;
     border-bottom: 1px solid #ccc;
     box-shadow: 0px 5px 5px rgba(25, 103, 116, .3);
+    overflow: hidden;
+}
+
+/* prevent grid children from overflowing their allocated column */
+header > * {
+    min-width: 0;
+    max-width: 100%;
 }
 
 header a {
@@ -98,6 +109,144 @@ header>img {
     text-decoration: none;
 }
 
+/* ── App layout ───────────────────────────────────────────────────────────── */
+.app-layout {
+    display: flex;
+    width: 100%;
+    min-height: calc(100vh - 90px);
+}
+
+.sidebar {
+    width: 175px;
+    flex-shrink: 0;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+    position: sticky;
+    top: 90px;
+    height: calc(100vh - 90px);
+    overflow-y: auto;
+}
+
+.sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 16px 0;
+}
+
+.sidebar li a {
+    display: block;
+    padding: 12px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 0.95rem;
+    border-left: 3px solid transparent;
+    transition: background 0.15s, color 0.15s;
+}
+
+.sidebar li a:hover {
+    background-color: var(--secondary);
+    color: var(--background);
+    border-left-color: var(--background);
+}
+
+.sidebar li a.active {
+    background-color: var(--secondary);
+    color: var(--background);
+    border-left-color: var(--background);
+    font-weight: 600;
+}
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    max-width: 825px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* hamburger — hidden on desktop */
+.header-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    color: #fff;
+    cursor: pointer;
+    padding: 4px 8px;
+    line-height: 1;
+}
+
+/* mobile nav drawer */
+.mobile-nav {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 260px;
+    height: 100vh;
+    background: #fff;
+    z-index: 1001;
+    transition: left 0.25s ease;
+    box-shadow: 2px 0 12px rgba(0,0,0,0.18);
+    padding-top: 56px;
+}
+
+.mobile-nav.open { left: 0; }
+
+.mobile-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+}
+
+.mobile-nav li a {
+    display: block;
+    padding: 16px 24px;
+    color: #333;
+    text-decoration: none;
+    font-size: 1.05rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.mobile-nav li a:hover {
+    background: var(--secondary);
+    color: var(--background);
+}
+
+.mobile-nav-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #555;
+}
+
+.mobile-nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1000;
+}
+
+.mobile-nav-overlay.open { display: block; }
+
+/* hide index menu cards on desktop — sidebar covers this */
+@media (min-width: 601px) {
+    .menu { display: none; }
+}
+
+/* ── /App layout ──────────────────────────────────────────────────────────── */
+
 .center {
     text-align: center;
     margin: 1rem auto;
@@ -142,7 +291,7 @@ header>img {
 }
 
 section {
-    width: 95%;
+    width: 100%;
     margin: auto;
     box-sizing: border-box;
 }
@@ -168,29 +317,111 @@ section>hr {
 
 .mgt_row {
     display: flex;
-    justify-content: space-evenly;
-    text-align: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 8px 12px;
     width: 100%;
+    box-sizing: border-box;
     border-bottom: 1px solid var(--contrast);
 }
 
 .mgt_row>input {
-    width: 80%;
-    justify-self: center;
-    align-self: center;
-    /* height: 1.7em; */
+    flex: 1;
+    min-width: 0;
     border-radius: .5rem;
     padding: .5rem;
     font-size: 1rem;
 }
 
 .mgt_row>a {
+    flex: 0 0 auto;
+    white-space: nowrap;
     padding: 10px;
     text-decoration: none;
     border-radius: 8px;
     color: #eee;
-    justify-self: center;
-    align-self: center;
+}
+
+/* ── Buyer form ───────────────────────────────────────────────────────────── */
+.whatsapp-prefix {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 90%;
+    margin: 10px auto;
+}
+
+.whatsapp-prefix span {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.whatsapp-prefix input {
+    flex: 1;
+    min-width: 0;
+    display: block;
+    width: 100%;
+    margin: 0;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin: 4px 0 12px;
+}
+
+.lt_mgt>form li .checkbox-group input[type="checkbox"] {
+    display: inline;
+    width: auto;
+    height: auto;
+    margin: 0;
+}
+
+.checkbox-group label,
+.lt_mgt>form li .checkbox-group label {
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: auto;
+    margin: 0;
+    text-align: left;
+}
+
+.peneiras-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 16px;
+    margin: 4px 0;
+}
+
+.peneira-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.peneira-row label {
+    font-weight: normal;
+    flex: 0 0 60px;
+}
+
+.peneira-row input {
+    flex: 1;
+    min-width: 0;
+}
+
+.section-divider {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 12px 0;
+}
+
+@media (max-width: 600px) {
+    .peneiras-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .return {
@@ -248,6 +479,14 @@ section>hr {
     max-width: 480px;
     width: calc(100% - 32px);
     border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* fieldset refuses to shrink by default — force it to respect its container */
+fieldset {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .lt_mgt>form>ul {
@@ -263,7 +502,7 @@ section>hr {
 }
 
 .form_grid>div>input {
-    width: 155px !important;
+    width: min(155px, 100%) !important;
 }
 
 .lt_mgt>form li label {
@@ -276,8 +515,9 @@ section>hr {
 .lt_mgt>form li select {
     display: inline-block;
     text-align: left;
-    width: 170px;
+    width: min(170px, 100%);
     margin: 10px;
+    box-sizing: border-box;
 }
 
 .lt_mgt>form li+li {
@@ -305,6 +545,40 @@ textarea {
 
 .lt_mgt>form li:last-child {
     text-align: right;
+}
+
+/* Sub-section headers inside fieldset */
+.lt_mgt>form fieldset>label {
+    display: block;
+    font-weight: 600;
+    margin: 12px 0 4px 0;
+    width: auto;
+}
+
+/* Narrow number inputs directly inside fieldset (tolerance, quantity) */
+.lt_mgt>form fieldset>input[type="number"] {
+    display: block;
+    width: min(140px, 90%);
+    margin: 4px 0 8px 0;
+}
+
+/* Checkbox inside a label (e.g. "Comprador ativo") */
+.lt_mgt>form li label:has(>input[type="checkbox"]) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 90%;
+    margin-left: 15px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.lt_mgt>form li label>input[type="checkbox"] {
+    display: inline;
+    width: auto;
+    height: auto;
+    margin: 0;
+    flex-shrink: 0;
 }
 
 .login-card {
@@ -478,6 +752,122 @@ textarea {
     margin: 12px 0 0;
 }
 
+.market-change.positive { color: #2a7a2a; }
+.market-change.negative { color: #c0392b; }
+
+/* weather panel */
+.weather-loading {
+    color: #888;
+    font-size: .9em;
+    margin: 8px 0;
+}
+
+.weather-current {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.weather-icon { font-size: 2.4em; line-height: 1; }
+
+.weather-temp {
+    font-size: 2em;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.weather-feels {
+    font-size: .8em;
+    color: #666;
+    margin-top: 2px;
+}
+
+.weather-meta {
+    display: flex;
+    gap: 16px;
+    font-size: .85em;
+    color: #555;
+    margin-bottom: 16px;
+}
+
+.weather-forecast {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.weather-day {
+    background: #f7f7f7;
+    border-radius: 8px;
+    padding: 8px 6px;
+    text-align: center;
+    font-size: .82em;
+}
+
+.weather-day-name {
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #444;
+}
+
+.weather-day-icon { font-size: 1.4em; }
+
+.weather-day-range {
+    margin-top: 4px;
+    color: #555;
+}
+
+.weather-day-rain {
+    color: #2970c0;
+    margin-top: 2px;
+}
+
+.market-section-label {
+    font-size: .8em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: #666;
+    margin: 4px 0 8px;
+}
+
+.market-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: .95em;
+}
+
+.market-row:last-child {
+    border-bottom: none;
+}
+
+.market-row--header {
+    font-weight: 600;
+    font-size: 1em;
+    margin-bottom: 4px;
+}
+
+.market-month {
+    min-width: 52px;
+    color: #444;
+}
+
+.market-price {
+    font-weight: 600;
+    margin-left: auto;
+}
+
+.market-change {
+    font-size: .85em;
+    min-width: 110px;
+    text-align: right;
+}
+
 @media screen and (max-width: 900px) {
     .dashboard {
         grid-template-columns: 1fr;
@@ -561,6 +951,19 @@ textarea {
 /* ── Mobile (phones) ──────────────────────────────────────────────────────── */
 @media screen and (max-width: 600px) {
 
+    /* sidebar hidden on mobile — header is the nav */
+    .sidebar {
+        display: none;
+    }
+
+    .app-layout {
+        display: block;
+    }
+
+    .main-content {
+        padding: 0;
+    }
+
     /* header: keep 3 equal columns, shrink content to fit */
     header {
         grid-template-columns: repeat(3, 1fr);
@@ -568,9 +971,8 @@ textarea {
         padding: 0 8px;
     }
 
-    #clock {
-        font-size: 0.72rem;
-    }
+    #clock { display: none; }
+    .hamburger { display: block; }
 
     header .logo {
         max-width: 44px;
@@ -663,23 +1065,12 @@ textarea {
         justify-content: center;
     }
 
-    /* return arrow: bigger tap area */
-    .return {
-        width: 44px;
-        padding: 4px;
-    }
-
     /* search bar row — flex so each element sizes predictably */
     .mgt_row {
         display: flex;
         align-items: center;
         gap: 8px;
         padding: 8px;
-    }
-
-    /* return arrow: fixed, doesn't grow */
-    .mgt_row>a:first-child {
-        flex: 0 0 auto;
     }
 
     /* search input: takes all remaining space */

@@ -7,6 +7,7 @@ from ..models import agreement as model_agreement
 from ..models import sample as model_sample
 from ..models import client as model_client
 from ..models import warehouse as model_warehouse
+from .market import get_market_data
 
 _DATE_RE = re.compile(r'\b(\d{2}/\d{2}/\d{4})\b')
 
@@ -56,4 +57,10 @@ def index():
         for s in all_samples[:10]
     ]
 
-    return render_template('app/index.html', upcoming=upcoming, recent_samples=recent_samples)
+    try:
+        market = get_market_data()
+    except Exception as e:
+        print(f"Market data error: {e}")
+        market = {'kc': [], 'usd_brl': None, 'usd_brl_change': None, 'usd_brl_change_pct': None, 'updated_at': '—'}
+
+    return render_template('app/index.html', upcoming=upcoming, recent_samples=recent_samples, market=market)

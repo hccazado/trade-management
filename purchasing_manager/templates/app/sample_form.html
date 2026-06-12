@@ -226,6 +226,9 @@
             </li>
         </ul>
     </form>
+    <form method="post" action="{{ url_for('sample.notify', id=sample.id) }}" style="margin:0 auto 16px;width:90%;text-align:right">
+        <button type="submit">Comunicar compradores</button>
+    </form>
 </section>
 <script src="{{ url_for('static', filename='copy_sample.js') }}"></script>
 {% endif %}

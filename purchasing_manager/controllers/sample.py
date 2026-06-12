@@ -10,19 +10,28 @@ from ..controllers import client as controller_client
 from ..controllers.buyer import get_matching_buyers
 
 
+def _post_webhook(payload):
+    webhook_url = os.environ.get("N8N_WEBHOOK_URL")
+    if not webhook_url:
+        print("Webhook: N8N_WEBHOOK_URL not set")
+        return
+    try:
+        r = requests.post(webhook_url, json=payload, timeout=10)
+        print(f"Webhook: {r.status_code} {r.text[:200]}")
+    except Exception as e:
+        print(f"Webhook notification failed: {e}")
+
+
 def _notify_buyers(sample_data):
+    """Call within request context — does Firestore lookup, then fires webhook in thread."""
     webhook_url = os.environ.get("N8N_WEBHOOK_URL")
     if not webhook_url:
         return
     matched = get_matching_buyers(sample_data)
     if not matched:
-        print("No matching buyers found, skipping webhook.")
         return
     payload = {"sample": sample_data, "buyers": matched}
-    try:
-        requests.post(webhook_url, json=payload, timeout=10)
-    except Exception as e:
-        print(f"Webhook notification failed: {e}")
+    threading.Thread(target=_post_webhook, args=(payload,), daemon=True).start()
 
 
 def index():
@@ -47,7 +56,7 @@ def create():
         new_data["num_amostra"] = generate_sample_number()
     if model_sample.create(new_data):
         if notify:
-            threading.Thread(target=_notify_buyers, args=(new_data,), daemon=True).start()
+            _notify_buyers(new_data)
         flash("Amostra cadastrada com sucesso!")
         return redirect(url_for("sample.index"))
     flash("Ocorreu um erro ao cadastrar a amostra.", "error")
@@ -69,6 +78,24 @@ def update(id):
         flash("Amostra atualizada com sucesso!")
         return redirect(url_for("sample.index"))
     flash("Ocorreu um erro ao atualizar a amostra.", "error")
+    return redirect(url_for("sample.edit", id=id))
+
+def notify(id):
+    sample_data = model_sample.get_one(id)
+    if not sample_data:
+        flash("Amostra não encontrada.", "error")
+        return redirect(url_for("sample.index"))
+    matched = get_matching_buyers(sample_data)
+    if not matched:
+        flash("Nenhum comprador correspondente encontrado.", "error")
+        return redirect(url_for("sample.edit", id=id))
+    webhook_url = os.environ.get("N8N_WEBHOOK_URL")
+    if not webhook_url:
+        flash("Webhook não configurado.", "error")
+        return redirect(url_for("sample.edit", id=id))
+    payload = {"sample": sample_data, "buyers": matched}
+    threading.Thread(target=_post_webhook, args=(payload,), daemon=True).start()
+    flash(f"Notificação enviada para {len(matched)} comprador(es).")
     return redirect(url_for("sample.edit", id=id))
 
 def generate_sample_number():

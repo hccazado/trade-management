@@ -30,9 +30,7 @@ def _peneiras_match(sample, buyer):
         min_val = _to_float(buyer.get(p['field']))
         if min_val is None:
             continue
-        sample_val = _to_float(sample.get(p['sample_key']))
-        if sample_val is None:
-            return False
+        sample_val = _to_float(sample.get(p['sample_key']), default=0.0)
         if sample_val < (min_val - tolerancia):
             return False
     return True
@@ -58,7 +56,7 @@ def get_matching_buyers(sample):
         if not buyer.get('ativo'):
             continue
         tipo_list = buyer.get('tipo') or []
-        if tipo_list and sample.get('tipo') not in tipo_list:
+        if tipo_list and sample.get('type') not in tipo_list:
             continue
         qty_min = _to_float(buyer.get('quantidade_minima'))
         if qty_min is not None:
