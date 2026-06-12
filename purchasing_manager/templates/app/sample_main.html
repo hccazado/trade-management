@@ -3,10 +3,10 @@
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-3 mt-3">
     <h2 class="h4 mb-0">Amostras de Café</h2>
-    <a href="{{ url_for('sample.new') }}" class="btn btn-primary btn-sm">+ Nova Amostra</a>
+    <a href="{{ url_for('sample.new') }}" class="btn btn-teal btn-sm">+ Nova Amostra</a>
 </div>
 <input class="form-control form-control-sm mb-3" id="input_search" placeholder="filtrar cliente, nº ou tipo...">
-<div class="table-responsive">
+<div class="table-responsive" style="max-height:calc(100vh - 220px);overflow-y:auto;">
     <table class="table table-sm table-hover table-striped align-middle">
         <thead class="table-secondary">
             <tr>
