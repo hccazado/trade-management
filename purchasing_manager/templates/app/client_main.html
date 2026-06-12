@@ -1,41 +1,34 @@
-{%extends "base.html"%}
+{% extends "base.html" %}
 
-
-
-{%block content%}
-<h2 class="center">Clientes</h2>
-<section class="lt_mgt">
-    <div class="mgt_row">
-        <input name="search" id="input_search" placeholder="Buscar por nome">
-        <a class="button" href="{{url_for('client.new')}}">Novo Cliente</a>
-    </div>
-    <div class="mgt_container">
-        <table>
-            <thead>
-                <td>Nome</td>
-                <td>Cidade / UF</td>
-                <td>Editar</td>
-            </thead>
-            <tbody id="mgt_body">
-                {%for client in clients%}
-                <tr>
-                    <td>
-                        {{client.nome}}
-                    </td>
-                    <td>
-                        {{client.cidade}} / {{client.uf}}
-                    </td>
-                    <td>
-                        <a href="{{url_for('client.edit', id=client.id)}}">
-                            <img class="edit" src="{{url_for('static', filename='edit.png')}}">
-                        </a>
-                    </td>
-                </tr>
-                {%endfor%}
-            </tbody>
-        </table>
-    </div>
-</section>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="{{url_for('static', filename='find_clients.js')}}"></script>
-{%endblock%}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3 mt-3">
+    <h2 class="h4 mb-0">Clientes</h2>
+    <a href="{{ url_for('client.new') }}" class="btn btn-primary btn-sm">+ Novo Cliente</a>
+</div>
+<input class="form-control form-control-sm mb-3" id="input_search" placeholder="filtrar nome...">
+<div class="table-responsive">
+    <table class="table table-sm table-hover table-striped align-middle">
+        <thead class="table-secondary">
+            <tr>
+                <th>Nome</th>
+                <th class="d-none d-md-table-cell">Cidade / UF</th>
+                <th class="col-icon">Editar</th>
+            </tr>
+        </thead>
+        <tbody id="mgt_body">
+            {% for client in clients %}
+            <tr>
+                <td>{{ client.nome }}</td>
+                <td class="d-none d-md-table-cell">{{ client.cidade }} / {{ client.uf }}</td>
+                <td class="col-icon">
+                    <a href="{{ url_for('client.edit', id=client.id) }}" class="table-icon">
+                        <span class="material-symbols-outlined">edit</span>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script src="{{ url_for('static', filename='find_clients.js') }}"></script>
+{% endblock %}

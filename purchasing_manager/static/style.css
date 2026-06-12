@@ -265,31 +265,6 @@ header>img {
     text-decoration: none;
 }
 
-.card {
-    border: 1px solid var(--background);
-    border-radius: 8px;
-    color: #000;
-    padding: 15px;
-    width: 250px;
-    height: 300px;
-    box-shadow: 2px 5px 5px #bbb;
-    /* text-decoration: none; */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.card img {
-    width: 90%;
-    height: auto;
-
-}
-
-.card span {
-    text-decoration: none;
-}
-
 section {
     width: 100%;
     margin: auto;
@@ -1070,22 +1045,6 @@ textarea {
         min-height: 20px;
     }
 
-    /* cards stretch on very small screens */
-    .card {
-        width: 85vw;
-        height: auto;
-        min-height: 120px;
-        flex-direction: row;
-        justify-content: flex-start;
-        padding: 16px;
-        gap: 16px;
-    }
-
-    .card img {
-        width: 48px;
-        height: 48px;
-    }
-
     /* smooth table scroll */
     .mgt_container {
         height: 55vh;
@@ -1142,3 +1101,63 @@ textarea {
         display: none;
     }
 }
+
+/* ── Bootstrap helpers ───────────────────────────────────────────────────── */
+.btn-teal {
+    background-color: #196774;
+    color: #fff;
+    border: none;
+}
+.btn-teal:hover { background-color: #145860; color: #fff; }
+
+.btn-outline-brand {
+    border-color: var(--background);
+    color: var(--background);
+}
+.btn-outline-brand:hover { background-color: var(--background); color: #fff; }
+
+.form-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.08);
+    max-width: 720px;
+    margin: 24px auto;
+}
+
+.form-title {
+    color: var(--background);
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+}
+
+/* ── Material Symbols ────────────────────────────────────────────────────── */
+.material-symbols-outlined {
+    font-variation-settings: 'opsz' 20, 'wght' 400, 'FILL' 0, 'GRAD' 0;
+    vertical-align: middle;
+    line-height: 1;
+}
+
+.nav-icon {
+    font-size: 1.1rem;
+    color: inherit;
+}
+
+.table-icon {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    padding: 2px 4px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.btn-icon .material-symbols-outlined { color: #555; }
+.btn-icon:disabled .material-symbols-outlined { color: #196774; }
+
+.col-icon { width: 60px; text-align: center; }

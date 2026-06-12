@@ -1,83 +1,58 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2 class="center">Amostras de Café</h2>
-<section class="lt_mgt">
-    <div class="mgt_row">
-        <input name="search" id="input_search" placeholder="filtrar cliente">
-        <a class="button" href="{{ url_for('sample.new') }}">Nova Amostra</a>
-    </div>
-    <div class="mgt_container">
-        <table>
-            <thead>
-                <tr>
-                    <td>Nº</td>
-                    <td class="hide-mobile">Tipo</td>
-                    <td>Cliente</td>
-                    <td class="hide-mobile">Data</td>
-                    <td class="hide-mobile">17/8</td>
-                    <td class="hide-mobile">13</td>
-                    <td class="hide-mobile">10</td>
-                    <td class="hide-mobile">Mk</td>
-                    <td class="hide-mobile">FD</td>
-                    <td class="hide-mobile">Ct</td>
-                    <td class="hide-mobile">Def</td>
-                    <td class="hide-mobile">Br</td>
-                    <td class="col-icon"></td>
-                </tr>
-            </thead>
-            <tbody id="mgt_body">
-                {% for sample in samples %}
-                <tr data-sample='{{ sample | tojson }}'>
-                    <td>
-                        {{ sample.num_amostra }}
-                    </td>
-                    <td class="hide-mobile">
-                        {{ sample.get('type', '—')|capitalize }}
-                    </td>
-                    <td>
-                        {{ sample.client_name }}
-                    </td>
-                    <td class="hide-mobile">
-                        {{ sample.data }}
-                    </td>
-                    <td class="hide-mobile">
-                        {{ sample['17/8'] }}
-                    </td>
-                    <td class="hide-mobile">
-                        {{ sample['13'] }}
-                    </td>
-                    <td class="hide-mobile">
-                        {{ sample['10'] }}
-                    </td>
-                    <td class="hide-mobile">
-                        {{ sample.Mk }}
-                    </td>
-                    <td class="hide-mobile">
-                        {{ sample.FD }}
-                    </td>
-                    <td class="hide-mobile">
-                        {{ sample.Cata }}
-                    </td>
-                    <td class="hide-mobile">
-                        {{ sample.PVA }}
-                    </td>
-                    <td class="hide-mobile">
-                        {{ sample.Broca }}
-                    </td>
-                    <td class="col-icon">
-                        <a href="{{ url_for('sample.edit', id=sample.id) }}">
-                            <img class="edit" src="{{ url_for('static', filename='edit.png') }}">
-                        </a>
-                        <button type="button" class="btn-copy">📋</button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</section>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<div class="d-flex justify-content-between align-items-center mb-3 mt-3">
+    <h2 class="h4 mb-0">Amostras de Café</h2>
+    <a href="{{ url_for('sample.new') }}" class="btn btn-primary btn-sm">+ Nova Amostra</a>
+</div>
+<input class="form-control form-control-sm mb-3" id="input_search" placeholder="filtrar cliente, nº ou tipo...">
+<div class="table-responsive">
+    <table class="table table-sm table-hover table-striped align-middle">
+        <thead class="table-secondary">
+            <tr>
+                <th>Nº</th>
+                <th class="d-none d-md-table-cell">Tipo</th>
+                <th>Cliente</th>
+                <th class="d-none d-md-table-cell">Data</th>
+                <th class="d-none d-md-table-cell">17/8</th>
+                <th class="d-none d-md-table-cell">13</th>
+                <th class="d-none d-md-table-cell">10</th>
+                <th class="d-none d-md-table-cell">Mk</th>
+                <th class="d-none d-md-table-cell">FD</th>
+                <th class="d-none d-md-table-cell">Ct</th>
+                <th class="d-none d-md-table-cell">Def</th>
+                <th class="d-none d-md-table-cell">Br</th>
+                <th class="col-icon">Editar</th>
+            </tr>
+        </thead>
+        <tbody id="mgt_body">
+            {% for sample in samples %}
+            <tr data-sample='{{ sample | tojson }}'>
+                <td>{{ sample.num_amostra }}</td>
+                <td class="d-none d-md-table-cell">{{ sample.get('type', '—')|capitalize }}</td>
+                <td>{{ sample.client_name }}</td>
+                <td class="d-none d-md-table-cell">{{ sample.data }}</td>
+                <td class="d-none d-md-table-cell">{{ sample['17/8'] }}</td>
+                <td class="d-none d-md-table-cell">{{ sample['13'] }}</td>
+                <td class="d-none d-md-table-cell">{{ sample['10'] }}</td>
+                <td class="d-none d-md-table-cell">{{ sample.Mk }}</td>
+                <td class="d-none d-md-table-cell">{{ sample.FD }}</td>
+                <td class="d-none d-md-table-cell">{{ sample.Cata }}</td>
+                <td class="d-none d-md-table-cell">{{ sample.PVA }}</td>
+                <td class="d-none d-md-table-cell">{{ sample.Broca }}</td>
+                <td class="col-icon">
+                    <a href="{{ url_for('sample.edit', id=sample.id) }}" class="table-icon">
+                        <span class="material-symbols-outlined">edit</span>
+                    </a>
+                    <button type="button" class="btn-icon btn-copy">
+                        <span class="material-symbols-outlined">content_copy</span>
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 <script src="{{ url_for('static', filename='find_samples.js') }}"></script>
 <script src="{{ url_for('static', filename='copy_sample.js') }}"></script>
 {% endblock %}

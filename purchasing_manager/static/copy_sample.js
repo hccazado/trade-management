@@ -30,16 +30,20 @@ function capitalize(s) {
     return s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
 }
 
+function finish(btn) {
+    const icon = btn.querySelector('.material-symbols-outlined');
+    icon.textContent = 'check';
+    btn.disabled = true;
+    setTimeout(() => {
+        icon.textContent = 'content_copy';
+        btn.disabled = false;
+    }, 2000);
+}
+
 function copySample(data, btn) {
     const text = buildSampleText(data);
-    const finish = () => {
-        const original = btn.textContent;
-        btn.textContent = '✓ Copiado';
-        btn.disabled = true;
-        setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 2000);
-    };
     if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(finish).catch(() => fallbackCopy(text, btn));
+        navigator.clipboard.writeText(text).then(() => finish(btn)).catch(() => fallbackCopy(text, btn));
     } else {
         fallbackCopy(text, btn);
     }
@@ -54,10 +58,7 @@ function fallbackCopy(text, btn) {
     ta.select();
     try {
         document.execCommand('copy');
-        const original = btn.textContent;
-        btn.textContent = '✓ Copiado';
-        btn.disabled = true;
-        setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 2000);
+        finish(btn);
     } catch (e) {
         alert('Não foi possível copiar. Tente novamente.');
     }

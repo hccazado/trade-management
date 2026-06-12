@@ -1,59 +1,41 @@
-{%extends "base.html"%}
+{% extends "base.html" %}
 
-
-{%block content%}
-<h1 class="center">Fechamentos</h1>
-<section class="lt_mgt">
-    <div class="mgt_row">
-        <input name="search" id="input_search" placeholder="filtrar fechamento">
-        <a class="button" href="{{url_for('agreement.new')}}">Novo Fechamento</a>
-    </div>
-    <div class="mgt_container">
-        <table>
-            <thead>
-                <td class="hide-mobile">Data</td>
-                <td>Num Fechamento</td>
-                <td class="hide-mobile">Ordem Compra</td>
-                <td class="hide-mobile">Vendedor</td>
-                <td>Comprador</td>
-                <td class="hide-mobile">Quantidade</td>
-                <td>Editar</td>
-            </thead>
-            <tbody id="mgt_body">
-                {%for agreement in agreements%}
-                <tr>
-                    <td class="hide-mobile">
-                        {{agreement['data']}}
-                    </td>
-                    <td>
-                        {{agreement['num_fechamento']}}
-                    </td>
-                    <td class="hide-mobile">
-                        {{agreement['rc']}}
-                    </td>
-                    <td class="hide-mobile">
-                        {{agreement['vendedor']}}
-                    </td>
-                    <td>
-                        {{agreement['comprador']}}
-                    </td>
-                    <td class="hide-mobile">
-                        {{agreement['quantidade']}}
-                    </td>
-                    <td>
-                        <a href="{{ url_for('agreement.edit', id=agreement['id']) }}">
-                            <img class="edit" src="{{ url_for('static', filename='edit.png') }}">
-                        </a>
-                        <a href="{{ url_for('agreement.print', id=agreement['id']) }}">
-                            <img class="edit" src="{{ url_for('static', filename='print.png') }}">
-                        </a>
-                    </td>
-                </tr>
-                {%endfor%}
-            </tbody>
-        </table>
-    </div>
-</section>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="{{url_for('static', filename='find_agreements.js')}}"></script>
-{%endblock%}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3 mt-3">
+    <h2 class="h4 mb-0">Fechamentos</h2>
+    <a href="{{ url_for('agreement.new') }}" class="btn btn-primary btn-sm">+ Novo Fechamento</a>
+</div>
+<input class="form-control form-control-sm mb-3" id="input_search" placeholder="filtrar fechamento...">
+<div class="table-responsive">
+    <table class="table table-sm table-hover table-striped align-middle">
+        <thead class="table-secondary">
+            <tr>
+                <th>Fechamento</th>
+                <th class="d-none d-md-table-cell">Data</th>
+                <th>Comprador</th>
+                <th class="d-none d-md-table-cell">Vendedor</th>
+                <th class="col-icon">Ações</th>
+            </tr>
+        </thead>
+        <tbody id="mgt_body">
+            {% for agreement in agreements %}
+            <tr>
+                <td>{{ agreement['num_fechamento'] }}</td>
+                <td class="d-none d-md-table-cell">{{ agreement['data'] }}</td>
+                <td>{{ agreement['comprador'] }}</td>
+                <td class="d-none d-md-table-cell">{{ agreement['vendedor'] }}</td>
+                <td class="col-icon">
+                    <a href="{{ url_for('agreement.edit', id=agreement['id']) }}" class="table-icon">
+                        <span class="material-symbols-outlined">edit</span>
+                    </a>
+                    <a href="{{ url_for('agreement.print', id=agreement['id']) }}" class="table-icon">
+                        <span class="material-symbols-outlined">print</span>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script src="{{ url_for('static', filename='find_agreements.js') }}"></script>
+{% endblock %}
