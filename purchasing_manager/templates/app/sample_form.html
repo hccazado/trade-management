@@ -11,7 +11,7 @@
         <!-- Row: Cliente / Tipo -->
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label fw-semibold" for="client">Cliente</label>
+                <label class="form-label" for="client">Cliente</label>
                 <select class="form-select" name="client" id="client">
                     {% if isediting %}
                         {% if not sample.client or sample.client == "" %}
@@ -31,7 +31,7 @@
                 </select>
             </div>
             <div class="col-md-6">
-                <label class="form-label fw-semibold" for="type">Tipo</label>
+                <label class="form-label" for="type">Tipo</label>
                 <select class="form-select" name="type" id="type">
                     <option value="" {% if isediting and not sample.get('type') %}selected{% elif not isediting %}selected{% endif %}>— Selecionar —</option>
                     {% for opt in ['fine', 'verygood', 'good', 'bica', 'barrento', 'escolha', 'chuvado', 'fd10'] %}
@@ -46,11 +46,11 @@
         <!-- Row: Data / Num Amostra -->
         <div class="row mb-3">
             <div class="col-md-4">
-                <label class="form-label fw-semibold" for="data">Data</label>
+                <label class="form-label" for="data">Data</label>
                 <input class="form-control" id="data" name="data" value="{{ sample.data if isediting else today }}">
             </div>
             <div class="col-md-8">
-                <label class="form-label fw-semibold" for="num_amostra">Número da Amostra</label>
+                <label class="form-label" for="num_amostra">Número da Amostra</label>
                 <input class="form-control" id="num_amostra" name="num_amostra"
                     placeholder="Deixar em branco para gerar automaticamente (ex: 001/26)"
                     value="{{ sample.num_amostra if isediting else '' }}">
@@ -58,7 +58,7 @@
         </div>
 
         <div class="card mb-3">
-            <div class="card-header fw-semibold">Peneiras (%)</div>
+            <div class="card-header">Peneiras (%)</div>
             <div class="card-body">
                 <div class="d-flex flex-wrap gap-3">
                     <div>
@@ -106,7 +106,7 @@
         </div>
 
         <div class="card mb-3">
-            <div class="card-header fw-semibold">Bebida</div>
+            <div class="card-header">Bebida</div>
             <div class="card-body">
                 <div class="d-flex flex-wrap gap-3">
                     <div>
@@ -139,13 +139,13 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label fw-semibold" for="quantidade">Quantidade (sacas)</label>
+            <label class="form-label" for="quantidade">Quantidade (sacas)</label>
             <input class="form-control" id="quantidade" name="quantidade" type="number" min="0" placeholder="e.g. 300"
                 value="{{ sample.get('quantidade', '') if isediting else '' }}">
         </div>
 
         <div class="mb-3">
-            <label class="form-label fw-semibold" for="obs">Observações (OBS)</label>
+            <label class="form-label" for="obs">Observações (OBS)</label>
             <textarea class="form-control" rows="3" id="obs" name="obs" placeholder="Conforme amostra...">{{ sample.obs if isediting else '' }}</textarea>
         </div>
 

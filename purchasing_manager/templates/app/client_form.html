@@ -11,55 +11,55 @@
     <h2 class="form-title">{% if isediting %}Editar Cliente{% else %}Cadastrar Cliente{% endif %}</h2>
     <form id="form" method="post">
         <div class="mb-3">
-            <label class="form-label fw-semibold" for="nome">Nome</label>
+            <label class="form-label" for="nome">Nome</label>
             <input class="form-control" id="nome" name="nome" value="{{ v.get('nome', '') }}">
         </div>
         <div class="mb-3">
-            <label class="form-label fw-semibold" for="email">E-mail</label>
+            <label class="form-label" for="email">E-mail</label>
             <input class="form-control" type="email" id="email" name="email" value="{{ v.get('email', '') }}">
         </div>
         <!-- Row: Tel / CEP / CNPJ -->
         <div class="row mb-3">
             <div class="col-md-4">
-                <label class="form-label fw-semibold" for="tel">Telefone</label>
+                <label class="form-label" for="tel">Telefone</label>
                 <input class="form-control" id="tel" name="tel" value="{{ v.get('tel', '') }}">
             </div>
             <div class="col-md-4">
-                <label class="form-label fw-semibold" for="cep">CEP</label>
+                <label class="form-label" for="cep">CEP</label>
                 <input class="form-control" id="cep" name="cep" value="{{ v.get('cep', '') }}">
             </div>
             <div class="col-md-4">
-                <label class="form-label fw-semibold" for="cnpj">CNPJ/CPF</label>
+                <label class="form-label" for="cnpj">CNPJ/CPF</label>
                 <input class="form-control" id="cnpj" name="cnpj" value="{{ v.get('cnpj', '') }}">
             </div>
         </div>
         <div class="mb-3">
-            <label class="form-label fw-semibold" for="ie">I.E.</label>
+            <label class="form-label" for="ie">I.E.</label>
             <input class="form-control" id="ie" name="ie" value="{{ v.get('ie', '') }}">
         </div>
         <!-- Row: End / Num -->
         <div class="row mb-3">
             <div class="col-md-8">
-                <label class="form-label fw-semibold" for="end">End.</label>
+                <label class="form-label" for="end">End.</label>
                 <input class="form-control" id="end" name="end" value="{{ v.get('end', '') }}">
             </div>
             <div class="col-md-4">
-                <label class="form-label fw-semibold" for="num">Num.</label>
+                <label class="form-label" for="num">Num.</label>
                 <input class="form-control" id="num" name="num" value="{{ v.get('num', '') }}">
             </div>
         </div>
         <!-- Row: Bairro / Cidade / UF -->
         <div class="row mb-3">
             <div class="col-md-4">
-                <label class="form-label fw-semibold" for="bairro">Bairro</label>
+                <label class="form-label" for="bairro">Bairro</label>
                 <input class="form-control" id="bairro" name="bairro" value="{{ v.get('bairro', '') }}">
             </div>
             <div class="col-md-5">
-                <label class="form-label fw-semibold" for="cidade">Cidade</label>
+                <label class="form-label" for="cidade">Cidade</label>
                 <input class="form-control" id="cidade" name="cidade" value="{{ v.get('cidade', '') }}">
             </div>
             <div class="col-md-3">
-                <label class="form-label fw-semibold" for="uf">UF</label>
+                <label class="form-label" for="uf">UF</label>
                 <select class="form-select" name="uf" id="uf">
                     <option value="" disabled {% if not v.get('uf') %}selected{% endif %}>Selecione UF</option>
                     {% for item in uf %}
@@ -69,11 +69,11 @@
             </div>
         </div>
         <div class="mb-3">
-            <label class="form-label fw-semibold" for="conta">Conta P/ Pagamento</label>
+            <label class="form-label" for="conta">Conta P/ Pagamento</label>
             <input class="form-control" id="conta" name="conta" value="{{ v.get('conta', '') }}">
         </div>
         <div class="mb-3">
-            <label class="form-label fw-semibold" for="obs">OBS</label>
+            <label class="form-label" for="obs">OBS</label>
             <textarea class="form-control" rows="3" id="obs" name="obs">{{ v.get('obs', '') }}</textarea>
         </div>
         <button type="submit" class="btn btn-teal">{% if isediting %}Atualizar{% else %}Cadastrar{% endif %}</button>

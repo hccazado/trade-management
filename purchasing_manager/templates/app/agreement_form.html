@@ -19,26 +19,27 @@
         {% if isEditing %}
         <div class="row mb-3">
             <div class="col-md-4">
-                <label class="form-label fw-semibold" for="data">Data</label>
+                <label class="form-label" for="data">Data</label>
                 <input class="form-control" id="data" name="data" value="{{ v.get('data','') }}">
             </div>
             <div class="col-md-4">
-                <label class="form-label fw-semibold" for="rc">Ref. Compra</label>
+                <label class="form-label" for="rc">Ref. Compra</label>
                 <input class="form-control" id="rc" name="rc" value="{{ v.get('rc','') }}">
             </div>
             <div class="col-md-4">
-                <label class="form-label fw-semibold" for="num_fechamento">Nº Fechamento</label>
-                <input class="form-control" id="num_fechamento" name="num_fechamento" value="{{ v.get('num_fechamento','') }}">
+                <label class="form-label" for="num_fechamento">Nº Fechamento</label>
+                <input class="form-control" id="num_fechamento" name="num_fechamento"
+                    value="{{ v.get('num_fechamento','') }}">
             </div>
         </div>
         {% else %}
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label fw-semibold" for="rc">Ref. Compra</label>
+                <label class="form-label" for="rc">Ref. Compra</label>
                 <input class="form-control" id="rc" name="rc">
             </div>
             <div class="col-md-6">
-                <label class="form-label fw-semibold" for="num_fechamento">Nº Fechamento</label>
+                <label class="form-label" for="num_fechamento">Nº Fechamento</label>
                 <input class="form-control" id="num_fechamento" name="num_fechamento">
             </div>
         </div>
@@ -47,18 +48,20 @@
         <!-- Row: Vendedor / Comprador -->
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label fw-semibold" for="vendedor">Vendedor</label>
+                <label class="form-label" for="vendedor">Vendedor</label>
                 <select class="form-select" name="vendedor" id="vendedor">
                     {% for client in clients %}
-                    <option value="{{ client['id'] }}" {% if v.get('vendedor') == client['id'] %}selected{% endif %}>{{ client.nome }}</option>
+                    <option value="{{ client['id'] }}" {% if v.get('vendedor')==client['id'] %}selected{% endif %}>{{
+                        client.nome }}</option>
                     {% endfor %}
                 </select>
             </div>
             <div class="col-md-6">
-                <label class="form-label fw-semibold" for="comprador">Comprador</label>
+                <label class="form-label" for="comprador">Comprador</label>
                 <select class="form-select" name="comprador" id="comprador">
                     {% for client in clients %}
-                    <option value="{{ client['id'] }}" {% if v.get('comprador') == client['id'] %}selected{% endif %}>{{ client.nome }}</option>
+                    <option value="{{ client['id'] }}" {% if v.get('comprador')==client['id'] %}selected{% endif %}>{{
+                        client.nome }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -67,18 +70,20 @@
         <!-- Row: Local Retirada / Local Descarga -->
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label fw-semibold" for="retirada">Local de Retirada</label>
+                <label class="form-label" for="retirada">Local de Retirada</label>
                 <select class="form-select" name="retirada" id="retirada">
                     {% for warehouse in warehouses %}
-                    <option value="{{ warehouse['id'] }}" {% if v.get('retirada') == warehouse['id'] %}selected{% endif %}>{{ warehouse.nome }}</option>
+                    <option value="{{ warehouse['id'] }}" {% if v.get('retirada')==warehouse['id'] %}selected{% endif
+                        %}>{{ warehouse.nome }}</option>
                     {% endfor %}
                 </select>
             </div>
             <div class="col-md-6">
-                <label class="form-label fw-semibold" for="descarga">Local de Descarga</label>
+                <label class="form-label" for="descarga">Local de Descarga</label>
                 <select class="form-select" name="descarga" id="descarga">
                     {% for warehouse in warehouses %}
-                    <option value="{{ warehouse['id'] }}" {% if v.get('descarga') == warehouse['id'] %}selected{% endif %}>{{ warehouse.nome }}</option>
+                    <option value="{{ warehouse['id'] }}" {% if v.get('descarga')==warehouse['id'] %}selected{% endif
+                        %}>{{ warehouse.nome }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -86,52 +91,56 @@
 
         <!-- Condição de venda full width -->
         <div class="mb-3">
-            <label class="form-label fw-semibold" for="cond_venda">Condição de Venda</label>
+            <label class="form-label" for="cond_venda">Condição de Venda</label>
             <input class="form-control" id="cond_venda" name="cond_venda" value="{{ v.get('cond_venda','') }}">
         </div>
 
         <!-- Row: Preço / Quantidade / Modalidade -->
         <div class="row mb-3">
             <div class="col-md-4">
-                <label class="form-label fw-semibold" for="preco">Preço</label>
+                <label class="form-label" for="preco">Preço</label>
                 <input class="form-control" id="preco" name="preco" value="{{ v.get('preco','') }}">
             </div>
             <div class="col-md-4">
-                <label class="form-label fw-semibold" for="quantidade">Quantidade</label>
+                <label class="form-label" for="quantidade">Quantidade</label>
                 <input class="form-control" id="quantidade" name="quantidade" value="{{ v.get('quantidade','') }}">
             </div>
             <div class="col-md-4">
-                <label class="form-label fw-semibold" for="modalidade">Modalidade</label>
+                <label class="form-label" for="modalidade">Modalidade</label>
                 <input class="form-control" id="modalidade" name="modalidade" value="{{ v.get('modalidade','') }}">
             </div>
         </div>
 
         <!-- Dados pagamento full width -->
         <div class="mb-3">
-            <label class="form-label fw-semibold" for="pagamento">Dados Para Pagamento</label>
+            <label class="form-label" for="pagamento">Dados Para Pagamento</label>
             <input class="form-control" id="pagamento" name="pagamento" value="{{ v.get('pagamento','') }}">
         </div>
 
         <!-- Row: Corretor / Corretagem Vendedor / Corretagem Comprador -->
         <div class="row mb-3">
             <div class="col-md-4">
-                <label class="form-label fw-semibold" for="corretor">Corretor</label>
-                <input class="form-control" id="corretor" name="corretor" value="{{ v.get('corretor','NETTUZZI CORRETORA') }}">
+                <label class="form-label" for="corretor">Corretor</label>
+                <input class="form-control" id="corretor" name="corretor"
+                    value="{{ v.get('corretor','NETTUZZI CORRETORA') }}">
             </div>
             <div class="col-md-4">
-                <label class="form-label fw-semibold" for="corretagem_vendedor">Corretagem Vendedor</label>
-                <input class="form-control" id="corretagem_vendedor" type="number" step="any" name="corretagem_vendedor" value="{{ v.get('corretagem_vendedor', 0.0) }}">
+                <label class="form-label" for="corretagem_vendedor">Corretagem Vend.</label>
+                <input class="form-control" id="corretagem_vendedor" type="number" step="any" name="corretagem_vendedor"
+                    value="{{ v.get('corretagem_vendedor', 0.0) }}">
             </div>
             <div class="col-md-4">
-                <label class="form-label fw-semibold" for="corretagem_comprador">Corretagem Comprador</label>
-                <input class="form-control" id="corretagem_comprador" type="number" step="any" name="corretagem_comprador" value="{{ v.get('corretagem_comprador', 0.5) }}">
+                <label class="form-label" for="corretagem_comprador">Corretagem Comp.</label>
+                <input class="form-control" id="corretagem_comprador" type="number" step="any"
+                    name="corretagem_comprador" value="{{ v.get('corretagem_comprador', 0.5) }}">
             </div>
         </div>
 
         <!-- OBS -->
         <div class="mb-3">
-            <label class="form-label fw-semibold" for="obs">OBS</label>
-            <textarea class="form-control" rows="3" id="obs" name="obs">{{ v.get('obs', 'Conforme amostra em poder das partes') }}</textarea>
+            <label class="form-label" for="obs">OBS</label>
+            <textarea class="form-control" rows="3" id="obs"
+                name="obs">{{ v.get('obs', 'Conforme amostra em poder das partes') }}</textarea>
         </div>
 
         <button type="submit" class="btn btn-teal">{% if isEditing %}Atualizar{% else %}Cadastrar{% endif %}</button>

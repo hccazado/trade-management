@@ -9,13 +9,13 @@
     <h2 class="form-title">{% if isediting %}Editar Comprador{% else %}Cadastrar Comprador{% endif %}</h2>
     <form id="form" method="post">
         <div class="mb-3">
-            <label class="form-label fw-semibold" for="nome">Nome <span class="text-danger">*</span></label>
+            <label class="form-label" for="nome">Nome <span class="text-danger">*</span></label>
             <input class="form-control" id="nome" name="nome" required
                 value="{{ buyer.nome if isediting else '' }}">
         </div>
 
         <div class="mb-3">
-            <label class="form-label fw-semibold">WhatsApp <span class="text-danger">*</span></label>
+            <label class="form-label">WhatsApp <span class="text-danger">*</span></label>
             <div class="input-group">
                 <span class="input-group-text">+55</span>
                 <input class="form-control" id="whatsapp" name="whatsapp" required
@@ -26,14 +26,14 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label fw-semibold" for="endereco">Endereço</label>
+            <label class="form-label" for="endereco">Endereço</label>
             <textarea class="form-control" id="endereco" name="endereco" rows="3">{{ buyer.get('endereco', '') if isediting else '' }}</textarea>
         </div>
 
         <div class="card mb-3">
-            <div class="card-header fw-semibold">Preferências de Amostra</div>
+            <div class="card-header">Preferências de Amostra</div>
             <div class="card-body">
-                <label class="form-label fw-semibold">Tipos aceitos</label>
+                <label class="form-label">Tipos aceitos</label>
                 <div class="checkbox-group">
                     {% for opt in tipo_options %}
                     <label>
@@ -46,7 +46,7 @@
 
                 <hr class="section-divider">
 
-                <label class="form-label fw-semibold">Bebida aceita</label>
+                <label class="form-label">Bebida aceita</label>
                 <div class="checkbox-group">
                     {% for b in bebida_options %}
                     <label>
@@ -57,14 +57,14 @@
                     {% endfor %}
                 </div>
                 <div class="mb-3 mt-2">
-                    <label class="form-label fw-semibold" for="bebida_tolerancia">Tolerância bebida (máx. copos de outros tipos)</label>
+                    <label class="form-label" for="bebida_tolerancia">Tolerância bebida (máx. copos de outros tipos)</label>
                     <input class="form-control" id="bebida_tolerancia" name="bebida_tolerancia" type="number" min="0" placeholder="0"
                         value="{{ buyer.get('bebida_tolerancia', 0) if isediting else 0 }}">
                 </div>
 
                 <hr class="section-divider">
 
-                <label class="form-label fw-semibold">Peneiras mínimas (%)</label>
+                <label class="form-label">Peneiras mínimas (%)</label>
                 <div class="peneiras-grid">
                     {% for p in peneira_options %}
                     <div class="peneira-row">
@@ -75,12 +75,12 @@
                     {% endfor %}
                 </div>
                 <div class="mb-3 mt-2">
-                    <label class="form-label fw-semibold" for="peneiras_tolerancia">Tolerância peneiras (% abaixo do mínimo aceito)</label>
+                    <label class="form-label" for="peneiras_tolerancia">Tolerância peneiras (% abaixo do mínimo aceito)</label>
                     <input class="form-control" id="peneiras_tolerancia" name="peneiras_tolerancia" type="number" step="0.1" min="0" placeholder="0.0"
                         value="{{ buyer.get('peneiras_tolerancia', 0) if isediting else 0 }}">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label fw-semibold" for="quantidade_minima">Quantidade mínima (sacas)</label>
+                    <label class="form-label" for="quantidade_minima">Quantidade mínima (sacas)</label>
                     <input class="form-control" id="quantidade_minima" name="quantidade_minima" type="number" min="0" placeholder="ex: 100"
                         value="{{ buyer.get('quantidade_minima', '') if isediting else '' }}">
                 </div>
