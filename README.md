@@ -94,7 +94,7 @@ When a new sample is registered with "notify buyers" enabled, the app:
 2. Filters buyers whose preferences (coffee type, minimum quantity, sieve percentages, cup profile) match the sample.
 3. Posts a webhook payload `{ sample, buyers }` to `N8N_WEBHOOK_URL` in a background thread.
 
-The n8n workflow handles the actual WhatsApp/messaging delivery.
+The n8n workflow handles the actual messaging delivery — it uses GPT-4 to generate a personalized WhatsApp or email message for each matched buyer. The workflow template is available in [`n8n_workflow/workflow.json`](n8n_workflow/workflow.json); import it into your n8n instance and fill in your own credentials.
 
 ## Multi-Tenancy
 

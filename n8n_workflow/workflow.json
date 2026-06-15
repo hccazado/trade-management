@@ -1,0 +1,140 @@
+{
+  "name": "Trade Management - Buyer Notification",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "YOUR_WEBHOOK_PATH",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        112,
+        -16
+      ],
+      "id": "6e4f23e5-e280-44d6-b7a9-096436764096",
+      "name": "Webhook",
+      "webhookId": "YOUR_WEBHOOK_ID"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-nano",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-NANO"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=Você é um assistente de vendas de café. Gere uma mensagem de WhatsApp para cada comprador.\n\nAmostra: {{ $json.body.sample.toJsonString() }}\nCompradores: {{ $json.body.buyers.toJsonString() }}\n\nIMPORTANTE: o campo \"type\" da AMOSTRA é o tipo do café (ex: \"verygood\", \"bica\").\nO campo \"tipo\" dos compradores é apenas um filtro interno — NÃO use na mensagem.\n\nPara cada comprador, gere o campo \"mensagem\" EXATAMENTE neste formato.\nUse o caractere \\n para cada quebra de linha.\n\nOlá {nome}, recebemos um café disponível para negociação.\\n\n🔢 Amostra: {sample.num_amostra}\\n\n🌱 Tipo: {sample.type}\\n\n📊 Peneiras: 17/8: {sample['17/8']}% | 13: {sample['13']}% | Moka: {sample.Mk}% | FD: {sample.FD}%\\n\n🍵 Bebida: {bebidas com valor > 0, separadas por vírgula}\\n\n📦 Quantidade: {sample.quantidade} sacas\\n\nEntre em contato para negociação.\\n\\n\nAtt,\\n\\n\nComercial, [Nome da Empresa]\n\nRetorne SOMENTE um JSON array sem texto adicional:\n[{\"nome\": \"...\", \"whatsapp\": \"...\", \"mensagem\": \"...\"}]"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        336,
+        -16
+      ],
+      "id": "587141bc-19aa-4d1c-924a-013628b7dfd5",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = $input.item.json.output[0].content[0].text;\nconst match = text.match(/\\[[\\s\\S]*\\]/);\nif (!match) {\n    throw new Error(\"JSON array not found.\");\n}\nconst parsed = JSON.parse(match[0]);\nreturn parsed.map(item => ({\n    json: {\n        ...item,\n        // Gmail HTML version\n        mensagemEmail: item.mensagem\n            .replace(/\\\\n/g, '\\n')   // convert literal \\n\n            .replace(/\\n/g, '<br>'), // convert actual newlines to HTML\n        // Plain text version\n        mensagemTexto: item.mensagem\n            .replace(/\\\\n/g, '\\n')\n    }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        688,
+        -16
+      ],
+      "id": "597ec15c-ebe5-4da5-a455-19636257caf6",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "sendTo": "YOUR_EMAIL@example.com",
+        "subject": "[Nome da Empresa] - Nova Amostra Disponível [{{ $('Webhook').item.json.body.sample.num_amostra }}]",
+        "message": "={{ $json.mensagemEmail }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        896,
+        -16
+      ],
+      "id": "677105ba-0af2-4d08-a800-9f81efe8899a",
+      "name": "Send a message",
+      "webhookId": "YOUR_WEBHOOK_ID",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_GMAIL_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "YOUR_VERSION_ID",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "YOUR_INSTANCE_ID"
+  },
+  "id": "YOUR_WORKFLOW_ID",
+  "tags": []
+}
