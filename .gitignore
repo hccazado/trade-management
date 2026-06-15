@@ -19,5 +19,8 @@ dist/
 build/
 *.egg-info/
 
+# migration scripts and backups
+data_migration_scripts/
+
 # macOS
 .DS_Store
