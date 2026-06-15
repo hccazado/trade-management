@@ -28,7 +28,7 @@ A multi-tenant web application for managing coffee purchasing operations — bui
 ## Project Structure
 
 ```
-purchasing_manager/
+trade_management/
 ├── controllers/   # Business logic
 ├── models/        # Firestore data access layer
 ├── routes/        # Flask blueprints (URL routing)
@@ -71,7 +71,7 @@ purchasing_manager/
 4. Run the app:
 
    ```bash
-   flask --app purchasing_manager run
+   flask --app trade_management run
    ```
 
 ### Docker

@@ -3,7 +3,7 @@ services:
     name: purchasing-manager
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn "purchasing_manager:create_app()"
+    startCommand: gunicorn "trade_management:create_app()"
     envVars:
       - key: SECRET_KEY
         generateValue: true

@@ -23,4 +23,4 @@ RUN pip install -r requirements.txt
 COPY . /purchasing-manager/
 
 # configure the container to run in an executed manner
-ENTRYPOINT [ "flask", "--app", "purchasing_manager", "run", "-h", "0.0.0.0", "-p", "5000" ]
+ENTRYPOINT [ "flask", "--app", "trade_management", "run", "-h", "0.0.0.0", "-p", "5000" ]
