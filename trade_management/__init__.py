@@ -58,6 +58,10 @@ def create_app (test_config = None):
     @app.route("/favicon.ico")
     def favicon():
         return redirect(url_for("static", filename = "favicon.ico"))
+
+    @app.route("/ping")
+    def ping():
+        return ("", 204)
     
     from .routes import home
     app.register_blueprint(home.bp)
