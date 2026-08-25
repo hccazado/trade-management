@@ -93,7 +93,12 @@
     /* Compress Bootstrap spacing utilities for print */
     .mb-1, .mb-2 { margin-bottom: 0.15rem !important; }
     .mb-3 { margin-bottom: 0.3rem !important; }
-    .mt-3 { margin-top: 0.4rem !important; }
-    .mt-4 { margin-top: 0.6rem !important; }
-    .sig-line { margin-top: 20px; }
+    .mt-3 { margin-top: 0.3rem !important; }
+    .mt-4 { margin-top: 0.5rem !important; }
+    .sig-line { margin-top: 16px; }
+
+    /* Override explicit font-size rules that resist body shrinkage */
+    .obs { font-size: 9px; }
+    .title { margin-top: 5px; }
+    .nunito_font400 { font-size: 10px; }
 }
