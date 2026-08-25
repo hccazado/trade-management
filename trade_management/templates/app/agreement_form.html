@@ -146,5 +146,6 @@
         <button type="submit" class="btn btn-teal">{% if isEditing %}Atualizar{% else %}Cadastrar{% endif %}</button>
     </form>
 </div>
+<script src="{{ url_for('static', filename='agreementForm.js') }}"></script>
 <script src="{{ url_for('static', filename='keepAlive.js') }}"></script>
 {% endblock %}

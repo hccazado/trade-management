@@ -77,6 +77,12 @@
 
 @media print {
     .no-print { display: none !important; }
+    html, body {
+        /* Prevent iOS Safari from scaling up fonts when printing, which causes a 2nd page */
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        font-size: 12px;
+    }
     body { background: none; }
     .page { width: 100%; padding: 0; box-shadow: none; margin: 0; }
 }

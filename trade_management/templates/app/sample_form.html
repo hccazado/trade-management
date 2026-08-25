@@ -11,24 +11,28 @@
         <!-- Row: Cliente / Tipo -->
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label" for="client_search">Cliente</label>
-                <div class="position-relative">
-                    <input type="text" class="form-control" id="client_search" autocomplete="off"
-                           placeholder="Buscar cliente..."
-                           value="{% if isediting and sample.client %}{{ clients | selectattr('id', 'equalto', sample.client) | map(attribute='nome') | first | default('') }}{% endif %}">
-                    <input type="hidden" name="client" id="client"
-                           value="{% if isediting %}{{ sample.client | default('') }}{% endif %}">
-                    <ul id="client_dropdown"
-                        class="list-group position-absolute w-100 shadow d-none"
-                        style="z-index:1050;max-height:220px;overflow-y:auto;top:calc(100% + 2px);left:0"></ul>
-                </div>
+                <label class="form-label" for="client">Cliente</label>
+                <select class="form-select" name="client" id="client">
+                    {% if isediting %}
+                    <option value="" {% if not sample.client %}selected{% endif %}>Sem Cliente / Nenhum</option>
+                    {% for c in clients %}
+                    <option value="{{ c.id }}" {% if sample.client==c.id %}selected{% endif %}>{{ c.nome }}</option>
+                    {% endfor %}
+                    {% else %}
+                    <option value="" selected>Sem Cliente / Nenhum</option>
+                    {% for c in clients %}
+                    <option value="{{ c.id }}">{{ c.nome }}</option>
+                    {% endfor %}
+                    {% endif %}
+                </select>
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="type">Tipo</label>
                 <select class="form-select" name="type" id="type">
-                    <option value="" {% if isediting and not sample.get('type') %}selected{% elif not isediting %}selected{% endif %}>— Selecionar —</option>
+                    <option value="" {% if isediting and not sample.get('type') %}selected{% elif not isediting
+                        %}selected{% endif %}>— Selecionar —</option>
                     {% for opt in ['fine', 'verygood', 'good', 'bica', 'barrento', 'escolha', 'chuvado', 'fd10'] %}
-                    <option value="{{ opt }}" {% if isediting and sample.get('type') == opt %}selected{% endif %}>
+                    <option value="{{ opt }}" {% if isediting and sample.get('type')==opt %}selected{% endif %}>
                         {{ opt|capitalize }}
                     </option>
                     {% endfor %}
@@ -56,58 +60,58 @@
                 <div class="d-flex flex-wrap gap-3">
                     <div>
                         <label class="form-label small">17/8</label>
-                        <input class="form-control form-control-sm" style="width:80px" id="17/8" name="17/8" type="number" step="0.1" min="0"
-                            value="{{ sample.get('17/8', '') if isediting else '' }}">
+                        <input class="form-control form-control-sm" style="width:80px" id="17/8" name="17/8"
+                            type="number" step="0.1" min="0" value="{{ sample.get('17/8', '') if isediting else '' }}">
                     </div>
                     <div>
                         <label class="form-label small">16</label>
-                        <input class="form-control form-control-sm" style="width:80px" id="16" name="16" type="number" step="0.1" min="0"
-                            value="{{ sample.get('16', '') if isediting else '' }}">
+                        <input class="form-control form-control-sm" style="width:80px" id="16" name="16" type="number"
+                            step="0.1" min="0" value="{{ sample.get('16', '') if isediting else '' }}">
                     </div>
                     <div>
                         <label class="form-label small">13</label>
-                        <input class="form-control form-control-sm" style="width:80px" id="13" name="13" type="number" step="0.1" min="0"
-                            value="{{ sample.get('13', '') if isediting else '' }}">
+                        <input class="form-control form-control-sm" style="width:80px" id="13" name="13" type="number"
+                            step="0.1" min="0" value="{{ sample.get('13', '') if isediting else '' }}">
                     </div>
                     <div>
                         <label class="form-label small">Fd13</label>
-                        <input class="form-control form-control-sm" style="width:80px" id="Fd13" name="Fd13" type="number" step="0.1" min="0"
-                            value="{{ sample.get('Fd13', '') if isediting else '' }}">
+                        <input class="form-control form-control-sm" style="width:80px" id="Fd13" name="Fd13"
+                            type="number" step="0.1" min="0" value="{{ sample.get('Fd13', '') if isediting else '' }}">
                     </div>
                     <div>
                         <label class="form-label small">Cata</label>
-                        <input class="form-control form-control-sm" style="width:80px" id="Cata" name="Cata" type="number" step="0.1" min="0"
-                            value="{{ sample.get('Cata', '') if isediting else '' }}">
+                        <input class="form-control form-control-sm" style="width:80px" id="Cata" name="Cata"
+                            type="number" step="0.1" min="0" value="{{ sample.get('Cata', '') if isediting else '' }}">
                     </div>
                     <div>
                         <label class="form-label small">Broca</label>
-                        <input class="form-control form-control-sm" style="width:80px" id="Broca" name="Broca" type="number" step="0.1" min="0"
-                            value="{{ sample.get('Broca', '') if isediting else '' }}">
+                        <input class="form-control form-control-sm" style="width:80px" id="Broca" name="Broca"
+                            type="number" step="0.1" min="0" value="{{ sample.get('Broca', '') if isediting else '' }}">
                     </div>
                     <div>
                         <label class="form-label small">Imp.</label>
-                        <input class="form-control form-control-sm" style="width:80px" id="Imp" name="Imp" type="number" step="0.1" min="0"
-                            value="{{ sample.get('Imp', '') if isediting else '' }}">
+                        <input class="form-control form-control-sm" style="width:80px" id="Imp" name="Imp" type="number"
+                            step="0.1" min="0" value="{{ sample.get('Imp', '') if isediting else '' }}">
                     </div>
                     <div>
                         <label class="form-label small">10</label>
-                        <input class="form-control form-control-sm" style="width:80px" id="10" name="10" type="number" step="0.1" min="0"
-                            value="{{ sample.get('10', '') if isediting else '' }}">
+                        <input class="form-control form-control-sm" style="width:80px" id="10" name="10" type="number"
+                            step="0.1" min="0" value="{{ sample.get('10', '') if isediting else '' }}">
                     </div>
                     <div>
                         <label class="form-label small">FD</label>
-                        <input class="form-control form-control-sm" style="width:80px" id="FD" name="FD" type="number" step="0.1" min="0"
-                            value="{{ sample.get('FD', '') if isediting else '' }}">
+                        <input class="form-control form-control-sm" style="width:80px" id="FD" name="FD" type="number"
+                            step="0.1" min="0" value="{{ sample.get('FD', '') if isediting else '' }}">
                     </div>
                     <div>
                         <label class="form-label small">PVA</label>
-                        <input class="form-control form-control-sm" style="width:80px" id="PVA" name="PVA" type="number" step="0.1" min="0"
-                            value="{{ sample.get('PVA', '') if isediting else '' }}">
+                        <input class="form-control form-control-sm" style="width:80px" id="PVA" name="PVA" type="number"
+                            step="0.1" min="0" value="{{ sample.get('PVA', '') if isediting else '' }}">
                     </div>
                     <div>
                         <label class="form-label small">Mk</label>
-                        <input class="form-control form-control-sm" style="width:80px" id="Mk" name="Mk" type="number" step="0.1" min="0"
-                            value="{{ sample.get('Mk', '') if isediting else '' }}">
+                        <input class="form-control form-control-sm" style="width:80px" id="Mk" name="Mk" type="number"
+                            step="0.1" min="0" value="{{ sample.get('Mk', '') if isediting else '' }}">
                     </div>
                 </div>
             </div>
@@ -119,27 +123,31 @@
                 <div class="d-flex flex-wrap gap-3">
                     <div>
                         <label class="form-label small">Duro</label>
-                        <input class="form-control form-control-sm" style="width:80px" id="Duro" name="Duro" type="number" min="0" placeholder="copos"
+                        <input class="form-control form-control-sm" style="width:80px" id="Duro" name="Duro"
+                            type="number" min="0" placeholder="copos"
                             value="{{ sample.get('Duro', '') if isediting else '' }}">
                     </div>
                     <div>
                         <label class="form-label small">Riado</label>
-                        <input class="form-control form-control-sm" style="width:80px" id="Riado" name="Riado" type="number" min="0" placeholder="copos"
+                        <input class="form-control form-control-sm" style="width:80px" id="Riado" name="Riado"
+                            type="number" min="0" placeholder="copos"
                             value="{{ sample.get('Riado', '') if isediting else '' }}">
                     </div>
                     <div>
                         <label class="form-label small">Rio</label>
-                        <input class="form-control form-control-sm" style="width:80px" id="Rio" name="Rio" type="number" min="0" placeholder="copos"
-                            value="{{ sample.get('Rio', '') if isediting else '' }}">
+                        <input class="form-control form-control-sm" style="width:80px" id="Rio" name="Rio" type="number"
+                            min="0" placeholder="copos" value="{{ sample.get('Rio', '') if isediting else '' }}">
                     </div>
                     <div>
                         <label class="form-label small">Fermentado</label>
-                        <input class="form-control form-control-sm" style="width:80px" id="Fermentado" name="Fermentado" type="number" min="0" placeholder="copos"
+                        <input class="form-control form-control-sm" style="width:80px" id="Fermentado" name="Fermentado"
+                            type="number" min="0" placeholder="copos"
                             value="{{ sample.get('Fermentado', '') if isediting else '' }}">
                     </div>
                     <div>
                         <label class="form-label small">Sujo</label>
-                        <input class="form-control form-control-sm" style="width:80px" id="Sujo" name="Sujo" type="number" min="0" placeholder="copos"
+                        <input class="form-control form-control-sm" style="width:80px" id="Sujo" name="Sujo"
+                            type="number" min="0" placeholder="copos"
                             value="{{ sample.get('Sujo', '') if isediting else '' }}">
                     </div>
                 </div>
@@ -154,7 +162,8 @@
 
         <div class="mb-3">
             <label class="form-label" for="obs">Observações (OBS)</label>
-            <textarea class="form-control" rows="3" id="obs" name="obs" placeholder="Conforme amostra...">{{ sample.obs if isediting else '' }}</textarea>
+            <textarea class="form-control" rows="3" id="obs" name="obs"
+                placeholder="Conforme amostra...">{{ sample.obs if isediting else '' }}</textarea>
         </div>
 
         {% if isediting %}
@@ -163,29 +172,20 @@
                 <button type="submit" class="btn btn-teal">Atualizar</button>
                 <button type="button" id="btn-copy-form" class="btn btn-outline-secondary">Copiar amostra</button>
             </div>
-            <button type="submit" formaction="{{ url_for('sample.notify', id=sample.id) }}" class="btn btn-teal">Comunicar compradores</button>
+            <button type="submit" formaction="{{ url_for('sample.notify', id=sample.id) }}"
+                class="btn btn-teal">Comunicar compradores</button>
         </div>
         {% else %}
         <div class="mb-3">
             <button type="submit" class="btn btn-teal">Cadastrar</button>
         </div>
-        <div class="form-check">
+        <!-- <div class="form-check">
             <input class="form-check-input" type="checkbox" id="comunicar_compradores" name="comunicar_compradores">
             <label class="form-check-label" for="comunicar_compradores">Comunicar compradores</label>
-        </div>
+        </div> -->
         {% endif %}
     </form>
 </div>
-
-<script id="sample-form-data" type="application/json">
-{
-    "clients": [
-        { "id": "", "nome": "Sem Cliente / Nenhum" }
-        {% for c in clients %},{ "id": "{{ c.id }}", "nome": {{ c.nome | tojson }} }{% endfor %}
-    ],
-    "isEditing": {{ 'true' if isediting else 'false' }}
-}
-</script>
 
 {% if isediting %}
 <script src="{{ url_for('static', filename='copy_sample.js') }}"></script>

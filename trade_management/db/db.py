@@ -1,6 +1,9 @@
 import firebase_admin
 from firebase_admin import credentials, firestore, exceptions
-import requests, os, json
+import os, json
+from dotenv import load_dotenv
+
+load_dotenv()
 
 _cred_json = os.environ.get("FIREBASE_CREDENTIALS")
 if _cred_json:

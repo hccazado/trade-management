@@ -1,5 +1,6 @@
 import os, sys, json
-
+from dotenv import load_dotenv
+load_dotenv()
 # pyrefly: ignore [missing-import]
 from flask import Flask, url_for, redirect, current_app, session
 from flask_cors import CORS
@@ -96,7 +97,7 @@ def create_app (test_config = None):
     
     @app.route("/")
     def home():
-        return redirect("url_for('home.index')")
+        return redirect(url_for('home.index'))
     
     uf_list = [{"uf":"AC", "name":"Acre"}, {"uf":"AL", "name":"Alagoas"}, {"uf":"AP", "name":"Amapá"}, {"uf":"AM", "name":"Amazonas"},
             {"uf":"BA", "name":"Bahia"}, {"uf":"CE", "name":"Ceará"}, {"uf":"DF", "name":"Distrito Federal"}, {"uf":"ES", "name":"Espírito Santo"},
