@@ -19,7 +19,7 @@
                 </thead>
                 <tbody>
                     {% for item in upcoming %}
-                    <tr>
+                    <tr class="clickable-row" onclick="window.location='{{ url_for('agreement.view', id=item.id) }}'">
                         <td>{{ item.date.strftime('%d/%m') }}</td>
                         <td>{{ item.comprador }}</td>
                         <td>{{ item.quantidade }}</td>

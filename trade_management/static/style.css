@@ -84,8 +84,6 @@ h6 {
 .main-content {
     flex: 1;
     min-width: 0;
-    max-width: 825px;
-    margin: 0 auto;
     padding: 0 24px;
 }
 
@@ -615,6 +613,8 @@ textarea {
 .market-change.positive { color: #2a7a2a; }
 .market-change.negative { color: #c0392b; }
 
+.clickable-row { cursor: pointer; }
+
 /* weather panel */
 .weather-loading {
     color: #888;
@@ -981,3 +981,11 @@ textarea {
 .btn-icon:disabled .material-symbols-outlined { color: #196774; }
 
 .col-icon { width: 60px; text-align: center; }
+.col-narrow { width: 100px; }
+
+.col-truncate {
+    max-width: 260px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

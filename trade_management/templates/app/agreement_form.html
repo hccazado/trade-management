@@ -92,7 +92,8 @@
         <!-- Condição de venda full width -->
         <div class="mb-3">
             <label class="form-label" for="cond_venda">Condição de Venda</label>
-            <input class="form-control" id="cond_venda" name="cond_venda" value="{{ v.get('cond_venda','') }}">
+            <input class="form-control" id="cond_venda" name="cond_venda"
+                value="{{ v.get('cond_venda','paga e retira até') }}">
         </div>
 
         <!-- Row: Preço / Quantidade / Modalidade -->
@@ -107,7 +108,8 @@
             </div>
             <div class="col-md-4">
                 <label class="form-label" for="modalidade">Modalidade</label>
-                <input class="form-control" id="modalidade" name="modalidade" value="{{ v.get('modalidade','') }}">
+                <input class="form-control" id="modalidade" name="modalidade"
+                    value="{{ v.get('modalidade','paga e retira') }}">
             </div>
         </div>
 
@@ -121,8 +123,7 @@
         <div class="row mb-3">
             <div class="col-md-4">
                 <label class="form-label" for="corretor">Corretor</label>
-                <input class="form-control" id="corretor" name="corretor"
-                    value="{{ v.get('corretor','NETTUZZI CORRETORA') }}">
+                <input class="form-control" id="corretor" name="corretor" value="{{ v.get('corretor','') }}">
             </div>
             <div class="col-md-4">
                 <label class="form-label" for="corretagem_vendedor">Corretagem Vend.</label>
@@ -140,7 +141,7 @@
         <div class="mb-3">
             <label class="form-label" for="obs">OBS</label>
             <textarea class="form-control" rows="3" id="obs"
-                name="obs">{{ v.get('obs', 'Conforme amostra em poder das partes') }}</textarea>
+                name="obs">{{ v.get('obs', 'Conforme amostra em poder das partes. Embarque a granel.') }}</textarea>
         </div>
 
         <button type="submit" class="btn btn-teal">{% if isEditing %}Atualizar{% else %}Cadastrar{% endif %}</button>

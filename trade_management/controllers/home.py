@@ -9,7 +9,16 @@ from ..models import client as model_client
 from ..models import warehouse as model_warehouse
 from .market import get_market_data
 
-_DATE_RE = re.compile(r'\b(\d{2}/\d{2}/\d{4})\b')
+_DATE_RE = re.compile(r'\b(\d{1,2}/\d{1,2}/(?:\d{4}|\d{2}))\b')
+
+
+def _parse_date(raw):
+    for fmt in ('%d/%m/%Y', '%d/%m/%y'):
+        try:
+            return datetime.strptime(raw, fmt).date()
+        except ValueError:
+            continue
+    return None
 
 
 def index():
@@ -21,15 +30,15 @@ def index():
 
     upcoming = []
     for ag in model_agreement.get_all():
-        m = _DATE_RE.search(ag.get('modalidade', '') or '')
+        m = _DATE_RE.search(ag.get('cond_venda', '') or '') or _DATE_RE.search(ag.get('modalidade', '') or '')
         if not m:
             continue
-        try:
-            d = datetime.strptime(m.group(1), '%d/%m/%Y').date()
-        except ValueError:
+        d = _parse_date(m.group(1))
+        if d is None:
             continue
         if today <= d <= cutoff:
             upcoming.append({
+                'id': ag.get('id'),
                 'date': d,
                 'comprador': clients.get(ag.get('comprador', ''), '—'),
                 'quantidade': ag.get('quantidade', '—'),

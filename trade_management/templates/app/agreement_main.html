@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block max_width %}1000px{% endblock %}
+
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-3 mt-3">
     <h2 class="h4 mb-0">Fechamentos</h2>
@@ -10,10 +12,11 @@
     <table class="table table-sm table-hover table-striped align-middle">
         <thead class="table-secondary">
             <tr>
-                <th>Fechamento</th>
-                <th class="d-none d-md-table-cell">Data</th>
-                <th>Comprador</th>
-                <th class="d-none d-md-table-cell">Vendedor</th>
+                <th class="col-narrow">Fechamento</th>
+                <th class="col-narrow">Data</th>
+                <th class="col-narrow">Sacas</th>
+                <th class="d-none d-md-table-cell col-truncate">Comprador</th>
+                <th class="d-none d-md-table-cell col-truncate">Vendedor</th>
                 <th class="col-icon">Ações</th>
             </tr>
         </thead>
@@ -21,9 +24,10 @@
             {% for agreement in agreements %}
             <tr>
                 <td>{{ agreement['num_fechamento'] }}</td>
-                <td class="d-none d-md-table-cell">{{ agreement['data'] }}</td>
-                <td>{{ agreement['comprador'] }}</td>
-                <td class="d-none d-md-table-cell">{{ agreement['vendedor'] }}</td>
+                <td>{{ agreement['data'] }}</td>
+                <td>{{ agreement['quantidade'] }}</td>
+                <td class="d-none d-md-table-cell col-truncate" title="{{ agreement['comprador'] }}">{{ agreement['comprador'] }}</td>
+                <td class="d-none d-md-table-cell col-truncate" title="{{ agreement['vendedor'] }}">{{ agreement['vendedor'] }}</td>
                 <td class="col-icon">
                     <a href="{{ url_for('agreement.edit', id=agreement['id']) }}" class="table-icon">
                         <span class="material-symbols-outlined">edit</span>
